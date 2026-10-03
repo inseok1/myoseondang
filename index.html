@@ -1,0 +1,919 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:type" content="website"><meta property="og:url" content="https://inseok1.github.io/myoseondang/"><meta property="og:title" content="묘선당 — 당주가 그대의 사주를 먼저 봐 드려요"><meta property="og:description" content="묘선당 당주가 그대의 사주에서 막힌 곳을 먼저 짚어 드려요. 이름과 태어난 때만 적으면 돼요."><meta property="og:image" content="https://inseok1.github.io/myoseondang/dangju/v5/h1.jpg"><meta name="twitter:card" content="summary_large_image"><style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>묘선당</title>
+<meta name="description" content="묘선당 당주가 그대의 사주에서 막힌 곳을 먼저 짚어 드려요. 이름과 태어난 때만 적으면 돼요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 밤의 정각 한 가지 분위기로 고정한 디자인(어두운 단일 테마) */
+:root{--bg:#121019;--panel:#1b1724;--line:#2e2839;--fg:#ece6f1;--muted:#a59db0;--gold:#c8a86b;--gold2:#e2c891;--err:#f0a3a3;color-scheme:dark}
+html,body{background:var(--bg);color:var(--fg)}
+body{word-break:keep-all;font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;font-size:15px;line-height:1.65;padding-inline:16px}
+.wrap{max-width:460px;margin:0 auto;padding-block:20px 48px;display:flex;flex-direction:column;gap:28px}
+.serif{font-family:"Noto Serif KR","Nanum Myeongjo",serif}
+.brand{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted)}
+.brand b{font-family:"Noto Serif KR",serif;font-size:19px;color:var(--fg);letter-spacing:.08em;font-weight:700}
+[hidden]{display:none!important}
+
+/* 첫 화면 */
+.hero{position:relative;border-radius:14px;overflow:hidden;background:var(--panel)}
+.hero img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top}
+.hero .cap{position:absolute;inset:auto 0 0 0;padding:64px 20px 20px;background:linear-gradient(transparent,rgba(12,10,17,.92) 55%)}
+.hero h1{margin:0 0 6px;font-family:"Noto Serif KR",serif;font-size:24px;line-height:1.4;font-weight:700;text-wrap:balance}
+.hero p{margin:0;color:var(--muted);font-size:14px}
+
+form{display:flex;flex-direction:column;gap:16px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f>span{font-size:13px;color:var(--muted);letter-spacing:.02em}
+input,select,textarea{font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 13px;width:100%;box-sizing:border-box;min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+textarea{min-height:84px;resize:vertical}
+.row{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
+.seg button{font:inherit;font-size:14px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 4px;cursor:pointer}
+.seg button.on{color:var(--bg);background:var(--gold2);border-color:var(--gold2);font-weight:700}
+.time{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);white-space:nowrap}
+.chk input{width:18px;height:18px;accent-color:var(--gold)}
+.err{color:var(--err);font-size:14px;min-height:1em;margin:0}
+.btn{font:inherit;font-weight:700;font-size:16px;display:block;width:100%;text-align:center;text-decoration:none;border-radius:12px;padding:15px;cursor:pointer;border:0;box-sizing:border-box}
+.btn.gold{background:var(--gold2);color:#1a1420}
+.btn.line{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.note{font-size:12.5px;color:var(--muted);margin:0;text-align:center}
+
+/* 웹툰: 컷 크기와 말풍선 */
+.toon{display:flex;flex-direction:column;gap:22px}
+.p{position:relative;margin:0;overflow:hidden;border-radius:6px;background:var(--panel)}
+.p img{display:block;width:100%;height:100%;object-fit:cover}
+.p.full-bleed{margin-inline:-16px;border-radius:0}
+.p.full-bleed,.p.large{aspect-ratio:3/4}
+.p.medium{aspect-ratio:1/1}
+.p.wide{aspect-ratio:16/9}
+.p.small,.p.small-closeup{width:74%;aspect-ratio:1/1}
+.p.small.r,.p.small-closeup.r{align-self:flex-end}
+.p.small-closeup img{transform:scale(1.45);transform-origin:50% 30%}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.split .p{aspect-ratio:3/5}
+.split .p:first-child img{object-position:50% 15%}
+.split .p:last-child img{transform:scale(1.7);transform-origin:50% 75%}
+.gapL{height:40px}
+.split .b{max-width:88%;font-size:14px}
+.b{position:absolute;max-width:64%;margin:0;font-size:15px;line-height:1.5;padding:10px 14px;box-sizing:border-box;word-break:keep-all;z-index:2;
+   opacity:0;transform:scale(.85);transition:opacity .35s ease,transform .35s cubic-bezier(.3,1.6,.5,1)}
+.p.in .b{opacity:1;transform:none}
+.b.normal{background:#fbf8f2;color:#1b1622;border-radius:20px;box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.b.normal:after{content:"";position:absolute;bottom:-9px;left:26px;border:9px solid transparent;border-top-color:#fbf8f2;border-bottom:0}
+.b.whisper{background:rgba(251,248,242,.88);color:#3a3344;border:1.5px dashed #6c6178;border-radius:20px;font-size:14px}
+.b.emphasis{background:#fff;color:#120e17;border:3px solid #120e17;border-radius:8px;font-weight:700;font-size:16px;box-shadow:4px 4px 0 var(--gold)}
+.b.inner_dotted{background:rgba(20,16,28,.72);color:#eee6f5;border:2px dotted #cfc3dd;border-radius:999px;padding:12px 18px;font-size:14px}
+.b.narration{background:rgba(14,11,20,.86);color:#e9dfc8;border-left:3px solid var(--gold);border-radius:2px;font-family:"Noto Serif KR",serif;font-size:14px}
+.b.sfx{background:none;padding:0;font-family:"Noto Serif KR",serif;font-weight:700;font-size:30px;color:var(--gold2);-webkit-text-stroke:1px #120e17;text-shadow:2px 2px 0 #120e17;transform:rotate(-8deg) scale(.6)}
+.p.in .b.sfx{transform:rotate(-8deg)}
+.upper-left{top:14px;left:12px}
+.upper-right{top:14px;right:12px}
+.upper-right.normal:after{left:auto;right:26px}
+.lower-left{bottom:14px;left:12px}
+.lower-right{bottom:14px;right:12px}
+.center{top:46%;left:50%;translate:-50% -50%}
+.center-right{top:46%;right:12px}
+.mid-left{top:40%;left:12px}
+.mid-right{top:40%;right:12px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* 결제 */
+.plans{display:grid;gap:12px}
+.plan{border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;background:var(--panel)}
+.plan.best{border-color:var(--gold)}
+.plan h3{margin:0;display:flex;justify-content:space-between;align-items:baseline;font-size:15px;letter-spacing:.08em}
+.plan h3 b{font-family:"Noto Serif KR",serif;font-size:22px;letter-spacing:0;font-variant-numeric:tabular-nums}
+.plan ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:14px}
+.plan li:before{content:"— ";color:var(--gold)}
+.pay{display:flex;flex-direction:column;gap:12px}
+.pay h2{margin:0;font-family:"Noto Serif KR",serif;font-size:19px;text-align:center}
+
+footer{border-top:1px solid var(--line);padding-top:18px;font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:8px}
+footer nav{display:flex;flex-wrap:wrap;gap:14px}
+footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:9}
+.sheet .box{background:var(--panel);width:100%;max-width:520px;max-height:82vh;overflow:auto;border-radius:16px 16px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom,0px));box-sizing:border-box}
+.sheet h2{margin:0 0 10px;font-size:18px}
+.sheet h3{font-size:14px;margin:14px 0 4px}
+.sheet p,.sheet li{font-size:14px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+  <div class="brand"><b>묘선당</b><span>사주 리포트</span></div>
+
+  <!-- 1. 입력 -->
+  <section id="v-in" style="display:flex;flex-direction:column;gap:24px">
+    <div class="toon" id="hook"></div>
+    <form id="fm" novalidate>
+      <h1 class="serif" style="margin:0;font-size:21px;text-align:center;text-wrap:balance">무엇이 걸리는지, 당주가 먼저 봐 드려요</h1>
+      <label class="f"><span>이름 (닉네임도 괜찮아요)</span><input id="nm" maxlength="12" autocomplete="nickname" placeholder="예) 지민"></label>
+      <div class="f"><span>성별</span><div class="seg" id="sex"><button type="button" data-v="여">여</button><button type="button" data-v="남">남</button></div></div>
+      <div class="f"><span>달력</span><div class="seg" id="cal"><button type="button" data-v="S" class="on">양력</button><button type="button" data-v="L">음력</button><button type="button" data-v="LL">음력 윤달</button></div></div>
+      <div class="f"><span>생년월일</span><div class="row"><input id="y" inputmode="numeric" maxlength="4" placeholder="1990"><input id="mo" inputmode="numeric" maxlength="2" placeholder="월"><input id="d" inputmode="numeric" maxlength="2" placeholder="일"></div></div>
+      <div class="f"><span>태어난 시간</span><div class="time"><input id="t" type="time" value="12:00"><label class="chk"><input type="checkbox" id="unk">모름</label></div></div>
+      <label class="f"><span>태어난 지역</span><select id="city"></select></label>
+      <label class="f"><span>당주에게 묻고 싶은 것 한 가지</span><textarea id="q" maxlength="200" placeholder="예) 지금 만나는 사람과 계속 가도 될까요?"></textarea></label>
+      <p class="err" id="e1" role="alert"></p>
+      <button class="btn gold" type="submit">문 두드리기</button>
+      <p class="note">적은 내용은 이 화면 안에서만 쓰이고 어디로도 보내지 않아요.</p>
+    </form>
+  </section>
+
+  <!-- 2. 당주 웹툰 -->
+  <section id="v-story" hidden>
+    <div class="toon" id="story"></div>
+    <div class="gapL"></div>
+    <div class="pay reveal" id="pay">
+      <h2 id="payTitle">방금까지는, 먼저 드러난 부분만 짚었습니다.</h2>
+      <p class="note" style="font-size:14px;color:var(--fg)">이제 그대의 사주와 질문을 자세히 풀어 볼 차례예요.</p>
+      <div class="plans">
+        <div class="plan"><h3>BASIC <b>9,900원</b></h3><ul><li>핵심 사주 풀이</li><li>질문 1개 심층 답변</li><li>약 50쪽 PDF</li></ul><a class="btn line" id="goB" target="_blank" rel="noopener">BASIC으로 시작하기</a></div>
+        <div class="plan best"><h3>PREMIUM <b>29,900원</b></h3><ul><li>전체 흐름 + 12개월 달별 흐름</li><li>질문 최대 3개 심층 답변</li><li>약 200쪽 PDF</li></ul><a class="btn gold" id="goP" target="_blank" rel="noopener">PREMIUM으로 시작하기</a></div>
+      </div>
+      <p class="note">질문이 여러 개라면 PREMIUM에서 최대 3개까지 함께 볼 수 있어요.<br>주문서에 방금 적은 내용이 미리 채워져요. 이메일과 입금자명만 더 적으면 돼요.<br>입금 확인 후 24시간 안에 이메일로 보내 드려요.</p>
+      <button class="btn line" type="button" id="again">다른 사주로 다시 보기</button>
+    </div>
+  </section>
+
+  <footer>
+    <nav><button type="button" data-doc="terms">이용약관</button><button type="button" data-doc="privacy">개인정보처리방침</button><button type="button" data-doc="refund">환불정책</button></nav>
+    <span>스냅미디어(묘선당) · 대표 최인석 · 사업자등록번호 617-97-61877 · 문의 카카오톡 채널 "묘선당"</span>
+    <span>사주 해석은 참고용이며 특정 사건의 발생을 단정하거나 보장하지 않아요.</span>
+  </footer>
+</div>
+
+<div class="sheet" id="sheet" hidden><div class="box" role="dialog" aria-modal="true"><h2 id="shT"></h2><div id="shB"></div><button class="btn line" type="button" id="shX" style="margin-top:14px">닫기</button></div></div>
+
+<script>
+/* ═══ 계산 엔진 ═══ */
+
+/* ═══════════ 기본 상수 ═══════════ */
+const GAN=['갑','을','병','정','무','기','경','신','임','계'];
+const GANH=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const JI=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+const JIH=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const GAN_OH=[0,0,1,1,2,2,3,3,4,4];        // 0木1火2土3金4水
+const JI_OH =[4,2,0,0,2,1,1,2,3,3,2,4];
+const GAN_YIN=[0,1,0,1,0,1,0,1,0,1];
+const OH=['목','화','토','금','수'];
+const OHC=['m','h','t','g','s'];
+const OHV=['--mok','--hwa','--to','--geum','--su'];
+
+/* 지장간 (여기/중기/정기) + 비중 */
+const JIJANG=[
+  [['임',10],['계',20]],                     // 子
+  [['계',9],['신',3],['기',18]],             // 丑
+  [['무',7],['병',7],['갑',16]],             // 寅
+  [['갑',10],['을',20]],                     // 卯
+  [['을',9],['계',3],['무',18]],             // 辰
+  [['무',7],['경',7],['병',16]],             // 巳
+  [['병',10],['기',9],['정',11]],            // 午
+  [['정',9],['을',3],['기',18]],             // 未
+  [['무',7],['임',7],['경',16]],             // 申
+  [['경',10],['신',20]],                     // 酉
+  [['신',9],['정',3],['무',18]],             // 戌
+  [['무',7],['갑',7],['임',16]]              // 亥
+];
+
+/* 십이운성 */
+const UNSUNG=['장생','목욕','관대','건록','제왕','쇠','병','사','묘','절','태','양'];
+const JANGSAENG=[11,6,2,9,2,9,5,0,8,3];   // 甲亥 乙午 丙寅 丁酉 戊寅 己酉 庚巳 辛子 壬申 癸卯
+
+/* 합충형파해 */
+const GAN_HAP=[[0,5,2],[1,6,3],[2,7,4],[3,8,0],[4,9,1]]; // 甲己土 乙庚金 丙辛水 丁壬木 戊癸火
+const GAN_CHUNG=[[0,6],[1,7],[2,8],[3,9]];
+const JI_YUKHAP=[[0,1,2],[2,11,0],[3,10,1],[4,9,3],[5,8,4],[6,7,2]];
+const SAMHAP=[[8,0,4,4],[11,3,7,0],[2,6,10,1],[5,9,1,3]]; // 申子辰水 亥卯未木 寅午戌火 巳酉丑金
+const BANGHAP=[[2,3,4,0],[5,6,7,1],[8,9,10,3],[11,0,1,4]];
+const JI_CHUNG=[[0,6],[1,7],[2,8],[3,9],[4,10],[5,11]];
+const SAMHYUNG=[[2,5,8],[1,10,7]];
+const SANGHYUNG=[[0,3]];
+const JAHYUNG=[4,6,9,11];
+const JI_PA=[[0,9],[3,6],[4,1],[7,10],[2,11],[5,8]];
+const JI_HAE=[[0,7],[1,6],[2,5],[3,4],[8,11],[9,10]];
+
+/* 신살 */
+const CHEONEUL={0:[1,7],4:[1,7],6:[1,7],1:[0,8],5:[0,8],2:[11,9],3:[11,9],7:[2,6],8:[3,5],9:[3,5]};
+const MUNCHANG=[5,6,8,9,8,9,11,0,2,3];
+const YANGIN={0:3,2:6,4:6,6:9,8:0};
+const HONGYEOM=[6,6,2,7,4,4,10,9,0,8];
+const BAEKHO=['갑진','을미','병술','정축','무진','임술','계축'];
+const GWAEGANG=['경진','경술','임진','임술','무술'];
+const DOHWA=[3,6,9,0], YEOKMA=[8,2,5,11], HWAGAE=[10,4,7,1]; // 삼합국 index 순
+
+
+/* 포맷 헬퍼 */
+const pad=n=>String(n).padStart(2,'0');
+const fm=v=>(v>=0?'+':'−')+Math.abs(v).toFixed(1)+'분';
+const fmHM=m=>pad(Math.floor(m/60))+':'+pad(Math.round(m%60));
+/* ═══════════ 천문 ═══════════ */
+const rad=Math.PI/180;
+function toJD(y,m,d,h){if(m<=2){y-=1;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24}
+function jdnOf(y,m,d){const a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;
+  return d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045}
+// VSOP87D 절단 급수 (지구 황경 L, 반경 R)
+const L0=[[175347046,0,0],[3341656,4.6692568,6283.07585],[34894,4.6261,12566.1517],
+[3497,2.7441,5753.3849],[3418,2.8289,3.5231],[3136,3.6277,77713.7715],[2676,4.4181,7860.4194],
+[2343,6.1352,3930.2097],[1324,0.7425,11506.7698],[1273,2.0371,529.691],[1199,1.1096,1577.3435],
+[990,5.233,5884.927],[902,2.045,26.298],[857,3.508,398.149],[780,1.179,5223.694],
+[753,2.533,5507.553],[505,4.583,18849.228],[492,4.205,775.523],[357,2.92,0.067],
+[317,5.849,11790.629],[284,1.899,796.298],[271,0.315,10977.079],[243,0.345,5486.778],
+[206,4.806,2544.314],[205,1.869,5573.143],[202,2.458,6069.777],[156,0.833,213.299],
+[132,3.411,2942.463],[126,1.083,20.775],[115,0.645,0.98],[103,0.636,4694.003],
+[102,0.976,15720.839],[102,4.267,7.114],[99,6.21,2146.17],[98,0.68,155.42],
+[86,5.98,161000.69],[85,1.3,6275.96],[85,3.67,71430.7],[80,1.81,17260.15],[79,3.04,12036.46],
+[71,1.76,5088.63],[74,3.5,3154.69],[74,4.68,801.82],[70,0.83,9437.76],[62,3.98,8827.39],
+[61,1.82,7084.9],[57,2.78,6286.6],[56,4.39,14143.5],[56,3.47,6279.55],[52,0.19,12139.55],
+[52,1.33,1748.02],[51,0.28,5856.48],[49,0.49,1194.45],[41,5.37,8429.24],[41,2.4,19651.05],
+[39,6.17,10447.39],[37,6.04,10213.29],[37,2.57,1059.38],[36,1.71,2352.87],[36,1.78,6812.77],
+[33,0.59,17789.85],[30,0.44,83996.85],[30,2.74,1349.87],[25,3.16,4690.48]];
+const L1=[[628331966747,0,0],[206059,2.678235,6283.07585],[4303,2.6351,12566.1517],
+[425,1.59,3.523],[119,5.796,26.298],[109,2.966,1577.344],[93,2.59,18849.23],[72,1.14,529.69],
+[68,1.87,398.15],[67,4.41,5507.55],[59,2.89,5223.69],[56,2.17,155.42],[45,0.4,796.3],
+[36,0.47,775.52],[29,2.65,7.11],[21,5.34,0.98],[19,1.85,5486.78],[19,4.97,213.3],
+[17,2.99,6275.96],[16,0.03,2544.31],[16,1.43,2146.17],[15,1.21,10977.08],[12,2.83,1748.02],
+[12,3.26,5088.63],[12,5.27,1194.45],[12,2.08,4694],[11,0.77,553.57],[10,1.3,6286.6],
+[10,4.24,1349.87],[9,2.7,242.73],[9,5.64,951.72],[8,5.3,2352.87],[6,2.65,9437.76],[6,4.67,4690.48]];
+const L2=[[52919,0,0],[8720,1.0721,6283.0758],[309,0.867,12566.152],[27,0.05,3.52],
+[16,5.19,26.3],[16,3.68,155.42],[10,0.76,18849.23],[9,2.06,77713.77],[7,0.83,775.52],
+[5,4.66,1577.34],[4,1.03,7.11],[4,3.44,5573.14],[3,5.14,796.3],[3,6.05,5507.55],
+[3,1.19,242.73],[3,6.12,529.69],[3,0.31,398.15],[3,2.28,553.57],[2,4.38,5223.69],[2,3.75,0.98]];
+const L3=[[289,5.844,6283.076],[35,0,0],[17,5.49,12566.15],[3,5.2,155.42],[1,4.72,3.52],
+[1,5.3,18849.23],[1,5.97,242.73]];
+const L4=[[114,3.142,0],[8,4.13,6283.08],[1,3.84,12566.15]];
+const L5=[[1,3.14,0]];
+const R0=[[100013989,0,0],[1670700,3.0984635,6283.07585],[13956,3.05525,12566.1517],
+[3084,5.1985,77713.7715],[1628,1.1739,5753.3849],[1576,2.8469,7860.4194],[925,5.453,11506.77],
+[542,4.564,3930.21],[472,3.661,5884.927],[346,0.964,5507.553],[329,5.9,5223.694],
+[307,0.299,5573.143],[243,4.273,11790.629],[212,5.847,1577.344],[186,5.022,10977.079],
+[175,3.012,18849.228],[110,5.055,5486.778],[98,0.89,6069.78],[86,5.69,15720.84],
+[86,1.27,161000.69],[65,0.27,17260.15],[63,0.92,529.69],[57,2.01,83996.85],[56,5.24,71430.7],
+[49,3.25,2544.31],[47,2.58,775.52],[45,5.54,9437.76],[43,6.01,6275.96],[39,5.36,4694],
+[38,2.39,8827.39],[37,0.83,19651.05],[37,4.9,12139.55],[36,1.67,12036.46],[35,1.84,2942.46],
+[33,0.24,7084.9],[32,0.18,5088.63],[32,1.78,398.15],[28,1.21,6286.6],[28,1.9,6279.55],[26,4.59,10447.39]];
+const R1=[[103019,1.10749,6283.07585],[1721,1.0644,12566.1517],[702,3.142,0],[32,1.02,18849.23],
+[31,2.84,5507.55],[25,1.32,5223.69],[18,1.42,1577.34],[10,5.91,10977.08],[9,1.42,6275.96],[9,0.27,5486.78]];
+const R2=[[4359,5.7846,6283.0758],[124,5.579,12566.152],[12,3.14,0],[9,3.63,77713.77],
+[6,1.87,5573.14],[3,5.47,18849.23]];
+
+const sum=(T,t)=>T.reduce((a,[A,B,C])=>a+A*Math.cos(B+C*t),0);
+const D=Math.PI/180;
+
+function deltaT(y){
+  let t;
+  if(y>=2005&&y<2050){t=y-2000;return 62.92+0.32217*t+0.005589*t*t}
+  if(y>=1986&&y<2005){t=y-2000;return 63.86+0.3345*t-0.060374*t*t+0.0017275*t**3+0.000651814*t**4+0.00002373599*t**5}
+  if(y>=1961&&y<1986){t=y-1975;return 45.45+1.067*t-t*t/260-t**3/718}
+  if(y>=1941&&y<1961){t=y-1950;return 29.07+0.407*t-t*t/233+t**3/2547}
+  if(y>=1920&&y<1941){t=y-1920;return 21.20+0.84493*t-0.076100*t*t+0.0020936*t**3}
+  if(y>=1900&&y<1920){t=y-1900;return -2.79+1.494119*t-0.0598939*t*t+0.0061966*t**3-0.000197*t**4}
+  if(y>=2050&&y<2150)return -20+32*((y-1820)/100)**2-0.5628*(2150-y);
+  return 64;
+}
+
+/* JDE(TT) 기준 태양 겉보기 황경 */
+function apparentSunLon(jde){
+  const t=(jde-2451545)/365250;
+  const L=(sum(L0,t)+sum(L1,t)*t+sum(L2,t)*t*t+sum(L3,t)*t**3+sum(L4,t)*t**4+sum(L5,t)*t**5)/1e8;
+  const R=(sum(R0,t)+sum(R1,t)*t+sum(R2,t)*t*t)/1e8;
+  let Th=(L/D)+180;                       // 지구황경 → 태양황경
+  const T=t*10;
+  const lp=Th-1.397*T-0.00031*T*T;        // FK5 보정
+  Th += -0.09033/3600 + (-0.03916/3600)*(Math.cos(lp*D)-Math.sin(lp*D))*0; // λ 성분만
+  // 장동
+  const Om=125.04452-1934.136261*T;
+  const Ls=280.4665+36000.7698*T, Lm=218.3165+481267.8813*T;
+  const dpsi=(-17.20*Math.sin(Om*D)-1.32*Math.sin(2*Ls*D)-0.23*Math.sin(2*Lm*D)+0.21*Math.sin(2*Om*D))/3600;
+  const aber=-20.4898/(3600*R);
+  let lam=Th+dpsi+aber;
+  return ((lam%360)+360)%360;
+}
+
+/* ΔT 반영 겉보기 황경 (UT 입력) */
+function solarLon(jd){
+  const yr = 2000 + (jd-2451545)/365.25;
+  return apparentSunLon(jd + deltaT(yr)/86400);
+}
+function eot(jd){const T=(jd-2451545)/36525;
+  const L0=((280.46646+36000.76983*T)%360+360)%360, M=357.52911+35999.05029*T;
+  const e=0.016708634-0.000042037*T, eps=23.439291-0.0130042*T, y=Math.tan(eps/2*rad)**2;
+  const E=y*Math.sin(2*L0*rad)-2*e*Math.sin(M*rad)+4*e*y*Math.sin(M*rad)*Math.cos(2*L0*rad)
+    -0.5*y*y*Math.sin(4*L0*rad)-1.25*e*e*Math.sin(2*M*rad);
+  return E/rad*4}
+function findTerm(t,g){let jd=g;for(let i=0;i<40;i++){let d=solarLon(jd)-t;
+  if(d>180)d-=360;if(d<-180)d+=360;if(Math.abs(d)<1e-9)break;jd-=d/0.9856473}return jd}
+function stdOff(y,m,d){const n=y*1e4+m*100+d;
+  if(n<19120101)return 8.5; if(n<19540321)return 9; if(n<19610810)return 8.5; return 9}
+const DST=[[1948,6,1,1948,9,13],[1949,4,3,1949,9,11],[1950,4,1,1950,9,10],[1951,5,6,1951,9,9],
+  [1955,5,5,1955,9,9],[1956,5,20,1956,9,30],[1957,5,5,1957,9,22],[1958,5,4,1958,9,21],
+  [1959,5,3,1959,9,20],[1960,5,1,1960,9,18],[1987,5,10,1987,10,11],[1988,5,8,1988,10,9]];
+const isDST=(y,m,d)=>{const n=y*1e4+m*100+d;return DST.some(p=>n>=p[0]*1e4+p[1]*100+p[2]&&n<p[3]*1e4+p[4]*100+p[5])};
+
+
+/* ═══════════ 음력 ↔ 양력 (천문 계산 기반) ═══════════
+   삭(合朔) — Meeus, Astronomical Algorithms ch.49
+   중기(中氣) — 태양 황경 30° 배수. 중기 없는 달이 윤달.
+   달의 경계는 한국 표준시 자정 기준. 표준시 이력(stdOff)을 그대로 따름. */
+
+function newMoonJDE(k){
+  const T=k/1236.85, T2=T*T, T3=T2*T, T4=T3*T;
+  let jde=2451550.09766+29.530588861*k+0.00015437*T2-0.000000150*T3+0.00000000073*T4;
+  const E=1-0.002516*T-0.0000074*T2;
+  const M =(2.5534+29.10535670*k-0.0000014*T2-0.00000011*T3)*D;      // 태양 평균근점이각
+  const Mp=(201.5643+385.81693528*k+0.0107582*T2+0.00001238*T3-0.000000058*T4)*D; // 달
+  const F =(160.7108+390.67050284*k-0.0016118*T2-0.00000227*T3+0.000000011*T4)*D;
+  const Om=(124.7746-1.56375588*k+0.0020672*T2+0.00000215*T3)*D;
+  const s=Math.sin;
+  jde += -0.40720*s(Mp) +0.17241*E*s(M) +0.01608*s(2*Mp) +0.01039*s(2*F)
+        +0.00739*E*s(Mp-M) -0.00514*E*s(Mp+M) +0.00208*E*E*s(2*M)
+        -0.00111*s(Mp-2*F) -0.00057*s(Mp+2*F) +0.00056*E*s(2*Mp+M)
+        -0.00042*s(3*Mp) +0.00042*E*s(M+2*F) +0.00038*E*s(M-2*F)
+        -0.00024*E*s(2*Mp-M) -0.00017*s(Om) -0.00007*s(Mp+2*M)
+        +0.00004*s(2*Mp-2*F) +0.00004*s(3*M) +0.00003*s(Mp+M-2*F)
+        +0.00003*s(2*Mp+2*F) -0.00003*s(Mp+M+2*F) +0.00003*s(Mp-M+2*F)
+        -0.00002*s(Mp-M-2*F) -0.00002*s(3*Mp+M) +0.00002*s(4*Mp);
+  const A=[
+    [299.77+0.107408*k-0.009173*T2, 0.000325],[251.88+0.016321*k,0.000165],
+    [251.83+26.651886*k,0.000164],[349.42+36.412478*k,0.000126],
+    [ 84.66+18.206239*k,0.000110],[141.74+53.303771*k,0.000062],
+    [207.14+ 2.453732*k,0.000060],[154.84+ 7.306860*k,0.000056],
+    [ 34.52+27.261239*k,0.000047],[207.19+ 0.121824*k,0.000042],
+    [291.34+ 1.844379*k,0.000040],[161.72+24.198154*k,0.000037],
+    [239.56+25.513099*k,0.000035],[331.55+ 3.592518*k,0.000023]];
+  A.forEach(([a,c])=>{ jde += c*Math.sin(a*D) });
+  return jde;
+}
+/* JD(UT) → 한국 표준시 기준 날짜번호(정수) */
+function jdToLocalDayNo(jdUT){
+  const g=jdToGreg(jdUT+0.5/24/60);  // 안전 여유
+  const off=stdOff(g.y,g.m,g.d);
+  return Math.floor(jdUT + off/24 + 0.5);
+}
+function jdToGreg(jd){
+  let z=Math.floor(jd+0.5), f=jd+0.5-z;
+  let A=z;
+  if(z>=2299161){const a=Math.floor((z-1867216.25)/36524.25); A=z+1+a-Math.floor(a/4)}
+  const B=A+1524, C=Math.floor((B-122.1)/365.25), Dd=Math.floor(365.25*C),
+        Ee=Math.floor((B-Dd)/30.6001);
+  const day=B-Dd-Math.floor(30.6001*Ee)+f;
+  const m=Ee<14?Ee-1:Ee-13, y=m>2?C-4716:C-4715;
+  return {y, m, d:Math.floor(day)};
+}
+function dayNoToGreg(n){ return jdToGreg(n-0.5); }
+
+/* 삭 시각(UT) → 그 달이 시작되는 날짜번호 */
+function newMoonDayNo(k){
+  const jde=newMoonJDE(k);
+  const yr=2000+(jde-2451545)/365.25;
+  const jdUT=jde-deltaT(yr)/86400;
+  const g=jdToGreg(jdUT);
+  const off=stdOff(g.y,g.m,g.d);
+  return Math.floor(jdUT+off/24+0.5);
+}
+/* 절기/중기 시각 → 날짜번호 */
+function termDayNo(lonDeg, guessJD){
+  const jd=findTerm(lonDeg, guessJD);
+  const g=jdToGreg(jd);
+  const off=stdOff(g.y,g.m,g.d);
+  return Math.floor(jd+off/24+0.5);
+}
+/* 어떤 양력 연도의 음력 월 구조를 만든다 (동지 기준 11월) */
+const _lunCache={};
+function lunarMonths(gy){
+  if(_lunCache[gy]) return _lunCache[gy];
+  // 전년 동지(황경 270°)
+  const ws0=termDayNo(270, toJD(gy-1,12,22,0));
+  const ws1=termDayNo(270, toJD(gy,12,22,0));
+  // 동지가 든 달의 삭 찾기
+  const kApprox=(jd)=>Math.floor((jd-2451550.09766)/29.530588861);
+  function nmOnOrBefore(dayNo){
+    let k=kApprox(dayNo-0.5)+2;
+    while(newMoonDayNo(k)>dayNo) k--;
+    return k;
+  }
+  const k0=nmOnOrBefore(ws0);      // 전년 11월삭
+  const k1=nmOnOrBefore(ws1);      // 올해 11월삭
+  const n=k1-k0;                   // 12 또는 13
+  const starts=[]; for(let i=0;i<=n;i++) starts.push(newMoonDayNo(k0+i));
+  // 중기 포함 여부
+  const hasMid=[];
+  for(let i=0;i<n;i++){
+    let found=false;
+    for(let j=0;j<24 && !found;j++){
+      const lam=(j*30)%360;
+      const t=termDayNo(lam, starts[i]-0.5+15);
+      if(t>=starts[i] && t<starts[i+1]) found=true;
+    }
+    hasMid.push(found);
+  }
+  // 월 번호 매기기: 첫 달=11월
+  const months=[]; let num=11, leapUsed=false;
+  for(let i=0;i<n;i++){
+    let isLeap=false;
+    if(n===13 && !leapUsed && !hasMid[i] && i>0){ isLeap=true; leapUsed=true; }
+    if(isLeap){ months.push({num:months[months.length-1].num, leap:true, start:starts[i], end:starts[i+1]}); }
+    else { months.push({num:num, leap:false, start:starts[i], end:starts[i+1]}); num=num%12+1; }
+  }
+  _lunCache[gy]=months;
+  return months;
+}
+
+/* 해당 음력 연도의 윤달 번호 (없으면 null) */
+function leapMonthOf(ly){
+  for(const gy of [ly, ly+1]){
+    for(const m of lunarMonths(gy)){
+      if(m.leap){
+        const g=dayNoToGreg(m.start);
+        const belong=(m.num>=11)?g.y:g.y;
+        if(belong===ly) return m.num;
+      }
+    }
+  }
+  return null;
+}
+/* 음력 → 양력. leap=true면 윤달 */
+function lunarToSolar(ly, lm, ld, leap){
+  for(const gy of [ly, ly+1]){
+    const ms=lunarMonths(gy);
+    for(const m of ms){
+      if(m.num!==lm || !!m.leap!==!!leap) continue;
+      const g0=dayNoToGreg(m.start);
+      // 음력 1~10월은 같은 해, 11·12월은 전해에 배정되므로 연도로 걸러냄
+      const belongYear = (m.num>=11) ? g0.y : g0.y;
+      if(belongYear!==ly && !(m.num>=11 && g0.y===ly)) continue;
+      const len=m.end-m.start;
+      if(ld<1||ld>len) throw new Error(`음력 ${ly}년 ${leap?'윤':''}${lm}월은 ${len}일까지입니다.`);
+      return dayNoToGreg(m.start+ld-1);
+    }
+  }
+  if(leap){
+    const lp=leapMonthOf(ly);
+    throw new Error(lp
+      ? `${ly}년의 윤달은 ${lp}월입니다. ${lm}월은 윤달이 아니니 "음력 (평달)"을 고르세요.`
+      : `${ly}년에는 윤달이 없습니다. "음력 (평달)"을 고르세요.`);
+  }
+  throw new Error(`음력 ${ly}년 ${lm}월이 존재하지 않습니다.`);
+}
+/* 양력 → 음력 (표시·검증용) */
+function solarToLunar(gy,gm,gd){
+  const dn=Math.floor(toJD(gy,gm,gd,12)+stdOff(gy,gm,gd)/24+0.5);
+  for(const y of [gy, gy+1]){
+    for(const m of lunarMonths(y)){
+      if(dn>=m.start && dn<m.end){
+        let yy=gy;
+        if(m.num>=11 && gm<=2) yy=gy-1;
+        if(m.num<=2 && gm>=11) yy=gy+1;
+        return {y:yy, m:m.num, d:dn-m.start+1, leap:!!m.leap};
+      }
+    }
+  }
+  return null;
+}
+
+/* ═══════════ 십신 ═══════════ */
+const SIP=[['비견','겁재'],['식신','상관'],['편재','정재'],['편관','정관'],['편인','정인']];
+function sipsin(day,g){
+  const a=GAN_OH[day],b=GAN_OH[g], same=GAN_YIN[day]===GAN_YIN[g]?0:1;
+  let r; if(a===b)r=0; else if((a+1)%5===b)r=1; else if((a+2)%5===b)r=2;
+  else if((a+3)%5===b)r=3; else r=4;
+  return SIP[r][same];
+}
+const SIP_GROUP={비견:'비겁',겁재:'비겁',식신:'식상',상관:'식상',편재:'재성',정재:'재성',
+  편관:'관성',정관:'관성',편인:'인성',정인:'인성'};
+
+/* ═══════════ 메인 계산 ═══════════ */
+function compute(o){
+  const {y,mo,d,hh,mi,lon,unk,uLon,uEot,uYaja,sex}=o;
+  const off=stdOff(y,mo,d), dst=isDST(y,mo,d), log=[];
+  /* v9.2: 시간 모름이면 입력칸의 시·분(기본 0시 등)을 쓰지 않고 정오로 고정한다.
+     예전에는 00:00 + 경도 보정(서울 약 −32분)이 전날로 넘어가 일주가 하루 틀어졌다. */
+  let adj=unk?12*60:hh*60+mi;
+  log.push(['입력 시각',unk?'시간 모름 (정오 기준으로 일·월·연 계산)':pad(hh)+':'+pad(mi)]);
+  log.push(['당시 표준시','UTC+'+off]);
+  if(dst){adj-=60;log.push(['서머타임','적용 (−60분)'])}
+  const jd0=toJD(y,mo,d,(adj/60)-off);
+  let lm=0,em=0;
+  if(uLon){lm=(lon-off*15)*4;log.push(['경도 보정',fm(lm)])}
+  if(uEot){em=eot(jd0);log.push(['균시차',fm(em)])}
+  const tmin=adj+lm+em;
+  const jdTrue=toJD(y,mo,d,(tmin/60)-off);
+  // 절기 판정: 절입시각은 천문학적 순간이므로 표준시끼리 비교 (경도·균시차 미적용)
+  const jdTerm = o.termTrue ? jdTrue : jd0;
+  const jd=jdTrue;
+  const lam=solarLon(jdTerm);
+  log.push(['절기 판정 기준', o.termTrue?'진태양시':'표준시']);
+
+  let sy=y; if(mo<=2&&lam<315)sy=y-1;
+  const yG=((sy-4)%10+10)%10, yJ=((sy-4)%12+12)%12;
+  const seg=Math.floor(((lam-315+360)%360)/30);
+  const mJ=[2,3,4,5,6,7,8,9,10,11,0,1][seg];
+  const mG=((yG%5)*2+2+seg)%10;
+
+  let jdn=jdnOf(y,mo,d);
+  if(tmin>=1440)jdn++; if(tmin<0)jdn--;
+  let tm=((tmin%1440)+1440)%1440;
+  let yaja=false;
+  if(!unk&&uYaja&&tm>=1380){jdn++;yaja=true}
+  const di=((jdn+49)%60+60)%60, dG=di%10, dJ=di%12;
+
+  let hG=null,hJ=null;
+  if(!unk){hJ=Math.floor(((tm+60)%1440)/120); hG=((dG%5)*2+hJ)%10}
+
+  /* 대운 */
+  const fwd=(GAN_YIN[yG]===0)===(sex==='M');
+  const cur=315+seg*30;
+  const prev=findTerm(((cur%360)+360)%360,jdTerm-15), next=findTerm(((cur+30)%360+360)%360,jdTerm+15);
+  const startAge=Math.max(1,Math.round((fwd?next-jdTerm:jdTerm-prev)/3*10)/10);
+  const daeun=[];
+  /* 대운 시작 시점은 "출생일 + 대운수(년)"이다.
+     예전에는 year를 y+floor(startAge)로 잡아 생월·소수점을 버렸는데,
+     그러면 12월생·대운수 5.7 같은 경우 실제보다 1~2년 앞당겨져
+     본문(나이 기준)과 대운표(연도 기준)의 현재 대운이 어긋났다. */
+  const birthMs=Date.UTC(y,mo-1,d);
+  const YR_MS=365.2422*86400000;
+  for(let i=0;i<10;i++){const st=fwd?i+1:-(i+1);
+    const startMs=birthMs+(startAge+i*10)*YR_MS;
+    daeun.push({g:((mG+st)%10+10)%10,j:((mJ+st)%12+12)%12,
+      age:Math.floor(startAge)+i*10, startMs,
+      year:new Date(startMs).getUTCFullYear()})}
+
+  log.push(['진태양시',fmHM(tm)]);
+  log.push(['태양 황경',lam.toFixed(4)+'°']);
+  log.push(['사주 연도',sy+'년 (입춘 기준)']);
+  log.push(['대운',fwd?'순행':'역행']);
+  log.push(['대운수',startAge.toFixed(1)]);
+  if(yaja)log.push(['야자시','적용 (일주 +1일)']);
+
+  const gans=[yG,mG,dG]; const jis=[yJ,mJ,dJ];
+  if(hG!==null){gans.push(hG);jis.push(hJ)}
+  return analyze({yG,yJ,mG,mJ,dG,dJ,hG,hJ,gans,jis,daeun,startAge,fwd,log,unk,sy,seg,y});
+}
+
+/* ═══════════ 심층 분석 ═══════════ */
+function analyze(r){
+  const {dG,mJ,gans,jis,dJ,yJ,hJ}=r;
+
+  /* ── 십이운성 ── */
+  const base=JANGSAENG[dG], up=GAN_YIN[dG]===0;
+  const unsungOf=j=>{const diff=up?(j-base+12)%12:(base-j+12)%12; return UNSUNG[diff]};
+  r.unsung=jis.map(unsungOf);
+
+  /* ── 십신 ── */
+  r.sipsinGan=gans.map(g=>sipsin(dG,g));
+  r.sipsinJi=jis.map(j=>{
+    const jg=JIJANG[j][JIJANG[j].length-1][0];
+    return sipsin(dG,GAN.indexOf(jg));
+  });
+
+  /* ── 오행 세력 (가중) ── */
+  const W_GAN=[1.0,1.2,1.0,1.0];              // 년 월 일 시 천간
+  const W_JI =[1.2,3.0,2.0,1.2];              // 년 월 일 시 지지
+  const power=[0,0,0,0,0];
+  gans.forEach((g,i)=>power[GAN_OH[g]]+=W_GAN[i]||1);
+  jis.forEach((j,i)=>{
+    const w=W_JI[i]||1, tot=JIJANG[j].reduce((a,b)=>a+b[1],0);
+    JIJANG[j].forEach(([kr,amt])=>power[GAN_OH[GAN.indexOf(kr)]]+=w*amt/tot);
+  });
+  const totalP=power.reduce((a,b)=>a+b,0);
+  r.power=power.map(v=>+(v).toFixed(2));
+  /* 각 값을 따로 반올림하면 합이 100.1처럼 어긋난다.
+     최대잔여법으로 남는 0.1을 잔여가 큰 쪽에 몰아준다. */
+  r.powerPct=(()=>{
+    const raw=power.map(v=>v/totalP*1000);
+    const fl=raw.map(Math.floor);
+    let rest=1000-fl.reduce((a,b)=>a+b,0);
+    const order=raw.map((v,i)=>[v-fl[i],i]).sort((a,b)=>b[0]-a[0]);
+    for(let k=0;k<rest;k++) fl[order[k%5][1]]++;
+    return fl.map(v=>+(v/10).toFixed(1));
+  })();
+
+  /* ── 신강 신약 ── */
+  const me=GAN_OH[dG];
+  const mine=power[me]+power[(me+4)%5];       // 비겁 + 인성
+  const other=power[(me+1)%5]+power[(me+2)%5]+power[(me+3)%5];
+  r.myPct=+(mine/totalP*100).toFixed(1);
+  const deukryeong = JI_OH[mJ]===me || JI_OH[mJ]===(me+4)%5;
+  const deukji = JIJANG[dJ].some(([k])=>{const o=GAN_OH[GAN.indexOf(k)];return o===me||o===(me+4)%5});
+  r.deukryeong=deukryeong; r.deukji=deukji;
+  let lvl;
+  if(r.myPct>=62) lvl='극신강';
+  else if(r.myPct>=50) lvl='신강';
+  else if(r.myPct>=42) lvl='중화';
+  else if(r.myPct>=30) lvl='신약';
+  else lvl='극신약';
+  r.strength=lvl;
+  r.isStrong = r.myPct>=46;
+
+  /* ── 통근 · 투출 ── */
+  const roots=[];
+  const names=['년','월','일','시'];
+  gans.forEach((g,i)=>{
+    const hit=[];
+    jis.forEach((j,k)=>{
+      JIJANG[j].forEach(([kr])=>{
+        const idx=GAN.indexOf(kr);
+        if(idx===g) hit.push({at:names[k]+'지', kind:'같은 글자', ji:j});
+        else if(GAN_OH[idx]===GAN_OH[g]) hit.push({at:names[k]+'지', kind:'같은 오행', ji:j});
+      });
+    });
+    if(hit.length) roots.push({type:'통근', gan:g, at:names[i]+'간', hits:hit});
+  });
+  const tuchul=[];
+  jis.forEach((j,k)=>{
+    JIJANG[j].forEach(([kr])=>{
+      const idx=GAN.indexOf(kr);
+      if(gans.includes(idx)){
+        const at=names[gans.indexOf(idx)]+'간';
+        tuchul.push({type:'투출', ji:j, gan:idx, from:names[k]+'지', to:at});
+      }
+    });
+  });
+  r.roots=roots; r.tuchul=tuchul;
+
+  /* ── 합충형파해 ── */
+  const rel=[];
+  const pos=i=>names[i];
+  for(let a=0;a<gans.length;a++)for(let b=a+1;b<gans.length;b++){
+    GAN_HAP.forEach(([x,y,oh])=>{
+      if((gans[a]===x&&gans[b]===y)||(gans[a]===y&&gans[b]===x))
+        rel.push({k:'천간합',t:`${GANH[gans[a]]}${GANH[gans[b]]} 합 → ${OH[oh]}`,at:`${pos(a)}간·${pos(b)}간`});
+    });
+    GAN_CHUNG.forEach(([x,y])=>{
+      if((gans[a]===x&&gans[b]===y)||(gans[a]===y&&gans[b]===x))
+        rel.push({k:'천간충',t:`${GANH[gans[a]]}${GANH[gans[b]]} 충`,at:`${pos(a)}간·${pos(b)}간`});
+    });
+  }
+  for(let a=0;a<jis.length;a++)for(let b=a+1;b<jis.length;b++){
+    const A=jis[a],B=jis[b];
+    JI_YUKHAP.forEach(([x,y,oh])=>{if((A===x&&B===y)||(A===y&&B===x))
+      rel.push({k:'육합',t:`${JIH[A]}${JIH[B]} 합 → ${OH[oh]}`,at:`${pos(a)}지·${pos(b)}지`})});
+    JI_CHUNG.forEach(([x,y])=>{if((A===x&&B===y)||(A===y&&B===x))
+      rel.push({k:'충',t:`${JIH[A]}${JIH[B]} 충`,at:`${pos(a)}지·${pos(b)}지`})});
+    JI_PA.forEach(([x,y])=>{if((A===x&&B===y)||(A===y&&B===x))
+      rel.push({k:'파',t:`${JIH[A]}${JIH[B]} 파`,at:`${pos(a)}지·${pos(b)}지`})});
+    JI_HAE.forEach(([x,y])=>{if((A===x&&B===y)||(A===y&&B===x))
+      rel.push({k:'해',t:`${JIH[A]}${JIH[B]} 해`,at:`${pos(a)}지·${pos(b)}지`})});
+    SANGHYUNG.forEach(([x,y])=>{if((A===x&&B===y)||(A===y&&B===x))
+      rel.push({k:'상형',t:`${JIH[A]}${JIH[B]} 형`,at:`${pos(a)}지·${pos(b)}지`})});
+    if(A===B&&JAHYUNG.includes(A))
+      rel.push({k:'자형',t:`${JIH[A]}${JIH[B]} 자형`,at:`${pos(a)}지·${pos(b)}지`});
+  }
+  SAMHAP.forEach(([a,b,c,oh])=>{
+    const has=[a,b,c].filter(x=>jis.includes(x));
+    if(has.length===3) rel.push({k:'삼합',t:`${JIH[a]}${JIH[b]}${JIH[c]} 삼합 → ${OH[oh]}국`,at:'완전'});
+    else if(has.length===2&&has.includes(b)) rel.push({k:'반합',t:`${has.map(x=>JIH[x]).join('')} 반합 → ${OH[oh]}`,at:'왕지 포함'});
+  });
+  BANGHAP.forEach(([a,b,c,oh])=>{
+    if([a,b,c].every(x=>jis.includes(x))) rel.push({k:'방합',t:`${JIH[a]}${JIH[b]}${JIH[c]} 방합 → ${OH[oh]}국`,at:'완전'});
+  });
+  SAMHYUNG.forEach(tri=>{
+    const has=tri.filter(x=>jis.includes(x));
+    if(has.length===3) rel.push({k:'삼형',t:`${tri.map(x=>JIH[x]).join('')} 삼형`,at:'완전'});
+    else if(has.length===2) rel.push({k:'형',t:`${has.map(x=>JIH[x]).join('')} 형`,at:'부분'});
+  });
+  r.rel=rel;
+
+  /* ── 신살 ── */
+  const sinsal=[];
+  const push=(n,w,d)=>sinsal.push({n,w,d});
+  (CHEONEUL[dG]||[]).forEach(j=>{if(jis.includes(j))
+    push('천을귀인',JIH[j],'위기에 도움이 오는 자리')});
+  if(jis.includes(MUNCHANG[dG])) push('문창귀인',JIH[MUNCHANG[dG]],'글과 학문의 별');
+  if(YANGIN[dG]!==undefined&&jis.includes(YANGIN[dG])) push('양인',JIH[YANGIN[dG]],'극단의 칼날');
+  if(jis.includes(HONGYEOM[dG])) push('홍염',JIH[HONGYEOM[dG]],'끌어당기는 매력');
+  const dp=GAN[dG]+JI[dJ];
+  if(BAEKHO.includes(dp)) push('백호대살',GANH[dG]+JIH[dJ],'강렬하고 급한 기운');
+  if(GWAEGANG.includes(dp)) push('괴강',GANH[dG]+JIH[dJ],'극단적 통솔력');
+  [[yJ,'년지'],[dJ,'일지']].forEach(([base,label])=>{
+    SAMHAP.forEach((s,idx)=>{
+      if(s.slice(0,3).includes(base)){
+        if(jis.includes(DOHWA[idx])) push('도화',JIH[DOHWA[idx]],label+' 기준 · 매력과 인기');
+        if(jis.includes(YEOKMA[idx])) push('역마',JIH[YEOKMA[idx]],label+' 기준 · 이동과 변화');
+        if(jis.includes(HWAGAE[idx])) push('화개',JIH[HWAGAE[idx]],label+' 기준 · 예술과 고독');
+      }
+    });
+  });
+  /* 공망 */
+  const sun=Math.floor(((jdnOf(r.y||2000,1,1),0))); // placeholder 제거
+  const dIdx=(GANH.indexOf(GANH[dG]));
+  const seq=(dG-dJ+12)%12;                 // 순 시작 위치
+  const gongmang=[(10-seq+12)%12,(11-seq+12)%12];
+  const gmHit=jis.filter(j=>gongmang.includes(j));
+  if(gmHit.length) push('공망',gmHit.map(j=>JIH[j]).join(''),'비어 있어 채워야 하는 자리');
+  r.sinsal=sinsal;
+
+  /* ── 격국 ── */
+  const jeonggi=JIJANG[mJ][JIJANG[mJ].length-1][0];
+  const jgIdx=GAN.indexOf(jeonggi);
+  const jgSip=sipsin(dG,jgIdx);
+  let guk, gukWhy;
+  const isTuchul=gans.includes(jgIdx);
+  if(jgSip==='비견'||jgSip==='겁재'){
+    guk = (YANGIN[dG]===mJ) ? '양인격' : '건록격';
+    gukWhy = `월지 ${JIH[mJ]}의 정기가 ${jgSip} — 자기 세력이 월령을 잡음`;
+  }else{
+    guk = jgSip+'격';
+    gukWhy = isTuchul
+      ? `월지 ${JIH[mJ]} 정기 ${GANH[jgIdx]}가 천간에 투출`
+      : `월지 ${JIH[mJ]} 정기 ${GANH[jgIdx]} 기준 (미투출)`;
+  }
+  r.guk=guk; r.gukWhy=gukWhy; r.gukTuchul=isTuchul;
+
+  /* ── 용신 ── */
+  const need = r.isStrong ? [(me+1)%5,(me+2)%5,(me+3)%5] : [(me+4)%5,me];
+  const scored = need.map(o=>({o,p:power[o]}));
+  scored.sort((a,b)=> r.isStrong ? b.p-a.p : a.p-b.p);
+  r.yongsin = r.isStrong ? scored[0].o : scored[0].o;
+  r.huisin  = r.isStrong ? (scored[1]?scored[1].o:scored[0].o) : (scored[1]?scored[1].o:scored[0].o);
+  r.gisin   = r.isStrong ? (me+4)%5 : (me+2)%5;
+  r.yongWhy = r.isStrong
+    ? `일간 세력 ${r.myPct}% — 넘치므로 덜어내는 오행이 용신`
+    : `일간 세력 ${r.myPct}% — 부족하므로 채워주는 오행이 용신`;
+
+  /* ── 조후 ── */
+  const season=[0,1,1,1,2,2,2,3,3,3,0,0][mJ]; // 계절
+  const winter=[11,0,1].includes(mJ), summer=[5,6,7].includes(mJ);
+  if(winter){ r.johu='화 火'; r.johuWhy=`${JIH[mJ]}월 — 한랭한 계절, 따뜻하게 하는 불이 먼저 필요` }
+  else if(summer){ r.johu='수 水'; r.johuWhy=`${JIH[mJ]}월 — 조열한 계절, 식혀주는 물이 먼저 필요` }
+  else if([3,4].includes(mJ)){ r.johu='금 金'; r.johuWhy=`${JIH[mJ]}월 — 목기가 왕성, 다듬는 금이 필요` }
+  else { r.johu='—'; r.johuWhy=`${JIH[mJ]}월 — 한난조습이 치우치지 않아 억부가 우선` }
+
+  return r;
+}
+
+
+/* ═══ 집필 지침 (전 챕터 공통) ═══ */
+
+</script>
+<script>
+const CITIES = [["서울", 126.98], ["부산", 129.08], ["대구", 128.6], ["인천", 126.71], ["광주", 126.85], ["대전", 127.38], ["울산", 129.31], ["세종", 127.29], ["수원시", 127.01], ["성남시", 127.13], ["의정부시", 127.03], ["안양시", 126.96], ["부천시", 126.77], ["광명시", 126.86], ["평택시", 127.09], ["동두천시", 127.06], ["안산시", 126.83], ["고양시", 126.83], ["과천시", 126.99], ["구리시", 127.13], ["남양주시", 127.22], ["오산시", 127.08], ["시흥시", 126.8], ["군포시", 126.94], ["의왕시", 126.97], ["하남시", 127.21], ["용인시", 127.18], ["파주시", 126.78], ["이천시", 127.44], ["안성시", 127.28], ["김포시", 126.72], ["화성시", 126.83], ["광주(경기)시", 127.26], ["여주시", 127.64], ["춘천시", 127.73], ["원주시", 127.95], ["강릉시", 128.89], ["동해시", 129.11], ["태백시", 128.99], ["속초시", 128.59], ["삼척시", 129.17], ["청주시", 127.49], ["충주시", 127.93], ["제천시", 128.19], ["천안시", 127.15], ["공주시", 127.12], ["보령시", 126.61], ["아산시", 127.0], ["서산시", 126.45], ["논산시", 127.1], ["계룡시", 127.25], ["당진시", 126.65], ["전주시", 127.15], ["군산시", 126.74], ["익산시", 126.96], ["정읍시", 126.86], ["남원시", 127.39], ["김제시", 126.88], ["목포시", 126.39], ["여수시", 127.66], ["순천시", 127.49], ["나주시", 126.72], ["광양시", 127.7], ["포항시", 129.34], ["경주시", 129.22], ["김천시", 128.11], ["안동시", 128.73], ["구미시", 128.34], ["영주시", 128.62], ["영천시", 128.94], ["상주시", 128.16], ["문경시", 128.19], ["경산시", 128.74], ["창원시", 128.68], ["진주시", 128.11], ["통영시", 128.43], ["사천시", 128.06], ["김해시", 128.89], ["밀양시", 128.75], ["거제시", 128.62], ["양산시", 129.04], ["제주시", 126.53], ["서귀포시", 126.56]];
+const NICK = ["곧게 자라는 큰 나무", "부드럽게 뻗어가는 풀과 덩굴", "환하게 퍼지는 햇빛", "조용히 오래 타는 등불", "넓고 묵직한 땅", "손으로 가꾸는 밭", "단단하게 벼린 쇠", "세밀하게 다듬은 보석", "넓게 흐르는 큰 물", "조용히 스며드는 빗물"];
+const TOON = {"hook": [{"img": "h1", "size": "full-bleed", "bubbles": [{"type": "normal", "pos": "upper-right", "text": "요즘, 왜 같은 생각이 또 돌아올까요?"}, {"type": "narration", "pos": "lower-left", "text": "괜찮은데도 마음이 걸리는 날."}]}, {"img": "h2", "size": "large", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "겉으로는 괜찮은데…"}, {"type": "whisper", "pos": "lower-right", "text": "혼자선 자꾸 같은 곳에 걸리죠."}]}, {"img": "h3", "size": "medium", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "듣기 좋은 말보다…"}, {"type": "emphasis", "pos": "lower-right", "text": "지금 보이는 문제부터."}]}, {"img": "h4", "size": "large", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "생일을 알려주세요."}, {"type": "normal", "pos": "mid-right", "text": "무엇이 걸리는지부터 볼게요."}]}], "story": [{"img": "s1", "size": "full-bleed", "sfx": "드르륵", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "어서 오세요, {이름}님."}, {"type": "whisper", "pos": "lower-left", "text": "{L:컷1}"}]}, {"img": "s1", "size": "small-closeup", "sfx": "사박", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "이쪽으로 와요."}, {"type": "whisper", "pos": "lower-left", "text": "{L:컷2}"}]}, {"img": "s2", "size": "wide", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "{L:컷3}"}]}, {"img": "s3", "size": "small-closeup", "bubbles": [{"type": "normal", "pos": "upper-right", "text": "{일간}의 기운이 꽤 또렷하네요."}]}, {"img": "s3", "size": "medium", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "‘{일간별명}’ 같은 사주예요."}, {"type": "whisper", "pos": "lower-right", "text": "{L:컷4}"}]}, {"img": "s4", "size": "split", "bubbles": [{"type": "whisper", "pos": "upper-left", "text": "그런데…"}, {"type": "emphasis", "pos": "upper-left", "text": "{일간문제}"}]}, {"img": "s4", "size": "full-bleed", "sfx": "멈칫", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "{L:컷7}"}]}, {"img": "c1", "size": "small-closeup", "sfx": "딸랑", "bubbles": []}, {"img": "h3", "size": "small", "need": "오행문제", "bubbles": [{"type": "normal", "pos": "upper-right", "text": "{L:컷5}"}, {"type": "emphasis", "pos": "lower-left", "text": "{오행문제}"}]}, {"img": "h2", "size": "small-closeup", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "그리고… {신강신약1}"}, {"type": "whisper", "pos": "lower-left", "text": "{신강신약2}"}]}, {"img": "s3", "size": "small", "bubbles": [{"type": "inner_dotted", "pos": "upper-right", "text": "{L:컷11}"}]}, {"img": "s5", "size": "medium", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "지금까지 세 군데가 보여요."}, {"type": "narration", "pos": "lower-left", "text": "{L:컷8}"}]}, {"img": "s2", "size": "wide", "bubbles": [{"type": "narration", "pos": "lower-left", "text": "“{질문}”"}]}, {"img": "s5", "size": "split", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "그리고 적어 주신…"}, {"type": "emphasis", "pos": "upper-left", "text": "{질문주제1}"}, {"type": "whisper", "pos": "lower-left", "text": "{질문주제2}"}]}, {"img": "s3", "size": "small-closeup", "sfx": "스윽", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "{L:컷17}"}]}, {"img": "s6", "size": "full-bleed", "bubbles": [{"type": "narration", "pos": "upper-left", "text": "{L:컷14}"}, {"type": "normal", "pos": "lower-right", "text": "이제 안으로 들어갑시다."}]}, {"img": "s7", "size": "medium", "sfx": "스윽", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "이제 앉으세요."}, {"type": "whisper", "pos": "lower-right", "text": "{L:컷16}"}]}, {"img": "s8", "size": "full-bleed", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "여기부터는 정확히 볼게요."}, {"type": "emphasis", "pos": "lower-left", "text": "{이름}님, 이제 본격적으로 시작하지요."}]}, {"img": "s9", "size": "small-closeup", "sfx": "탁", "bubbles": [{"type": "normal", "pos": "upper-right", "text": "먼저, 처음 걸렸던 그 자리부터."}, {"type": "whisper", "pos": "lower-left", "text": "{L:컷18}"}]}, {"img": "s9", "size": "split", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "{L:컷19}"}, {"type": "whisper", "pos": "upper-left", "text": "그 질문과 어디서 엮이는지."}]}, {"img": "s10", "size": "full-bleed", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "지금 말씀드린 건…"}, {"type": "emphasis", "pos": "center-right", "text": "문제의 윤곽이에요."}]}, {"img": "c2", "size": "large", "sfx": "딸랑", "bubbles": [{"type": "normal", "pos": "upper-left", "text": "자세한 풀이는 여기서 이어갈게요."}, {"type": "narration", "pos": "lower-left", "text": "{L:컷20}"}]}]};
+const LINES = {"컷1": {"by": "나이대", "v": {"20대": "요즘 마음이 자주 흔들리죠?", "30대": "요즘 신경 쓰이는 일이 많죠?", "40대": "요즘 마음이 쉽게 놓이지 않죠?", "50대 이상": "요즘 마음에 걸리는 게 있죠?"}}, "컷2": {"by": "띠", "v": {"쥐": "요즘 생각이 꼬리를 물고 이어지죠.", "소": "한 가지 생각을 오래 붙잡고 있네요.", "호랑이": "마음은 앞서는데 생각이 따라오질 않죠.", "토끼": "작은 일에도 마음이 오래 남아 있네요.", "용": "생각이 커질수록 마음도 복잡해지죠.", "뱀": "겉으로는 괜찮아도 속은 복잡하네요.", "말": "생각이 많아지면 마음이 먼저 지치죠.", "양": "혼자 생각을 정리하는 시간이 길었겠어요.", "원숭이": "이것저것 비교하는 생각이 반복되네요.", "닭": "확실하지 않은 부분이 계속 신경 쓰이죠.", "개": "한번 마음에 걸리면 쉽게 넘기질 못하네요.", "돼지": "괜찮다고 넘긴 일이 다시 떠오르죠."}}, "컷3": {"by": "일간", "v": {"갑": "갑목은 요즘 방향을 잡는 생각이 많네요.", "을": "을목은 요즘 관계의 미묘함이 먼저 보여요.", "병": "병화는 요즘 마음이 앞뒤로 크게 움직이네요.", "정": "정화는 요즘 혼자 품는 생각이 많아요.", "무": "무토는 요즘 책임져야 할 일이 눈에 들어와요.", "기": "기토는 요즘 사소한 부분까지 신경 쓰이네요.", "경": "경금은 요즘 판단을 계속 다시 하게 돼요.", "신": "신금은 요즘 말하지 않은 부분이 걸리네요.", "임": "임수는 요즘 생각의 범위가 너무 넓어졌어요.", "계": "계수는 요즘 마음속 질문이 계속 남아 있네요."}}, "컷4": {"by": "일간", "v": {"갑": "결정하려다가 다시 처음으로 돌아가죠.", "을": "상대 반응을 계속 살피게 되네요.", "병": "괜찮다가도 갑자기 마음이 흔들리죠.", "정": "말하지 못한 생각이 계속 남아 있어요.", "무": "내가 정리해야 한다는 생각이 반복되네요.", "기": "작은 변화에도 의미를 찾게 되죠.", "경": "이미 내린 판단을 다시 검토하게 돼요.", "신": "말보다 행동이 더 신경 쓰이는 시기네요.", "임": "여러 가능성을 동시에 생각하고 있어요.", "계": "혼자 답을 찾으려는 시간이 길어졌네요."}}, "컷5": {"by": "오행", "v": {"많은목": "목이 강해서 시작과 방향에 생각이 몰려요.", "많은화": "화가 강해서 감정의 움직임이 크게 보여요.", "많은토": "토가 강해서 책임과 부담이 먼저 보여요.", "많은금": "금이 강해서 판단과 비교가 반복되네요.", "많은수": "수가 강해서 생각이 깊어지고 길어져요.", "적은목": "목이 약해서 시작보다 망설임이 먼저 보여요.", "적은화": "화가 약해서 마음을 표현하는 게 늦어져요.", "적은토": "토가 약해서 마음이 쉽게 정리되지 않네요.", "적은금": "금이 약해서 선택을 오래 고민하게 돼요.", "적은수": "수가 약해서 감정을 혼자 급히 정리하려 해요."}}, "컷6": {"by": "오행", "v": {"많은목": "하고 싶은 것과 해야 할 것이 자꾸 부딪혀요.", "많은화": "마음이 달아올랐다가 금방 식기도 하네요.", "많은토": "혼자 감당하려는 흐름이 반복되고 있어요.", "많은금": "맞고 틀린 걸 계속 따져보게 되네요.", "많은수": "생각이 깊어질수록 혼자 복잡해지죠.", "적은목": "새로운 방향을 잡는 데 자꾸 시간이 걸려요.", "적은화": "마음을 표현하고도 다시 신경 쓰이네요.", "적은토": "하나를 정해도 마음이 쉽게 붙지 않아요.", "적은금": "결정을 내린 뒤에도 계속 확인하게 돼요.", "적은수": "감정을 정리하기 전에 결론부터 내리려 해요."}}, "컷7": {"by": "성별", "v": {"남": "혼자 정리하려는 습관이 반복되고 있네요.", "여": "상대의 반응을 먼저 살피는 흐름이 보여요."}}, "컷8": {"by": "나이대", "v": {"20대": "관계와 선택 사이에서 생각이 많아졌네요.", "30대": "일과 관계가 동시에 마음에 걸리네요.", "40대": "책임질 일과 내 마음이 자꾸 부딪히죠.", "50대 이상": "지나온 일과 지금의 마음을 함께 보게 되네요."}}, "컷9": {"by": "시간모름", "v": {"모름": "태어난 시간은 비어 있지만, 지금 보이는 흐름은 선명해요.", "앎": "태어난 시간까지 보니 반복되는 부분이 더 또렷하네요."}}, "컷10": {"by": "신강신약", "v": {"극신강": "내 생각을 밀어붙이다가 혼자 지치는 패턴이 보여요.", "신강": "내 판단을 믿다가도 다시 확인하는 흐름이 있네요.", "중화": "상황에 맞추려다 내 마음을 놓치는 때가 있어요.", "신약": "상대와 상황을 먼저 살피는 습관이 반복되네요.", "극신약": "주변 반응에 마음이 크게 흔들리는 때가 있어요."}}, "컷11": {"by": "신강신약", "v": {"극신강": "혼자 결정하고 혼자 감당하려는 흐름이 강해요.", "신강": "결정은 빠른데 마음속 확인은 오래 남네요.", "중화": "둘 사이에서 균형을 맞추려는 생각이 많아요.", "신약": "상대 입장을 먼저 생각하다가 내 마음을 미뤄요.", "극신약": "작은 반응 하나에도 생각이 크게 움직이네요."}}, "컷12": {"by": "오행", "v": {"많은목": "시작한 뒤 다음 방향을 계속 고민하게 돼요.", "많은화": "감정이 올라오면 생각도 같이 커지네요.", "많은토": "내가 책임져야 한다는 생각이 반복돼요.", "많은금": "작은 차이도 계속 비교하게 되네요.", "많은수": "한 가지를 생각해도 여러 갈래로 번져요.", "적은목": "결정 앞에서 시작 자체를 오래 고민하네요.", "적은화": "마음에 있어도 표현까지 시간이 걸리네요.", "적은토": "정리하려 할수록 오히려 마음이 흩어져요.", "적은금": "확신이 생겨도 다시 확인하고 싶어져요.", "적은수": "감정을 깊게 보기보다 빨리 넘기려 하네요."}}, "컷13": {"by": "주제", "v": {"연애": "연애에서는 상대의 작은 반응이 계속 걸리네요.", "재회": "재회 문제에서는 지나간 장면이 자꾸 떠올라요.", "결혼": "결혼 문제에서는 확신보다 현실이 먼저 걸려요.", "직업": "직업에서는 지금 방향이 맞는지 계속 고민하네요.", "사업": "사업에서는 선택보다 결과에 대한 생각이 커져요.", "돈": "돈에서는 들어오고 나가는 흐름이 계속 신경 쓰여요.", "가족": "가족 문제에서는 혼자 감당하려는 생각이 보여요.", "건강": "건강에서는 작은 변화도 계속 확인하게 되네요.", "방향": "방향을 정하려 해도 여러 선택지가 계속 남아요."}}, "컷14": {"by": "성별", "v": {"남": "말하지 않고 넘긴 일이 마음에 남아 있네요.", "여": "상대에게 하지 못한 말이 계속 마음에 남아요."}}, "컷15": {"by": "띠", "v": {"쥐": "생각이 시작되면 끝까지 확인하려는 편이네요.", "소": "한번 마음에 둔 문제를 오래 붙잡고 있어요.", "호랑이": "결론을 내리고도 다시 생각하게 되네요.", "토끼": "상대의 표정과 말투가 오래 남아 있어요.", "용": "큰 그림을 생각하다가 세부까지 깊어지네요.", "뱀": "겉으로 보이지 않는 부분을 계속 살피네요.", "말": "생각이 많아지면 행동까지 늦어지기도 하죠.", "양": "혼자 마음을 정리하는 시간이 길어졌네요.", "원숭이": "여러 가능성을 비교하는 생각이 반복돼요.", "닭": "확실하지 않은 부분이 계속 눈에 들어오네요.", "개": "한번 걸린 문제를 쉽게 내려놓지 못하네요.", "돼지": "괜찮다고 생각해도 다시 떠오르는 일이 있어요."}}, "컷16": {"by": "시간모름", "v": {"모름": "시간을 모르는 만큼 이 부분은 단정하지 않을게요.", "앎": "태어난 시간까지 포함하니 반복되는 패턴이 보이네요."}}, "컷17": {"by": "주제", "v": {"연애": "좋아하는 마음보다 상대 반응을 먼저 보게 되네요.", "재회": "끝난 관계를 다시 확인하고 싶은 마음이 남아 있어요.", "결혼": "마음과 현실 사이를 계속 비교하고 있네요.", "직업": "지금 일을 계속해야 할지 생각이 길어지고 있어요.", "사업": "새로운 선택 앞에서 손익을 계속 따져보네요.", "돈": "돈의 흐름보다 불안한 부분이 더 크게 느껴져요.", "가족": "가족에게 말하지 못한 생각이 쌓여 있네요.", "건강": "몸의 작은 변화에도 신경이 많이 쓰이네요.", "방향": "어느 쪽을 골라도 다른 선택이 계속 생각나요."}}, "컷18": {"by": "일간", "v": {"갑": "내가 먼저 움직여야 한다는 생각이 강하네요.", "을": "상대와 주변 분위기를 계속 읽고 있네요.", "병": "마음이 움직일 때 생각도 크게 흔들리네요.", "정": "겉으로 말하지 않은 감정이 오래 남아요.", "무": "결국 내가 책임져야 한다는 생각이 반복돼요.", "기": "작은 문제도 그냥 지나치지 못하네요.", "경": "결정을 내려도 다시 따져보는 습관이 있어요.", "신": "말보다 행동의 차이를 계속 확인하네요.", "임": "한 가지 문제를 여러 방향으로 생각하고 있어요.", "계": "혼자 답을 찾으려는 시간이 길어지고 있어요."}}, "컷19": {"by": "오행", "v": {"많은목": "해야 할 일과 하고 싶은 일이 계속 충돌해요.", "많은화": "감정이 올라오면 판단까지 흔들리는 순간이 있어요.", "많은토": "책임질 일이 많아질수록 마음이 무거워져요.", "많은금": "완벽하게 확인하려는 생각이 반복되고 있어요.", "많은수": "생각이 깊어질수록 혼자 복잡해지네요.", "적은목": "방향을 정해도 다시 망설이는 흐름이 있어요.", "적은화": "마음을 표현하기 전에 여러 번 생각하게 돼요.", "적은토": "마음속 정리가 쉽게 끝나지 않네요.", "적은금": "결정 뒤에도 계속 맞는지 확인하게 돼요.", "적은수": "감정을 충분히 들여다보기 전에 넘기려 하네요."}}, "컷20": {"by": "나이대", "v": {"20대": "지금은 선택 하나가 계속 마음에 남아 있네요.", "30대": "지금은 일과 관계가 동시에 신경 쓰이는 시기네요.", "40대": "지금은 책임과 내 마음이 자꾸 부딪히고 있어요.", "50대 이상": "지금은 지나온 선택까지 다시 돌아보게 되네요."}}};   // 고객별 말풍선 문구(ChatGPT 상의본 lines5.json): {컷N:{by:'일간|오행|…', v:{값:문장}}}
+const DDI = ['쥐','소','호랑이','토끼','용','뱀','말','양','원숭이','닭','개','돼지'];
+const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54lF28EiYkRnlnv-LRqXe2D09g/viewform';
+const PRODUCT = {basic:'BASIC 9,900원 — 간단한 사주풀이 + 질문 1개', premium:'PREMIUM 29,900원 — 전체 흐름 + 12개월 달별 흐름 + 질문 최대 3개'};
+const CALNAME = {S:'양력', L:'음력 (평달)', LL:'음력 (윤달)'};
+/* 당주 대사 문구: ChatGPT(Thinking) 상의본 gpt_dangju_answer.txt. 반복되는 패턴만 말하고 사건 예언·겁주기는 하지 않는다 */
+const DMP = ['앞으로 가야 한다는 마음은 큰데, 한번 정한 방향을 너무 오래 붙잡고 있는군요.',
+  '상대와 상황을 너무 많이 살피다 보니, 정작 내 마음이 뒤로 밀리는군요.',
+  '마음이 움직이면 빨리 가고 싶은데, 주변의 반응을 기다리다 답답해지는군요.',
+  '마음은 계속 타는데, 아무도 알아주지 않아 지치는 사주군요.',
+  '참고 받아주는 힘은 큰데, 혼자 감당하려는 습관이 남아 있군요.',
+  '작은 것까지 챙기다 보니, 어느 순간 내 몫이 너무 많아지는군요.',
+  '무엇이 맞는지는 잘 아는데, 그 기준을 쉽게 내려놓지 못하는군요.',
+  '조금만 더 잘하면 된다는 마음 때문에, 이미 충분한 것도 계속 고치고 있군요.',
+  '생각할 수 있는 길이 너무 많아서, 오히려 하나를 정하는 일이 늦어지는군요.',
+  '남들은 지나치는 작은 마음까지 담아두다 보니, 혼자 생각이 깊어지는군요.'];
+const MANY = ['하고 싶은 방향은 계속 생기는데, 시작한 것들을 한곳에 모으는 데 마음이 분산되는군요.',
+  '마음이 움직이는 속도가 빠른 만큼, 감정이 앞서고 나서 뒤늦게 지치는군요.',
+  '안정시키고 챙기려는 마음이 커서, 필요 없는 것까지 오래 붙들고 있는군요.',
+  '기준이 분명한 만큼, 마음에 들지 않는 것을 그냥 넘기기가 어렵군요.',
+  '생각하고 살피는 힘이 커서, 하나를 정하기 전에 너무 많은 경우를 보고 있군요.'];
+const FEW = ['새로운 방향을 잡아도 내 것이 맞는지 확인하느라 시작이 늦어지는군요.',
+  '마음속에는 생각이 있어도 그것을 밖으로 꺼내는 데 시간이 걸리는군요.',
+  '머릿속 생각은 많은데, 현실에서 붙잡아줄 기준이 약하게 느껴질 때가 있군요.',
+  '무엇을 남기고 무엇을 내려놓을지 정하는 순간에 마음이 오래 머무는군요.',
+  '생각을 충분히 정리할 틈 없이 움직이다 보니, 뒤늦게 마음이 따라오는군요.'];
+const STP = {'극신강':'내가 맞다고 느끼는 방향이 분명해서, 다른 가능성을 받아들이는 데 시간이 걸리는군요.',
+  '신강':'혼자서도 잘 버티는 힘이 있는데, 그래서 오히려 도움을 늦게 받아들이는군요.',
+  '중화':'상황에 맞춰 잘 움직이는 만큼, 어느 순간 내 마음보다 주변의 균형을 먼저 보는군요.',
+  '신약':'주변 분위기를 많이 받아들이는 편이라, 내 마음과 남의 마음이 섞일 때가 있군요.',
+  '극신약':'혼자 결정해야 하는 순간보다, 주변의 분위기와 관계가 안정될 때 마음이 더 편해지는군요.'};
+const TOPICS = [['재회',/재회|다시 만나|돌아올|연락 올|헤어진/,'그 질문, 사주에서 지나간 관계를 바라보는 흐름이 보여요. 다만 무엇 때문에 다시 마음이 움직였는지는 더 살펴봐야겠군요.'],
+  ['결혼',/결혼|배우자|혼인|상견례/,'그 질문, 사주에 관계에서 원하는 기준이 드러나네요. 다만 그 기준과 지금의 마음이 어디서 부딪히는지는 더 봐야 해요.'],
+  ['연애',/연애|사랑|남자친구|여자친구|남친|여친|그 사람|상대|썸|짝사랑|관계|만나는/,'그 질문, 사주에 관계의 패턴이 보여요. 다만 어디서 마음이 막히는지는 더 깊이 봐야겠군요.'],
+  ['직업',/이직|퇴사|회사|직장|취업|직업|승진|공무원|커리어|면접|일이/,'그 질문, 사주에 지금 일이 답답하게 느껴지는 패턴이 보여요. 다만 어디에서 힘이 막히는지는 더 깊게 봐야겠군요.'],
+  ['사업',/사업|창업|가게|장사|매출|동업/,'그 질문, 사주에 일을 벌이고 움직이는 방식이 보이는군요. 다만 지금 필요한 방향은 한 겹 더 안쪽을 봐야 해요.'],
+  ['돈',/돈|재물|재산|수입|월급|빚|저축|모으/,'그 질문, 사주에 돈을 대하고 움직이는 방식이 보여요. 다만 그대의 고민이 어디서 시작됐는지는 더 자세히 봐야겠군요.'],
+  ['가족',/부모|엄마|아빠|가족|자녀|아이|형제|시댁|남편|아내/,'그 질문, 사주에 가족 안에서 반복되는 역할이 보이는군요. 다만 왜 그 역할을 계속 맡게 되는지는 더 들여다봐야 해요.'],
+  ['건강',/건강|아프|병원|수술|몸|잠/,'그 질문, 사주에 생활 리듬과 긴장이 쌓이는 방식이 보이는군요. 다만 구체적인 생활의 흐름은 더 깊이 살펴봐야 해요.'],
+  ['방향',/진로|방향|앞으로|인생|무엇을 해야|적성|공부|시험/,'그 질문, 사주에 그대가 자꾸 망설이는 지점이 보여요. 다만 어느 쪽으로 마음이 막혀 있는지는 더 봐야겠군요.']];
+const TOPIC_ELSE = '그 질문, 사주에 그대가 자꾸 같은 자리에서 멈추는 이유가 보여요. 다만 그게 어디서 시작됐는지는 더 깊이 봐야겠군요.';
+const DOCS = {
+  terms:['이용약관','<h3>1. 서비스</h3><p>묘선당은 고객이 적어 준 출생 정보와 질문으로 사주 리포트(PDF)를 만들어 이메일로 보내는 서비스입니다.</p><h3>2. 주문과 결제</h3><p>주문은 주문서로 받고, 결제는 카카오페이 또는 계좌이체로 합니다. 입금이 확인되면 제작을 시작합니다.</p><h3>3. 전달</h3><p>입금 확인 후 24시간 이내에 적어 주신 이메일로 PDF를 보냅니다. 늦어질 것 같으면 기한 전에 먼저 알립니다.</p><h3>4. 리포트의 성격</h3><p>사주 해석은 참고용이며 오락·문화·자기성찰 목적입니다. 건강 진단, 투자·법률 판단을 대신하지 않으며 특정 사건의 발생을 단정하거나 보장하지 않습니다.</p><h3>5. 판매자</h3><p>스냅미디어(묘선당) · 대표 최인석 · 사업자등록번호 617-97-61877</p>'],
+  privacy:['개인정보처리방침','<h3>받는 정보</h3><p>주문서: 표지에 넣을 이름(닉네임 가능), 성별, 생년월일·달력, 태어난 시간, 태어난 지역, 질문, 이메일, 입금자 이름.</p><h3>쓰는 곳</h3><p>리포트 제작과 이메일 발송, 입금 확인에만 씁니다.</p><h3>보관과 삭제</h3><p>주문 정보는 Google 설문지·스프레드시트에 보관하고, 전달한 날부터 30일 뒤에 지웁니다. 입금이 없는 주문은 7일 뒤에 지웁니다. 요청하시면 바로 지웁니다.</p><h3>처리 위탁</h3><p>리포트 문장 작성 처리를 위해 Google(Gemini)에 사주 여덟 글자와 계산 결과, 질문만 보냅니다. 이름과 생년월일·출생시간 원문은 보내지 않습니다.</p><h3>무료 풀이</h3><p>이 화면의 무료 풀이는 기기 안에서만 계산하며 묘선당 쪽으로 전송되지 않습니다.</p><h3>문의</h3><p>카카오톡 채널 "묘선당"</p>'],
+  refund:['환불정책','<ul><li>PDF를 받기 전에는 언제든 취소할 수 있고 전액 환불해 드립니다.</li><li>리포트는 주문하신 분의 출생 정보로 따로 만드는 맞춤 제작물이라, 받으신 뒤에는 단순 변심 환불이 어렵습니다.</li><li>계산 오류가 있거나 보내 주신 질문이 빠졌다면 받은 날부터 7일 안에 알려 주세요. 고쳐서 다시 보내 드리거나 전액 환불해 드립니다.</li><li>약속한 기한(입금 확인 후 24시간)을 넘길 것 같으면 먼저 알려 드리며, 기다리기 어려우시면 전액 환불해 드립니다.</li></ul>']};
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let CUR = null;
+
+$('city').innerHTML = CITIES.map(([n, l]) => `<option value="${l}">${esc(n)}</option>`).join('') + '<option value="127">해외 또는 목록에 없음</option>';
+let CAL = 'S', SEX = '';
+function seg(id, set){ $(id).addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; set(b.dataset.v); [...$(id).children].forEach(x => x.classList.toggle('on', x === b)); }); }
+seg('cal', v => CAL = v); seg('sex', v => SEX = v);
+$('unk').addEventListener('change', () => { $('t').disabled = $('unk').checked; });
+
+function readIn(){
+  const name = $('nm').value.trim(), q = $('q').value.trim();
+  if (!name) throw new Error('당주가 부를 이름을 적어 주세요. 닉네임도 괜찮아요.');
+  if (!SEX) throw new Error('성별을 골라 주세요.');
+  const y = +$('y').value, mo = +$('mo').value, d = +$('d').value;
+  if (!(y >= 1900 && y <= 2050)) throw new Error('태어난 해를 네 자리로 적어 주세요. 예) 1990');
+  if (!(mo >= 1 && mo <= 12)) throw new Error('태어난 달을 1~12 사이로 적어 주세요.');
+  if (!(d >= 1 && d <= 31)) throw new Error('태어난 날을 1~31 사이로 적어 주세요.');
+  if (q.length < 4) throw new Error('당주에게 묻고 싶은 것을 한 문장으로 적어 주세요.');
+  const unk = $('unk').checked; const [hh, mi] = ($('t').value || '12:00').split(':').map(Number);
+  let s = {y, m:mo, d};
+  if (CAL !== 'S'){ try { s = lunarToSolar(y, mo, d, CAL === 'LL'); } catch(err){ throw new Error('음력 날짜를 다시 확인해 주세요. 윤달이 없는 달일 수 있어요.'); } }
+  else { const t = new Date(y, mo - 1, d); if (t.getMonth() !== mo - 1) throw new Error(`양력 ${y}년 ${mo}월 ${d}일은 없는 날짜예요.`); }
+  const sel = $('city');
+  return {name, sex:SEX, q, cal:CAL, y, mo, d, solar:s, unk, hh:unk ? 12 : hh, mi:unk ? 0 : mi, lon:parseFloat(sel.value), cityName:sel.options[sel.selectedIndex].text};
+}
+
+/* 계산: 스튜디오와 같은 설정(경도 보정 켬, 균시차 끔, 야자시 켬) */
+function reading(b){
+  const r = compute({y:b.solar.y, mo:b.solar.m, d:b.solar.d, hh:b.hh, mi:b.mi, lon:b.lon, unk:b.unk, uLon:true, uEot:false, uYaja:true, sex:b.sex === '여' ? 'F' : 'M'});
+  const pct = r.powerPct.map(Number), hi = pct.indexOf(Math.max(...pct)), lo = pct.indexOf(Math.min(...pct));
+  // 오행은 한쪽만 짚는다: 35% 이상 많은 기운, 10% 미만 적은 기운. 둘 다면 더 치우친 쪽
+  let oh = null, ohKey = null;
+  const over = pct[hi] - 35, under = 10 - pct[lo];
+  if (over >= 0 && (under <= 0 || over >= under)){ oh = MANY[hi]; ohKey = '많은' + OH[hi]; } else if (under > 0){ oh = FEW[lo]; ohKey = '적은' + OH[lo]; }
+  const t = TOPICS.find(([, re]) => re.test(b.q));
+  const age = new Date().getFullYear() - b.y;
+  // 고객별 말풍선을 고르는 값. 같은 사람은 늘 같은 문장, 다른 사람은 다른 문장(무작위 아님)
+  const keys = {'일간':GAN[r.dG], '오행':ohKey, '신강신약':r.strength, '주제':t ? t[0] : '방향', '성별':b.sex,
+    '나이대':age < 30 ? '20대' : age < 40 ? '30대' : age < 50 ? '40대' : '50대 이상', '띠':DDI[r.yJ], '시간모름':b.unk ? '모름' : '앎'};
+  return {dg:r.dG, gan:GAN[r.dG] + OH[GAN_OH[r.dG]], nick:NICK[r.dG], dm:DMP[r.dG], oh, st:STP[r.strength] || STP['중화'], topic:t ? t[2] : TOPIC_ELSE, keys};
+}
+
+/* 말풍선 웹툰 그리기: 콘티(TOON)는 ChatGPT(Thinking) 상의본 webtoon4.json */
+function line(id, V){   // {L:컷N} → 이 고객 값에 맞는 문장. 값이 없으면 빈 문자열(그 풍선은 뺀다)
+  const L = LINES[id]; if (!L || !V._keys) return '';
+  return L.v[V._keys[L.by]] || '';
+}
+function bubble(bb, i, V){
+  const raw = bb.text.replace(/\{L:([^}]+)\}/g, (m, id) => line(id, V));
+  if (!raw.trim()) return '';
+  const t = esc(raw).replace(/\{([^}]+)\}/g, (m, k) => V[k] != null ? esc(V[k]) : m);
+  return `<p class="b ${bb.type} ${bb.pos}" style="transition-delay:${(.25 + i * .45).toFixed(2)}s">${t}</p>`;
+}
+function panelHtml(c, V, k, eager){
+  const src = `dangju/v5/${c.img}.jpg`, ld = eager ? 'eager' : 'lazy';
+  const bs = [...c.bubbles];
+  if (c.sfx) bs.push({type:'sfx', pos:c.bubbles.some(x => x.pos === 'lower-right') ? 'lower-left' : 'lower-right', text:c.sfx});
+  if (c.size === 'split'){
+    const half = (list, extra) => `<figure class="p">${extra}<img src="${src}" alt="" loading="${ld}">${list.map((x, i) => bubble({...x, pos:x.type === 'sfx' ? 'lower-right' : i ? 'lower-left' : 'upper-left'}, i, V)).join('')}</figure>`;
+    return `<div class="split">${half(bs.slice(0, 1), '')}${half(bs.slice(1), '')}</div>`;
+  }
+  const side = (c.size === 'small' || c.size === 'small-closeup') && k % 2 ? ' r' : '';
+  return `<figure class="p ${c.size}${side}"><img src="${src}" alt="" loading="${ld}">${bs.map((x, i) => bubble(x, i, V)).join('')}</figure>`;
+}
+function toonHtml(list, V){
+  let k = 0;
+  return list.filter(c => !c.need || V[c.need]).map((c, i) => {
+    if (c.size === 'small' || c.size === 'small-closeup') k++;
+    return panelHtml(c, V, k, i < 2) + (c.size === 'full-bleed' ? '<div class="gapL"></div>' : '');
+  }).join('');
+}
+$('hook').innerHTML = toonHtml(TOON.hook, {}); watch();
+
+function render(){
+  const b = CUR, r = CUR.r;
+  // 긴 문장은 풍선 두 개로 나눈다(신강신약은 첫 쉼표, 질문 주제는 첫 문장에서)
+  const cut = (s, re) => { const m = s.match(re); return m ? [m[1], m[2]] : [s, '']; };
+  const [st1, st2] = cut(r.st, /^(.*?,)\s*(.*)$/), [tp1, tp2] = cut(r.topic, /^(.*?[.요])\s+(.*)$/);
+  const V = {_keys:r.keys, '신강신약1':st1, '신강신약2':st2, '질문주제1':tp1, '질문주제2':tp2, '이름':b.name, '일간':r.gan, '일간별명':r.nick, '일간문제':r.dm, '오행문제':r.oh, '신강신약문제':r.st, '질문':b.q, '질문주제문제':r.topic};
+  $('story').innerHTML = toonHtml(TOON.story, V);
+  $('payTitle').textContent = '방금까지는, 먼저 드러난 부분만 짚었습니다.';
+  $('goB').href = orderUrl('basic'); $('goP').href = orderUrl('premium');
+  watch();
+}
+
+function orderUrl(tier){
+  const b = CUR, two = n => String(n).padStart(2, '0'), p = new URLSearchParams({usp:'pp_url'});
+  p.set('entry.1425718858', PRODUCT[tier]); p.set('entry.143991645', b.name); p.set('entry.358440189', b.sex);
+  p.set('entry.1564947932', CALNAME[b.cal]); p.set('entry.1305139645', `${b.y}-${two(b.mo)}-${two(b.d)}`);
+  p.set('entry.445168086', b.unk ? '모름' : `${two(b.hh)}:${two(b.mi)}`);
+  if (b.cityName !== '해외 또는 목록에 없음') p.set('entry.1378085171', b.cityName);
+  p.set('entry.1643090871', b.q);
+  return FORM + '?' + p.toString();
+}
+
+/* 스크롤하면 컷이 하나씩 드러난다. 관찰 기능이 없으면 바로 다 보여 준다 */
+function watch(){
+  const els = document.querySelectorAll('.reveal:not(.in), .p:not(.in)');
+  if (!('IntersectionObserver' in window)){ els.forEach(e => e.classList.add('in')); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.15});
+  els.forEach(e => io.observe(e));
+}
+
+$('fm').addEventListener('submit', e => {
+  e.preventDefault(); $('e1').textContent = '';
+  try { const b = readIn(); b.r = reading(b); CUR = b; render(); }
+  catch(err){ $('e1').textContent = err.message || '계산 중 문제가 생겼어요. 입력을 다시 확인해 주세요.'; console.error(err); return; }
+  $('v-in').hidden = true; $('v-story').hidden = false; window.scrollTo({top:0});
+});
+$('again').addEventListener('click', () => { $('v-story').hidden = true; $('v-in').hidden = false; window.scrollTo({top:0}); });
+
+document.addEventListener('click', e => { const d = e.target.closest('[data-doc]'); if (!d) return; const [t, h] = DOCS[d.dataset.doc]; $('shT').textContent = t; $('shB').innerHTML = h; $('sheet').hidden = false; $('shX').focus(); });
+$('shX').addEventListener('click', () => $('sheet').hidden = true);
+$('sheet').addEventListener('click', e => { if (e.target.id === 'sheet') $('sheet').hidden = true; });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('sheet').hidden = true; });
+</script>
+</body></html>
