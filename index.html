@@ -140,8 +140,9 @@ footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0
           <button type="button" data-q="지금 회사를 계속 다니는 게 맞을까요?">일</button>
           <button type="button" data-q="저는 왜 같은 고민을 반복할까요?">나</button>
         </div>
+        <button class="btn line" type="button" id="pick" style="font-size:14px;font-weight:500;padding:11px">무엇을 물어야 할지 모르겠다면, 당주가 골라 드릴게요</button>
         <p class="err" id="e0" role="alert"></p>
-        <button class="btn gold" type="button" id="next">당주에게 이 질문 묻기</button>
+        <button class="btn gold" type="button" id="next">이 질문으로 내 사주 살펴보기</button>
         <p class="note">질문 칸에는 실명이나 연락처를 적지 말아 주세요.</p>
       </div>
       <!-- 2단계: 태어난 때 -->
@@ -181,7 +182,7 @@ footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0
       </div>
       <div class="plans">
         <div class="plan best"><h3>질문 하나의 답 <b>9,900원</b></h3><ul><li>BASIC · 핵심 사주 풀이</li><li>이 질문 1개 심층 답변</li><li>약 50쪽 PDF, 24시간 안에 이메일로</li></ul><a class="btn gold" id="goB" target="_blank" rel="noopener">이 질문의 답 받기</a></div>
-        <div class="plan"><h3>질문 셋과 열두 달 <b>29,900원</b></h3><ul><li>PREMIUM · 전체 흐름 + 12개월 달별 흐름</li><li>질문 최대 3개 심층 답변</li><li>약 200쪽 PDF</li></ul><a class="btn line" id="goP" target="_blank" rel="noopener">질문 셋까지 깊이 보기</a></div>
+        <div class="plan"><h3>질문 3개 + 1년 흐름 <b>29,900원</b></h3><ul><li>PREMIUM · 전체 흐름 + 12개월 달별 흐름</li><li>질문 최대 3개 심층 답변</li><li>약 200쪽 PDF</li></ul><a class="btn line" id="goP" target="_blank" rel="noopener">질문 셋까지 깊이 보기</a></div>
       </div>
       <p class="note">질문이 여러 개라면 PREMIUM에서 최대 3개까지 함께 볼 수 있어요.<br>주문서에 방금 적은 내용이 미리 채워져요. 이메일과 입금자명만 더 적으면 돼요.<br>입금 확인 후 24시간 안에 이메일로 보내 드려요.</p>
       <button class="btn line" type="button" id="again">다른 사주로 다시 보기</button>
@@ -1012,6 +1013,11 @@ $('share').addEventListener('click', async () => {
 let QSTART = false;
 $('q').addEventListener('input', () => { if (!QSTART){ QSTART = true; log('질문 시작'); } });
 $('chips').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('q').value = b.dataset.q; $('q').focus(); if (!QSTART){ QSTART = true; log('질문 시작'); } });
+$('pick').addEventListener('click', () => {   // 질문이 없는 손님: 예시 가운데 하나를 넣어 준다
+  const bs = [...$('chips').children], cur = $('q').value; let b;
+  do { b = bs[Math.floor(Math.random() * bs.length)]; } while (bs.length > 1 && b.dataset.q === cur);
+  b.click();
+});
 $('next').addEventListener('click', () => {
   const q = $('q').value.trim();
   if (q.length < 4){ $('e0').textContent = '당주에게 묻고 싶은 것을 한 문장으로 적어 주세요.'; return; }
