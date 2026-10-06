@@ -1,5 +1,5 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:type" content="website"><meta property="og:url" content="https://inseok1.github.io/myoseondang/"><meta property="og:title" content="묘선당 — 당주가 그대의 사주를 먼저 봐 드려요"><meta property="og:description" content="묘선당 당주가 그대의 사주에서 막힌 곳을 먼저 짚어 드려요. 이름과 태어난 때만 적으면 돼요."><meta property="og:image" content="https://inseok1.github.io/myoseondang/dangju/v5/h1.jpg"><meta name="twitter:card" content="summary_large_image"><style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>묘선당</title>
-<meta name="description" content="묘선당 당주가 그대의 사주에서 막힌 곳을 먼저 짚어 드려요. 이름과 태어난 때만 적으면 돼요.">
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:type" content="website"><meta property="og:url" content="https://inseok1.github.io/myoseondang/"><meta property="og:title" content="묘선당 | 그대의 질문부터"><meta property="og:description" content="사주보다 먼저, 지금 그대가 궁금한 것부터."><meta property="og:image" content="https://inseok1.github.io/myoseondang/dangju/v5/h1.jpg"><meta name="twitter:card" content="summary_large_image"><style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>묘선당</title>
+<meta name="description" content="사주보다 먼저, 지금 그대가 궁금한 것부터.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
@@ -87,6 +87,27 @@ textarea{min-height:84px;resize:vertical}
 .plan h3 b{font-family:"Noto Serif KR",serif;font-size:22px;letter-spacing:0;font-variant-numeric:tabular-nums}
 .plan ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:14px}
 .plan li:before{content:"— ";color:var(--gold)}
+/* 질문 먼저 받는 입력 두 단계 */
+.step{display:flex;flex-direction:column;gap:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.chips button:focus-visible,.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.asked{margin:0;padding:14px 16px;border-left:3px solid var(--gold);background:var(--panel);font-family:"Noto Serif KR",serif;font-size:15px}
+.asked small{display:block;margin-top:6px;font-family:"Noto Sans KR",sans-serif;font-size:13px;color:var(--muted)}
+/* 한 장 결과 카드와 잠긴 목차 */
+.mine{display:flex;flex-direction:column;gap:12px}
+.mine h2{margin:0;font-family:"Noto Serif KR",serif;font-size:19px;text-align:center}
+.mine canvas{display:block;width:100%;height:auto;border-radius:10px;background:var(--panel)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.two .btn{font-size:15px;padding:14px 8px}
+.seat{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--panel);display:flex;flex-direction:column;gap:10px}
+.seat p{margin:0}
+.seat .where{font-family:"Noto Serif KR",serif;font-size:17px;line-height:1.5}
+.seat .where b{color:var(--gold2)}
+.toc{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;counter-reset:n}
+.toc li{counter-increment:n;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;font-size:14.5px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.toc li:before{content:counter(n);color:var(--gold);font-family:"Noto Serif KR",serif;font-weight:700}
+.toc li:after{content:"리포트에서";font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;white-space:nowrap}
 .pay{display:flex;flex-direction:column;gap:12px}
 .pay h2{margin:0;font-family:"Noto Serif KR",serif;font-size:19px;text-align:center}
 
@@ -108,17 +129,34 @@ footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0
   <section id="v-in" style="display:flex;flex-direction:column;gap:24px">
     <div class="toon" id="hook"></div>
     <form id="fm" novalidate>
-      <h1 class="serif" style="margin:0;font-size:21px;text-align:center;text-wrap:balance">무엇이 걸리는지, 당주가 먼저 봐 드려요</h1>
-      <label class="f"><span>이름 (닉네임도 괜찮아요)</span><input id="nm" maxlength="12" autocomplete="nickname" placeholder="예) 지민"></label>
+      <!-- 1단계: 질문부터 받는다 -->
+      <div class="step" id="st1">
+        <h1 class="serif" style="margin:0;font-size:21px;text-align:center;text-wrap:balance">먼저, 그대가 궁금한 것부터 적어 주세요</h1>
+        <label class="f"><span>당주에게 묻고 싶은 것 한 가지</span><textarea id="q" maxlength="200" placeholder="예) 이 사람과의 관계를 계속 이어가도 될까요?"></textarea></label>
+        <div class="chips" id="chips" aria-label="질문 예시">
+          <button type="button" data-q="헤어진 그 사람을 다시 만나도 될까요?">재회</button>
+          <button type="button" data-q="지금 만나는 사람과 계속 가도 될까요?">연애</button>
+          <button type="button" data-q="돈을 버는데 왜 모이지 않을까요?">돈</button>
+          <button type="button" data-q="지금 회사를 계속 다니는 게 맞을까요?">일</button>
+          <button type="button" data-q="저는 왜 같은 고민을 반복할까요?">나</button>
+        </div>
+        <p class="err" id="e0" role="alert"></p>
+        <button class="btn gold" type="button" id="next">당주에게 이 질문 묻기</button>
+        <p class="note">질문 칸에는 실명이나 연락처를 적지 말아 주세요.</p>
+      </div>
+      <!-- 2단계: 태어난 때 -->
+      <div class="step" id="st2" hidden>
+      <p class="asked" id="asked"></p>
       <div class="f"><span>성별</span><div class="seg" id="sex"><button type="button" data-v="여">여</button><button type="button" data-v="남">남</button></div></div>
       <div class="f"><span>달력</span><div class="seg" id="cal"><button type="button" data-v="S" class="on">양력</button><button type="button" data-v="L">음력</button><button type="button" data-v="LL">음력 윤달</button></div></div>
       <div class="f"><span>생년월일</span><div class="row"><input id="y" inputmode="numeric" maxlength="4" placeholder="1990"><input id="mo" inputmode="numeric" maxlength="2" placeholder="월"><input id="d" inputmode="numeric" maxlength="2" placeholder="일"></div></div>
       <div class="f"><span>태어난 시간</span><div class="time"><input id="t" type="time" value="12:00"><label class="chk"><input type="checkbox" id="unk">모름</label></div></div>
       <label class="f"><span>태어난 지역</span><select id="city"></select></label>
-      <label class="f"><span>당주에게 묻고 싶은 것 한 가지</span><textarea id="q" maxlength="200" placeholder="예) 지금 만나는 사람과 계속 가도 될까요?"></textarea></label>
+      <label class="f"><span>당주가 부를 이름 (안 적어도 돼요)</span><input id="nm" maxlength="12" autocomplete="nickname" placeholder="예) 지민"></label>
       <p class="err" id="e1" role="alert"></p>
       <button class="btn gold" type="submit">문 두드리기</button>
       <p class="note">이름과 태어난 달·날·시간·지역은 이 화면 안에서만 쓰이고 어디로도 보내지 않아요. 태어난 해·성별·질문만 이름 없이 기록해 더 나은 풀이를 만드는 데 써요.</p>
+      </div>
     </form>
   </section>
 
@@ -126,12 +164,24 @@ footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0
   <section id="v-story" hidden>
     <div class="toon" id="story"></div>
     <div class="gapL"></div>
+    <!-- 한 장 결과 카드: 이름·생년월일 없이 유형과 질문 자리만 담는다 -->
+    <div class="mine reveal" id="mine">
+      <h2>그대의 한 장</h2>
+      <canvas id="cv" width="1080" height="1350" role="img" aria-label="그대의 유형과 질문이 걸린 자리를 담은 카드"></canvas>
+      <div class="two"><button class="btn gold" type="button" id="save">카드 저장하기</button><button class="btn line" type="button" id="share">내 결과 보내기</button></div>
+      <p class="note" id="shMsg" role="status">카드에는 이름과 생년월일이 들어가지 않아요.</p>
+    </div>
+    <div class="gapL"></div>
     <div class="pay reveal" id="pay">
       <h2 id="payTitle">방금까지는, 먼저 드러난 부분만 짚었습니다.</h2>
-      <p class="note" style="font-size:14px;color:var(--fg)">이제 그대의 사주와 질문을 자세히 풀어 볼 차례예요.</p>
+      <div class="seat">
+        <p class="where" id="seatLine"></p>
+        <p class="note" style="text-align:left;font-size:13.5px">리포트는 이 질문을 따로 떼어 이렇게 풉니다.</p>
+        <ol class="toc" id="toc"></ol>
+      </div>
       <div class="plans">
-        <div class="plan"><h3>BASIC <b>9,900원</b></h3><ul><li>핵심 사주 풀이</li><li>질문 1개 심층 답변</li><li>약 50쪽 PDF</li></ul><a class="btn line" id="goB" target="_blank" rel="noopener">BASIC으로 시작하기</a></div>
-        <div class="plan best"><h3>PREMIUM <b>29,900원</b></h3><ul><li>전체 흐름 + 12개월 달별 흐름</li><li>질문 최대 3개 심층 답변</li><li>약 200쪽 PDF</li></ul><a class="btn gold" id="goP" target="_blank" rel="noopener">PREMIUM으로 시작하기</a></div>
+        <div class="plan best"><h3>질문 하나의 답 <b>9,900원</b></h3><ul><li>BASIC · 핵심 사주 풀이</li><li>이 질문 1개 심층 답변</li><li>약 50쪽 PDF, 24시간 안에 이메일로</li></ul><a class="btn gold" id="goB" target="_blank" rel="noopener">이 질문의 답 받기</a></div>
+        <div class="plan"><h3>질문 셋과 열두 달 <b>29,900원</b></h3><ul><li>PREMIUM · 전체 흐름 + 12개월 달별 흐름</li><li>질문 최대 3개 심층 답변</li><li>약 200쪽 PDF</li></ul><a class="btn line" id="goP" target="_blank" rel="noopener">질문 셋까지 깊이 보기</a></div>
       </div>
       <p class="note">질문이 여러 개라면 PREMIUM에서 최대 3개까지 함께 볼 수 있어요.<br>주문서에 방금 적은 내용이 미리 채워져요. 이메일과 입금자명만 더 적으면 돼요.<br>입금 확인 후 24시간 안에 이메일로 보내 드려요.</p>
       <button class="btn line" type="button" id="again">다른 사주로 다시 보기</button>
@@ -767,6 +817,8 @@ function log(kind, b){
     fetch(LOG, {method:'POST', mode:'no-cors', body:new URLSearchParams({'entry.1433921101': row})}).catch(() => {});
   } catch(e){}
 }
+const CARD = {"type": [{"name": "곧은 나무", "line": "스스로 길을 여는데, 도움 청하는 건 끝까지 미루는군요."}, {"name": "휘는 새순", "line": "맞춰주는 데 능한데, 싫은 건 말없이 쌓아두는군요."}, {"name": "한낮의 불", "line": "분위기는 살리는데, 서운한 건 혼자 삼키는군요."}, {"name": "오래 타는 불", "line": "조용히 오래 버티는데, 선 넘으면 마음을 닫는군요."}, {"name": "큰 산", "line": "남의 짐까지 들어주는데, 내 피곤함은 티 안 내는군요."}, {"name": "따뜻한 흙", "line": "작은 것까지 챙기는데, 거절은 참 어려운 사람이군요."}, {"name": "단단한 쇠", "line": "할 말은 바로 하는데, 상처받으면 혼자 오래 기억하는군요."}, {"name": "빛나는 결", "line": "사람 보는 눈은 까다로운데, 한번 꽂히면 꽤 깊이 가는군요."}, {"name": "깊은 물", "line": "넓게 받아주는데, 속마음은 끝까지 혼자 품는군요."}, {"name": "잔비", "line": "조용히 눈치채는데, 정작 내 서운함은 말하지 않는군요."}], "seat": {"재회": {"name": "다시 만나는 자리", "line": "그 사람보다, 그대가 관계를 끝내는 방식과 더 깊게 이어져 있어요.", "toc": ["왜 그 사람만 유독 정리가 안 되는가", "그 관계에서 그대가 끝까지 붙잡는 것은 무엇인가", "다시 이어갈 때 그대가 먼저 확인할 것은 무엇인가", "그대가 직접 점검할 관계의 선택 3가지"]}, "결혼": {"name": "인연의 자리", "line": "상대보다, 그대가 끝내 양보하지 못하는 기준과 더 깊게 이어져 있어요.", "toc": ["그대가 결혼에서 쉽게 넘기지 못하는 조건은 무엇인가", "마음보다 현실을 볼 때 먼저 따지는 것은 무엇인가", "상대에게 기대고 싶은 부분과 지키고 싶은 선은 무엇인가", "그대가 직접 확인할 결혼의 기준 3가지"]}, "연애": {"name": "마음의 자리", "line": "상대의 마음보다, 그대가 서운할 때 하는 행동과 더 깊게 이어져 있어요.", "toc": ["그대가 좋아할수록 더 자주 하는 행동은 무엇인가", "서운해도 먼저 말하지 않는 이유는 무엇인가", "연애에서 그대가 원하는 거리와 표현은 어느 쪽인가", "그대가 직접 바꿔볼 연애 습관 3가지"]}, "직업": {"name": "일의 자리", "line": "회사보다, 그대가 일에서 인정받고 싶은 지점과 더 깊게 이어져 있어요.", "toc": ["그대가 일을 잘하면서도 지치기 쉬운 지점은 어디인가", "일할 때 인정받고 싶은 능력은 무엇인가", "안정과 도전 사이에서 그대가 자주 택하는 쪽은 어디인가", "그대가 직접 점검할 일의 선택 3가지"]}, "사업": {"name": "확장의 자리", "line": "기회보다, 그대가 일을 벌이고 맡기는 방식과 더 깊게 이어져 있어요.", "toc": ["혼자 결정할 때와 사람을 쓸 때 무엇이 달라지는가", "기회가 와도 그대가 쉽게 놓지 못하는 기준은 무엇인가", "돈보다 시간과 사람에서 먼저 생기는 부담은 무엇인가", "그대가 직접 정리할 사업의 우선순위 3가지"]}, "돈": {"name": "재물의 자리", "line": "수입보다, 돈이 생겼을 때 그대가 먼저 하는 선택과 더 깊게 이어져 있어요.", "toc": ["돈이 생기면 먼저 쓰는 곳과 아끼는 곳은 어디인가", "수입보다 그대가 더 신경 쓰는 돈의 기준은 무엇인가", "사람 때문에 생기는 지출에서 그대는 어디까지 감당하는가", "그대가 직접 정리할 돈의 습관 3가지"]}, "가족": {"name": "가족의 자리", "line": "가족보다, 그 안에서 그대가 맡아 온 역할과 더 깊게 이어져 있어요.", "toc": ["가족에게는 왜 내 힘든 일을 늦게 말하게 되는가", "챙겨주는 역할과 챙김받고 싶은 마음은 어디서 갈리는가", "가족 사이에서 그대가 끝까지 지키려는 선은 무엇인가", "그대가 직접 점검할 가족의 대화 3가지"]}, "건강": {"name": "생활의 자리", "line": "몸보다, 쉬어야 할 때도 놓지 못하는 생활의 버릇과 더 깊게 이어져 있어요.", "toc": ["몸이 보내는 신호보다 먼저 무시하는 생활 습관은 무엇인가", "쉬어야 할 때도 그대가 계속 붙잡는 일은 무엇인가", "스트레스를 풀기보다 쌓아두게 되는 생활 패턴은 무엇인가", "그대가 직접 바꿔볼 생활 습관 3가지"]}, "방향": {"name": "선택의 자리", "line": "길보다, 그대가 선택 앞에서 끝까지 붙드는 기준과 더 깊게 이어져 있어요.", "toc": ["선택지가 많을수록 그대가 끝까지 고민하는 기준은 무엇인가", "남의 기대와 내 기준이 부딪힐 때 무엇을 먼저 보는가", "새로 시작할 때 그대가 가장 먼저 확인하는 것은 무엇인가", "그대가 직접 정리할 선택 기준 3가지"]}}, "share": "나 이 질문으로 사주 봤는데, 결과가 은근 재밌어. 너도 한번 해봐."};   // 유형 이름·카드 한 줄(일간 10종), 질문 자리·잠긴 목차(주제 9종): ChatGPT(Thinking) 상의본 card5.json
+const SHARE_URL = 'https://inseok1.github.io/myoseondang/?s=share';
 const PRODUCT = {basic:'BASIC 9,900원 — 간단한 사주풀이 + 질문 1개', premium:'PREMIUM 29,900원 — 전체 흐름 + 12개월 달별 흐름 + 질문 최대 3개'};
 const CALNAME = {S:'양력', L:'음력 (평달)', LL:'음력 (윤달)'};
 /* 당주 대사 문구: ChatGPT(Thinking) 상의본 gpt_dangju_answer.txt. 반복되는 패턴만 말하고 사건 예언·겁주기는 하지 않는다 */
@@ -821,8 +873,7 @@ seg('cal', v => CAL = v); seg('sex', v => SEX = v);
 $('unk').addEventListener('change', () => { $('t').disabled = $('unk').checked; });
 
 function readIn(){
-  const name = $('nm').value.trim(), q = $('q').value.trim();
-  if (!name) throw new Error('당주가 부를 이름을 적어 주세요. 닉네임도 괜찮아요.');
+  const name = $('nm').value.trim() || '그대', q = $('q').value.trim();
   if (!SEX) throw new Error('성별을 골라 주세요.');
   const y = +$('y').value, mo = +$('mo').value, d = +$('d').value;
   if (!(y >= 1900 && y <= 2050)) throw new Error('태어난 해를 네 자리로 적어 주세요. 예) 1990');
@@ -850,7 +901,7 @@ function reading(b){
   // 고객별 말풍선을 고르는 값. 같은 사람은 늘 같은 문장, 다른 사람은 다른 문장(무작위 아님)
   const keys = {'일간':GAN[r.dG], '오행':ohKey, '신강신약':r.strength, '주제':t ? t[0] : '방향', '성별':b.sex,
     '나이대':age < 30 ? '20대' : age < 40 ? '30대' : age < 50 ? '40대' : '50대 이상', '띠':DDI[r.yJ], '시간모름':b.unk ? '모름' : '앎'};
-  return {dg:r.dG, gan:GAN[r.dG] + OH[GAN_OH[r.dG]], nick:NICK[r.dG], dm:DMP[r.dG], oh, st:STP[r.strength] || STP['중화'], topic:t ? t[2] : TOPIC_ELSE, keys};
+  return {dg:r.dG, gan:GAN[r.dG] + OH[GAN_OH[r.dG]], nick:NICK[r.dG], dm:DMP[r.dG], oh, st:STP[r.strength] || STP['중화'], topic:t ? t[2] : TOPIC_ELSE, keys, type:CARD.type[r.dG], seat:CARD.seat[t ? t[0] : '방향']};
 }
 
 /* 말풍선 웹툰 그리기: 콘티(TOON)는 ChatGPT(Thinking) 상의본 webtoon4.json */
@@ -890,21 +941,84 @@ function render(){
   const cut = (s, re) => { const m = s.match(re); return m ? [m[1], m[2]] : [s, '']; };
   const [st1, st2] = cut(r.st, /^(.*?,)\s*(.*)$/), [tp1, tp2] = cut(r.topic, /^(.*?[.요])\s+(.*)$/);
   const V = {_keys:r.keys, '신강신약1':st1, '신강신약2':st2, '질문주제1':tp1, '질문주제2':tp2, '이름':b.name, '일간':r.gan, '일간별명':r.nick, '일간문제':r.dm, '오행문제':r.oh, '신강신약문제':r.st, '질문':b.q, '질문주제문제':r.topic};
-  $('story').innerHTML = toonHtml(TOON.story, V);
+  $('story').innerHTML = toonHtml(TOON.story, V).split('그대님').join('그대');   // 이름을 안 적은 손님
   $('payTitle').textContent = '방금까지는, 먼저 드러난 부분만 짚었습니다.';
   $('goB').href = orderUrl('basic'); $('goP').href = orderUrl('premium');
+  $('seatLine').innerHTML = `그대의 질문은 <b>${esc(r.seat.name)}</b>에 걸려 있습니다.<br>${esc(r.seat.line)}`;
+  $('toc').innerHTML = r.seat.toc.map(x => `<li><span>${esc(x)}</span></li>`).join('');
+  $('shMsg').textContent = '카드에는 이름과 생년월일이 들어가지 않아요.';
+  drawCard();
   watch();
 }
 
 function orderUrl(tier){
   const b = CUR, two = n => String(n).padStart(2, '0'), p = new URLSearchParams({usp:'pp_url'});
-  p.set('entry.1425718858', PRODUCT[tier]); p.set('entry.143991645', b.name); p.set('entry.358440189', b.sex);
+  p.set('entry.1425718858', PRODUCT[tier]); if (b.name !== '그대') p.set('entry.143991645', b.name); p.set('entry.358440189', b.sex);
   p.set('entry.1564947932', CALNAME[b.cal]); p.set('entry.1305139645', `${b.y}-${two(b.mo)}-${two(b.d)}`);
   p.set('entry.445168086', b.unk ? '모름' : `${two(b.hh)}:${two(b.mi)}`);
   if (b.cityName !== '해외 또는 목록에 없음') p.set('entry.1378085171', b.cityName);
   p.set('entry.1643090871', b.q);
   return FORM + '?' + p.toString();
 }
+
+/* 한 장 결과 카드(1080×1350): 유형 이름, 카드 한 줄, 질문 자리, 주소만 그린다 */
+function wrapText(c, text, maxW){
+  const out = []; let cur = '';
+  for (const w of text.split(' ')){ const t = cur ? cur + ' ' + w : w; if (cur && c.measureText(t).width > maxW){ out.push(cur); cur = w; } else cur = t; }
+  if (cur) out.push(cur); return out;
+}
+async function drawCard(){
+  const r = CUR.r, cv = $('cv'), c = cv.getContext('2d'), W = 1080, H = 1350;
+  const SERIF = '"Noto Serif KR","Nanum Myeongjo",serif', SANS = '"Noto Sans KR",system-ui,sans-serif';
+  try { await Promise.all([document.fonts.load('700 100px "Noto Serif KR"', r.type.name + r.type.line + r.seat.name), document.fonts.load('500 34px "Noto Sans KR"', '묘선당그대의유형질문이걸린자리나도보기')]); } catch(e){}
+  if (CUR.r !== r) return;
+  c.fillStyle = '#121019'; c.fillRect(0, 0, W, H);
+  c.strokeStyle = '#c8a86b'; c.lineWidth = 2; c.strokeRect(44, 44, W - 88, H - 88);
+  c.strokeStyle = '#2e2839'; c.strokeRect(60, 60, W - 120, H - 120);
+  c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+  c.fillStyle = '#a59db0'; c.font = `500 32px ${SANS}`; c.fillText('묘 선 당', W / 2, 160);
+  let fs = 86; c.font = `700 ${fs}px ${SERIF}`;
+  while (c.measureText(r.type.name).width > 820 && fs > 56){ fs -= 4; c.font = `700 ${fs}px ${SERIF}`; }
+  c.fillStyle = '#e2c891'; c.fillText(r.type.name, W / 2, 330);
+  c.fillStyle = '#c8a86b'; c.fillRect(W / 2 - 40, 392, 80, 2);
+  c.fillStyle = '#ece6f1'; c.font = `600 60px ${SERIF}`;
+  const ls = r.type.line.split(', ').map((seg, i, a) => i < a.length - 1 ? seg + ',' : seg).flatMap(seg => wrapText(c, seg, 840));
+  let y = 660 - (ls.length - 1) * 48;
+  ls.forEach(l => { c.fillText(l, W / 2, y); y += 96; });
+  c.fillStyle = '#a59db0'; c.font = `500 32px ${SANS}`; c.fillText('그대의 질문이 걸린 자리', W / 2, 1010);
+  c.fillStyle = '#e2c891'; c.font = `700 62px ${SERIF}`; c.fillText(r.seat.name, W / 2, 1098);
+  c.fillStyle = '#a59db0'; c.font = `500 30px ${SANS}`; c.fillText('나도 보기 · inseok1.github.io/myoseondang', W / 2, 1238);
+}
+$('save').addEventListener('click', () => {
+  log('카드 저장', CUR);
+  $('cv').toBlob(blob => {
+    if (!blob){ $('shMsg').textContent = '카드를 길게 눌러 저장해 주세요.'; return; }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '묘선당_내카드.png';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    $('shMsg').textContent = '저장했어요. 안 보이면 카드를 길게 눌러 저장해 주세요.';
+  }, 'image/png');
+});
+$('share').addEventListener('click', async () => {
+  log('공유 누름', CUR);
+  const data = {title:'묘선당', text:CARD.share, url:SHARE_URL};
+  try {
+    if (navigator.share){ await navigator.share(data); return; }
+    await navigator.clipboard.writeText(CARD.share + ' ' + SHARE_URL);
+    $('shMsg').textContent = '보낼 글과 주소를 복사했어요. 카톡에 붙여 넣어 주세요.';
+  } catch(e){ if (e && e.name === 'AbortError') return; $('shMsg').textContent = '주소를 직접 복사해 주세요: ' + SHARE_URL; }
+});
+
+/* 질문 먼저: 1단계에서 질문을 받고 2단계에서 태어난 때를 받는다 */
+let QSTART = false;
+$('q').addEventListener('input', () => { if (!QSTART){ QSTART = true; log('질문 시작'); } });
+$('chips').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('q').value = b.dataset.q; $('q').focus(); if (!QSTART){ QSTART = true; log('질문 시작'); } });
+$('next').addEventListener('click', () => {
+  const q = $('q').value.trim();
+  if (q.length < 4){ $('e0').textContent = '당주에게 묻고 싶은 것을 한 문장으로 적어 주세요.'; return; }
+  $('e0').textContent = ''; log('질문 완료');
+  $('asked').innerHTML = `“${esc(q)}”<small>질문은 받았어요. 이제 태어난 때를 알려 주세요.</small>`;
+  $('st1').hidden = true; $('st2').hidden = false; $('asked').scrollIntoView({block:'start'});
+});
 
 /* 스크롤하면 컷이 하나씩 드러난다. 관찰 기능이 없으면 바로 다 보여 준다 */
 function watch(){
@@ -922,7 +1036,7 @@ $('fm').addEventListener('submit', e => {
 });
 $('goB').addEventListener('click', () => log('BASIC 누름', CUR)); $('goP').addEventListener('click', () => log('PREMIUM 누름', CUR));
 log('방문');
-$('again').addEventListener('click', () => { $('v-story').hidden = true; $('v-in').hidden = false; window.scrollTo({top:0}); });
+$('again').addEventListener('click', () => { $('v-story').hidden = true; $('v-in').hidden = false; $('st2').hidden = true; $('st1').hidden = false; window.scrollTo({top:0}); });
 
 document.addEventListener('click', e => { const d = e.target.closest('[data-doc]'); if (!d) return; const [t, h] = DOCS[d.dataset.doc]; $('shT').textContent = t; $('shB').innerHTML = h; $('sheet').hidden = false; $('shX').focus(); });
 $('shX').addEventListener('click', () => $('sheet').hidden = true);
