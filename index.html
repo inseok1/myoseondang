@@ -91,6 +91,7 @@ textarea{min-height:84px;resize:vertical}
 .step{display:flex;flex-direction:column;gap:16px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips button{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.chips button.on{color:var(--bg);background:var(--gold2);border-color:var(--gold2);font-weight:700}
 .chips button:focus-visible,.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .asked{margin:0;padding:14px 16px;border-left:3px solid var(--gold);background:var(--panel);font-family:"Noto Serif KR",serif;font-size:15px}
 .asked small{display:block;margin-top:6px;font-family:"Noto Sans KR",sans-serif;font-size:13px;color:var(--muted)}
@@ -144,6 +145,26 @@ footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0
         <p class="err" id="e0" role="alert"></p>
         <button class="btn gold" type="button" id="next">이 질문으로 내 사주 살펴보기</button>
         <p class="note">질문 칸에는 실명이나 연락처를 적지 말아 주세요.</p>
+      </div>
+      <!-- 1.5단계: 사전 질문(전부 선택). 2026-10-07 지시서: 손님의 현실을 먼저 듣고 그 문맥으로 사주를 푼다 -->
+      <div class="step" id="st1b" hidden>
+        <h1 class="serif" style="margin:0;font-size:21px;text-align:center;text-wrap:balance">먼저 간단히 알려 주세요</h1>
+        <p class="note">적어 주신 만큼 그대의 사정에 맞춰 풀이해요. 전부 선택이라 건너뛰어도 돼요.<br>이 내용은 주문서로만 넘어가고, 주문하지 않으면 어디에도 저장되지 않아요.</p>
+        <label class="f"><span>지금 하는 일</span><select id="pJob"><option>선택 안 함</option><option>직장인</option><option>공무원</option><option>전문직</option><option>자영업</option><option>사업자</option><option>프리랜서</option><option>계약직</option><option>구직 중</option><option>은퇴</option><option>주부</option><option>학생</option><option>기타</option></select></label>
+        <label class="f" id="pJobW" hidden><span>구체적으로 어떤 일인가요</span><input id="pJobD" maxlength="60" placeholder="예) 식당 운영, 건설업, 회사원"></label>
+        <label class="f"><span>연애·결혼 상태</span><select id="pRel"><option>선택 안 함</option><option>미혼</option><option>연애 중</option><option>장기연애</option><option>기혼</option><option>별거</option><option>이혼</option><option>재혼</option><option>사별</option><option>기타</option></select></label>
+        <div class="f"><span>최근 1~3년 사이 크게 바뀐 일 (여러 개 눌러도 돼요)</span><div class="chips" id="pEvt"><button type="button" data-v="직업 변화">직업 변화</button><button type="button" data-v="사업 시작·종료">사업 시작·종료</button><button type="button" data-v="경제적 변화">경제적 변화</button><button type="button" data-v="이사">이사</button><button type="button" data-v="결혼">결혼</button><button type="button" data-v="이혼·별거">이혼·별거</button><button type="button" data-v="연애 시작·종료">연애 시작·종료</button><button type="button" data-v="가족 문제">가족 문제</button><button type="button" data-v="건강 문제">건강 문제</button><button type="button" data-v="큰 수술·치료">큰 수술·치료</button><button type="button" data-v="사고">사고</button><button type="button" data-v="소송·법적 문제">소송·법적 문제</button><button type="button" data-v="자녀 문제">자녀 문제</button><button type="button" data-v="부모 문제">부모 문제</button></div></div>
+        <label class="f" id="pEvtW" hidden><span>무슨 일이 있었는지 편하게 적어 주세요</span><textarea id="pEvtD" maxlength="300" style="min-height:64px"></textarea></label>
+        <label class="f"><span>건강에서 고려할 상황</span><select id="pHealth"><option>선택 안 함</option><option>특별한 문제 없음</option><option>만성질환</option><option>수술 후 회복</option><option>치료 중</option><option>입원 중</option><option>중증질환</option><option>암 치료 중</option><option>기타</option><option>답변하고 싶지 않음</option></select></label>
+        <label class="f" id="pHealthW" hidden><span>지금 상황 (병명, 병기, 수술, 전이 부위, 치료 상황 등. 적어 주신 글자 그대로 써요)</span><textarea id="pHealthD" maxlength="300" style="min-height:64px" placeholder="예) 위암 4기, 위 절제 수술 후 간 전이"></textarea></label>
+        <label class="f"><span>특히 신경 쓰이는 가족</span><select id="pFam"><option>선택 안 함</option><option>없음</option><option>배우자</option><option>자녀</option><option>부모</option><option>형제자매</option><option>기타</option></select></label>
+        <label class="f" id="pFamW" hidden><span>걱정되거나 궁금한 점</span><input id="pFamD" maxlength="120" placeholder="예) 아내의 건강이 걱정돼요"></label>
+        <label class="f"><span>지금 재정 상황</span><select id="pFin"><option>선택 안 함</option><option>안정적</option><option>보통</option><option>수입이 불안정</option><option>지출이 많음</option><option>부채가 있음</option><option>사업자금이 필요함</option><option>투자 중</option><option>은퇴 후 생활비가 걱정됨</option><option>기타</option></select></label>
+        <label class="f"><span>이사·거주지 이동</span><select id="pMove"><option>선택 안 함</option><option>전혀 없음</option><option>고민 중</option><option>구체적으로 계획 중</option><option>계약 준비 중</option><option>이미 결정</option><option>기타</option></select></label>
+        <label class="f" id="pMoveW" hidden><span>이사를 생각하는 이유</span><input id="pMoveD" maxlength="120" placeholder="예) 병원과 가까운 곳으로"></label>
+        <label class="f"><span>이 질문을 하게 된 배경</span><textarea id="pBg" maxlength="300" style="min-height:64px" placeholder="짧게 적어도 돼요"></textarea></label>
+        <button class="btn gold" type="button" id="next2">다음</button>
+        <button class="btn line" type="button" id="skip2" style="font-size:14px;font-weight:500;padding:11px">건너뛰기</button>
       </div>
       <!-- 2단계: 태어난 때 -->
       <div class="step" id="st2" hidden>
@@ -958,6 +979,7 @@ function orderUrl(tier){
   p.set('entry.445168086', b.unk ? '모름' : `${two(b.hh)}:${two(b.mi)}`);
   if (b.cityName !== '해외 또는 목록에 없음') p.set('entry.1378085171', b.cityName);
   p.set('entry.1643090871', b.q);
+  const pf = profileText(); if (pf) p.set('entry.2123051714', pf);
   return FORM + '?' + p.toString();
 }
 
@@ -1022,8 +1044,31 @@ $('next').addEventListener('click', () => {
   if (q.length < 4){ $('e0').textContent = '당주에게 묻고 싶은 것을 한 문장으로 적어 주세요.'; return; }
   $('e0').textContent = ''; log('질문 완료');
   $('asked').innerHTML = `“${esc(q)}”<small>질문은 받았어요. 이제 태어난 때를 알려 주세요.</small>`;
-  $('st1').hidden = true; $('st2').hidden = false; $('asked').scrollIntoView({block:'start'});
+  $('st1').hidden = true; $('st1b').hidden = false; $('st1b').scrollIntoView({block:'start'});
 });
+/* 사전 질문: 고른 것에 따라 덧붙여 묻는 칸을 연다. 주문서의 '지금 상황' 칸으로만 넘긴다(익명 기록에는 넣지 않는다) */
+const NONE = ['선택 안 함', '없음', '전혀 없음', '특별한 문제 없음', '답변하고 싶지 않음'];
+const val = id => NONE.includes($(id).value) ? '' : $(id).value;
+[['pJob','pJobW'],['pHealth','pHealthW'],['pFam','pFamW'],['pMove','pMoveW']].forEach(([a, w]) => $(a).addEventListener('change', () => { $(w).hidden = !val(a); }));
+$('pEvt').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; b.classList.toggle('on'); $('pEvtW').hidden = !$('pEvt').querySelector('.on'); });
+function profileText(){
+  const tx = id => $(id).value.trim(), out = [], add = (k, a, d) => { const v = [a, d].filter(Boolean).join(' — '); if (v) out.push('[' + k + '] ' + v); };
+  add('하는 일', val('pJob'), val('pJob') && tx('pJobD'));
+  add('연애·결혼', val('pRel'), '');
+  const ev = [...$('pEvt').querySelectorAll('.on')].map(b => b.dataset.v).join(', ');
+  add('최근 큰 변화', ev, ev && tx('pEvtD'));
+  add('건강', val('pHealth'), val('pHealth') && tx('pHealthD'));
+  add('가족', val('pFam'), val('pFam') && tx('pFamD'));
+  add('재정', val('pFin'), '');
+  add('이사', val('pMove'), val('pMove') && tx('pMoveD'));
+  add('질문1 배경', tx('pBg'), '');
+  return out.join(String.fromCharCode(10));
+}
+const toBirth = kind => { log(kind); $('st1b').hidden = true; $('st2').hidden = false; $('asked').scrollIntoView({block:'start'}); };
+$('next2').addEventListener('click', () => toBirth('사전 질문 완료'));
+$('skip2').addEventListener('click', () => toBirth('사전 질문 건너뜀'));
+/* 태어난 시간 칸은 누르면 바로 시계가 뜨게 한다(지원하지 않는 브라우저에서는 그냥 입력) */
+$('t').addEventListener('click', () => { try { $('t').showPicker(); } catch(e){} });
 
 /* 스크롤하면 컷이 하나씩 드러난다. 관찰 기능이 없으면 바로 다 보여 준다 */
 function watch(){
@@ -1041,7 +1086,7 @@ $('fm').addEventListener('submit', e => {
 });
 $('goB').addEventListener('click', () => log('BASIC 누름', CUR)); $('goP').addEventListener('click', () => log('PREMIUM 누름', CUR));
 log('방문');
-$('again').addEventListener('click', () => { $('v-story').hidden = true; $('v-in').hidden = false; $('st2').hidden = true; $('st1').hidden = false; window.scrollTo({top:0}); });
+$('again').addEventListener('click', () => { $('v-story').hidden = true; $('v-in').hidden = false; $('st2').hidden = true; $('st1b').hidden = true; $('st1').hidden = false; window.scrollTo({top:0}); });
 
 document.addEventListener('click', e => { const d = e.target.closest('[data-doc]'); if (!d) return; const [t, h] = DOCS[d.dataset.doc]; $('shT').textContent = t; $('shB').innerHTML = h; $('sheet').hidden = false; $('shX').focus(); });
 $('shX').addEventListener('click', () => $('sheet').hidden = true);
