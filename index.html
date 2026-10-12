@@ -132,6 +132,7 @@ footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0
     <form id="fm" novalidate>
       <!-- 1단계: 질문부터 받는다 -->
       <div class="step" id="st1">
+        <div id="tarot" hidden style="flex-direction:column;gap:10px;border:1px solid var(--gold);border-radius:14px;padding:14px;background:var(--panel)"></div>
         <h1 class="serif" style="margin:0;font-size:21px;text-align:center;text-wrap:balance">먼저, 그대가 궁금한 것부터 적어 주세요</h1>
         <label class="f"><span>당주에게 묻고 싶은 것 한 가지</span><textarea id="q" maxlength="200" placeholder="예) 이 사람과의 관계를 계속 이어가도 될까요?"></textarea></label>
         <div class="chips" id="chips" aria-label="질문 예시">
@@ -832,6 +833,12 @@ const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54
    한 줄 형식: 종류|태어난 해|성별|달력|시간 여부|들어온 경로|질문 */
 const LOG = 'https://docs.google.com/forms/d/e/1FAIpQLSfqbnJPIycDBdZuXx8ierUjKeJ041Qg_RR660HnrEHckc0psg/formResponse';
 const SRC = (() => { try { return (new URLSearchParams(location.search).get('s') || (document.referrer ? new URL(document.referrer).hostname : '직접')).slice(0, 30); } catch(e){ return '직접'; } })();
+/* 타로 입구(tarot.html)에서 넘어온 손님: 고른 문과 뽑은 석 장이 주소로 온다(?d=문&tc=번호.번호.번호). 값이 없거나 이상하면 평소 화면 그대로 */
+const TNAME = ['바보','마법사','여사제','여황제','황제','교황','연인','전차','힘','은둔자','운명의 수레바퀴','정의','매달린 사람','끝맺음','절제','악마','탑','별','달','태양','심판','세계'];
+const TDOOR = {re:['재회','헤어진 그 사람과 다시 이어질 수 있을까요?'], love:['연애','지금 만나는 사람과 계속 가도 될까요?'], money:['돈','돈을 버는데 왜 모이지 않을까요?'], work:['일','지금 하는 일을 계속하는 게 맞을까요?'], me:['나','저는 왜 같은 고민을 되풀이할까요?']};
+const TPOS = ['지금 그대의 자리','가로막는 것','나아갈 길'];
+const TAROT = (() => { try { const u = new URLSearchParams(location.search), d = TDOOR[u.get('d')], c = (u.get('tc') || '').split('.').map(Number);
+  return d && c.length === 3 && new Set(c).size === 3 && c.every(n => Number.isInteger(n) && n >= 0 && n < 22) ? {door:d, c} : null; } catch(e){ return null; } })();
 function log(kind, b){
   try {
     const row = [kind, b ? b.y : '', b ? b.sex : '', b ? b.cal : '', b ? (b.unk ? '시간모름' : '시간있음') : '', SRC, b ? b.q.split('|').join(' ').split(String.fromCharCode(10)).join(' ').split(String.fromCharCode(13)).join(' ') : ''].join('|');
@@ -955,6 +962,11 @@ function toonHtml(list, V){
   }).join('');
 }
 $('hook').innerHTML = toonHtml(TOON.hook, {}); watch();
+if (TAROT){   // 타로에서 온 손님은 훅 만화를 건너뛰고, 뽑은 석 장과 고른 고민을 먼저 본다(질문은 고쳐 적을 수 있다)
+  $('hook').hidden = true; $('q').value = TAROT.door[1];
+  $('tarot').innerHTML = `<b class="serif" style="font-size:15px;color:var(--gold2)">그대가 뽑은 석 장</b><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;font-size:12.5px;color:var(--muted)">${TAROT.c.map((n, i) => `<div><img src="tarot/img/f${String(n).padStart(2, '0')}.jpg" alt="" style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;border:1px solid var(--gold);display:block;margin-bottom:6px"><span style="color:var(--fg);font-weight:700">${esc(TNAME[n])}</span><br>${TPOS[i]}</div>`).join('')}</div><span style="font-size:13.5px;color:var(--muted)">이 석 장을 그대의 사주로 이어 읽습니다. 아래 질문은 그대의 말로 고쳐 적어도 돼요.</span>`;
+  $('tarot').hidden = false; $('tarot').style.display = 'flex';
+}
 
 function render(){
   const b = CUR, r = CUR.r;
@@ -965,7 +977,7 @@ function render(){
   $('story').innerHTML = toonHtml(TOON.story, V).split('그대님').join('그대');   // 이름을 안 적은 손님
   $('payTitle').textContent = '방금까지는, 먼저 드러난 부분만 짚었습니다.';
   $('goB').href = orderUrl('basic'); $('goP').href = orderUrl('premium');
-  $('seatLine').innerHTML = `그대의 질문은 <b>${esc(r.seat.name)}</b>에 걸려 있습니다.<br>${esc(r.seat.line)}`;
+  $('seatLine').innerHTML = (TAROT ? `뽑은 석 장(${TAROT.c.map(n => esc(TNAME[n])).join(' · ')})은 방향을 말했습니다. 이제 사주가 자리와 때를 말합니다.<br>` : '') + `그대의 질문은 <b>${esc(r.seat.name)}</b>에 걸려 있습니다.<br>${esc(r.seat.line)}`;
   $('toc').innerHTML = r.seat.toc.map(x => `<li><span>${esc(x)}</span></li>`).join('');
   $('shMsg').textContent = '카드에는 이름과 생년월일이 들어가지 않아요.';
   drawCard();
@@ -1062,6 +1074,7 @@ function profileText(){
   add('재정', val('pFin'), '');
   add('이사', val('pMove'), val('pMove') && tx('pMoveD'));
   add('질문1 배경', tx('pBg'), '');
+  if (TAROT) add('먼저 뽑은 타로', TAROT.c.map((n, i) => TPOS[i] + ': ' + TNAME[n]).join(' / '), '고른 고민: ' + TAROT.door[0]);
   return out.join(String.fromCharCode(10));
 }
 const toBirth = kind => { log(kind); $('st1b').hidden = true; $('st2').hidden = false; $('asked').scrollIntoView({block:'start'}); };
