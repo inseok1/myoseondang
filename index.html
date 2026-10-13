@@ -834,11 +834,11 @@ const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54
 const LOG = 'https://docs.google.com/forms/d/e/1FAIpQLSfqbnJPIycDBdZuXx8ierUjKeJ041Qg_RR660HnrEHckc0psg/formResponse';
 const SRC = (() => { try { return (new URLSearchParams(location.search).get('s') || (document.referrer ? new URL(document.referrer).hostname : '직접')).slice(0, 30); } catch(e){ return '직접'; } })();
 /* 타로 입구(tarot.html)에서 넘어온 손님: 고른 문과 뽑은 석 장이 주소로 온다(?d=문&tc=번호.번호.번호). 값이 없거나 이상하면 평소 화면 그대로 */
-const TNAME = ['바보','마법사','여사제','여황제','황제','교황','연인','전차','힘','은둔자','운명의 수레바퀴','정의','매달린 사람','죽음','절제','악마','탑','별','달','태양','심판','세계'];
+const TNAME = ['바보','마법사','여사제','여황제','황제','교황','연인','전차','힘','은둔자','운명의 수레바퀴','정의','매달린 사람','죽음','절제','악마','탑','별','달','태양','심판','세계','지팡이 에이스','지팡이 2','지팡이 3','지팡이 4','지팡이 5','지팡이 6','지팡이 7','지팡이 8','지팡이 9','지팡이 10','지팡이 시종','지팡이 기사','지팡이 여왕','지팡이 왕','잔 에이스','잔 2','잔 3','잔 4','잔 5','잔 6','잔 7','잔 8','잔 9','잔 10','잔 시종','잔 기사','잔 여왕','잔 왕','검 에이스','검 2','검 3','검 4','검 5','검 6','검 7','검 8','검 9','검 10','검 시종','검 기사','검 여왕','검 왕','동전 에이스','동전 2','동전 3','동전 4','동전 5','동전 6','동전 7','동전 8','동전 9','동전 10','동전 시종','동전 기사','동전 여왕','동전 왕'];
 const TDOOR = {re:['재회','헤어진 그 사람과 다시 이어질 수 있을까요?'], love:['연애','지금 만나는 사람과 계속 가도 될까요?'], money:['돈','돈을 버는데 왜 모이지 않을까요?'], work:['일','지금 하는 일을 계속하는 게 맞을까요?'], me:['나','저는 왜 같은 고민을 되풀이할까요?']};
 const TPOS = ['지금 그대의 자리','가로막는 것','나아갈 길'];
 const TAROT = (() => { try { const u = new URLSearchParams(location.search), d = TDOOR[u.get('d')], c = (u.get('tc') || '').split('.').map(Number);
-  return d && c.length === 3 && new Set(c).size === 3 && c.every(n => Number.isInteger(n) && n >= 0 && n < 22) ? {door:d, c} : null; } catch(e){ return null; } })();
+  return d && c.length === 3 && new Set(c).size === 3 && c.every(n => Number.isInteger(n) && n >= 0 && n < 78) ? {door:d, c} : null; } catch(e){ return null; } })();
 function log(kind, b){
   try {
     const row = [kind, b ? b.y : '', b ? b.sex : '', b ? b.cal : '', b ? (b.unk ? '시간모름' : '시간있음') : '', SRC, b ? b.q.split('|').join(' ').split(String.fromCharCode(10)).join(' ').split(String.fromCharCode(13)).join(' ') : ''].join('|');
