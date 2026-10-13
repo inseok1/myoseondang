@@ -834,7 +834,7 @@ const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54
 const LOG = 'https://docs.google.com/forms/d/e/1FAIpQLSfqbnJPIycDBdZuXx8ierUjKeJ041Qg_RR660HnrEHckc0psg/formResponse';
 const SRC = (() => { try { return (new URLSearchParams(location.search).get('s') || (document.referrer ? new URL(document.referrer).hostname : '직접')).slice(0, 30); } catch(e){ return '직접'; } })();
 /* 타로 입구(tarot.html)에서 넘어온 손님: 고른 문과 뽑은 석 장이 주소로 온다(?d=문&tc=번호.번호.번호). 값이 없거나 이상하면 평소 화면 그대로 */
-const TNAME = ['바보','마법사','여사제','여황제','황제','교황','연인','전차','힘','은둔자','운명의 수레바퀴','정의','매달린 사람','끝맺음','절제','악마','탑','별','달','태양','심판','세계'];
+const TNAME = ['바보','마법사','여사제','여황제','황제','교황','연인','전차','힘','은둔자','운명의 수레바퀴','정의','매달린 사람','죽음','절제','악마','탑','별','달','태양','심판','세계'];
 const TDOOR = {re:['재회','헤어진 그 사람과 다시 이어질 수 있을까요?'], love:['연애','지금 만나는 사람과 계속 가도 될까요?'], money:['돈','돈을 버는데 왜 모이지 않을까요?'], work:['일','지금 하는 일을 계속하는 게 맞을까요?'], me:['나','저는 왜 같은 고민을 되풀이할까요?']};
 const TPOS = ['지금 그대의 자리','가로막는 것','나아갈 길'];
 const TAROT = (() => { try { const u = new URLSearchParams(location.search), d = TDOOR[u.get('d')], c = (u.get('tc') || '').split('.').map(Number);
@@ -964,7 +964,7 @@ function toonHtml(list, V){
 $('hook').innerHTML = toonHtml(TOON.hook, {}); watch();
 if (TAROT){   // 타로에서 온 손님은 훅 만화를 건너뛰고, 뽑은 석 장과 고른 고민을 먼저 본다(질문은 고쳐 적을 수 있다)
   $('hook').hidden = true; $('q').value = TAROT.door[1];
-  $('tarot').innerHTML = `<b class="serif" style="font-size:15px;color:var(--gold2)">그대가 뽑은 석 장</b><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;font-size:12.5px;color:var(--muted)">${TAROT.c.map((n, i) => `<div><img src="tarot/img/f${String(n).padStart(2, '0')}.jpg" alt="" style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;border:1px solid var(--gold);display:block;margin-bottom:6px"><span style="color:var(--fg);font-weight:700">${esc(TNAME[n])}</span><br>${TPOS[i]}</div>`).join('')}</div><span style="font-size:13.5px;color:var(--muted)">이 석 장을 그대의 사주로 이어 읽습니다. 아래 질문은 그대의 말로 고쳐 적어도 돼요.</span>`;
+  $('tarot').innerHTML = `<b class="serif" style="font-size:15px;color:var(--gold2)">그대가 뽑은 석 장</b><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;font-size:12.5px;color:var(--muted)">${TAROT.c.map((n, i) => `<div><img src="tarot/img/r${String(n).padStart(2, '0')}.jpg" alt="" style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;border:1px solid var(--gold);display:block;margin-bottom:6px"><span style="color:var(--fg);font-weight:700">${esc(TNAME[n])}</span><br>${TPOS[i]}</div>`).join('')}</div><span style="font-size:13.5px;color:var(--muted)">이 석 장을 그대의 사주로 이어 읽습니다. 아래 질문은 그대의 말로 고쳐 적어도 돼요.</span>`;
   $('tarot').hidden = false; $('tarot').style.display = 'flex';
 }
 

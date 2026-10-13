@@ -166,7 +166,7 @@ const DECK=[
  ['X','운명의 수레바퀴','輪','바뀌는 때 · 기회','판이 돌고 있습니다. 올라타는 쪽이 유리합니다.','들어온 제안을 미루지 말고, 조건을 확인한 뒤 답하십시오.'],
  ['XI','정의','義','균형 · 따져 보기','준 만큼 받고, 한 만큼 돌아오는 때입니다.','감정은 접어 두고, 주고받은 것을 표로 적어 보십시오.'],
  ['XII','매달린 사람','止','멈춤 · 다른 눈','움직이지 않는 것이 답인 때입니다.','결정을 한 달 미루고, 그동안 반대쪽 입장에서 생각해 보십시오.'],
- ['XIII','끝맺음','終','정리 · 새 장','끝내야 다음이 시작됩니다.','끌고 온 것 하나를 정해 이번 달 안에 매듭지으십시오.'],
+ ['XIII','죽음','終','정리 · 새 장','끝내야 다음이 시작됩니다.','끌고 온 것 하나를 정해 이번 달 안에 매듭지으십시오.'],
  ['XIV','절제','和','섞기 · 알맞음','넘치지도 모자라지도 않게 맞추는 기운입니다.','한쪽으로 쏠린 것을 반으로 줄이고, 비는 쪽을 채우십시오.'],
  ['XV','악마','執','붙들림 · 버릇','알면서도 놓지 못하는 것이 있습니다.','끊으려 하지 말고, 먼저 횟수를 세어 절반으로 줄이십시오.'],
  ['XVI','탑','崩','무너짐 · 드러남','버티던 것이 흔들려 진짜가 드러납니다.','무너진 자리를 덮지 말고, 무엇이 약했는지부터 적으십시오.'],
@@ -202,7 +202,7 @@ $('again').onclick=()=>show('v-door');
 
 $('go').onclick=()=>{
   $('asked2').textContent='“'+door.q+'”';
-  $('reveal3').innerHTML=picked.map((p,i)=>{const c=DECK[order[p]];return `<div class="flip"><button type="button" data-i="${i}" aria-label="${POS[i][0]} 카드 뒤집기"><span class="side b"></span><span class="side f"><img src="tarot/img/f${String(order[p]).padStart(2,'0')}.jpg" alt=""><span class="num">${c[0]}</span><span class="nm">${c[1]}</span></span></button>${POS[i][0]}</div>`}).join('');
+  $('reveal3').innerHTML=picked.map((p,i)=>{const c=DECK[order[p]];return `<div class="flip"><button type="button" data-i="${i}" aria-label="${POS[i][0]} 카드 뒤집기"><span class="side b"></span><span class="side f"><img src="tarot/img/r${String(order[p]).padStart(2,'0')}.jpg" alt=""><span class="num">${c[0]}</span><span class="nm">${c[1]}</span></span></button>${POS[i][0]}</div>`}).join('');
   $('reads').innerHTML='';$('tease').hidden=true;$('hint').hidden=false;log('타로 펼침',door.chip);
   $('next').href=HOME+'?s=tarot&d='+door.id+'&tc='+picked.map(p=>order[p]).join('.');if(!LIVE){$('next').target='_blank';$('next').rel='noopener'}
   show('v-read')};
