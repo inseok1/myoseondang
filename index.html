@@ -926,9 +926,11 @@ const TDOOR = {re:['재회','헤어진 그 사람과 다시 이어질 수 있을
 const TPOS = ['지금 그대의 자리','가로막는 것','나아갈 길'];
 let TAROT = (() => { try { const u = new URLSearchParams(location.search), d = TDOOR[u.get('d')], c = (u.get('tc') || '').split('.').map(Number);
   return d && c.length === 3 && new Set(c).size === 3 && c.every(n => Number.isInteger(n) && n >= 0 && n < 78) ? {door:d, c, id:u.get('d')} : null; } catch(e){ return null; } })();
+/* 익명 손님 번호(2026-10-20): 한 사람의 방문 → 타로 → 진단 → 결제 누름을 이어 보려고 붙인다. 탭을 닫으면 새 번호 */
+const SID = (() => { try { let s = sessionStorage.getItem('msd_sid'); if (!s){ s = Math.random().toString(36).slice(2, 8); sessionStorage.setItem('msd_sid', s); } return s; } catch(e){ return Math.random().toString(36).slice(2, 8); } })();
 function log(kind, b){
   try {
-    const row = [kind, b ? b.y : '', b ? b.sex : '', b ? b.cal : '', b ? (b.unk ? '시간모름' : '시간있음') : '', SRC, b ? b.q.split('|').join(' ').split(String.fromCharCode(10)).join(' ').split(String.fromCharCode(13)).join(' ') : ''].join('|');
+    const row = [kind, b ? b.y : '', b ? b.sex : '', b ? b.cal : '', b ? (b.unk ? '시간모름' : '시간있음') : '', SRC, b ? b.q.split('|').join(' ').split(String.fromCharCode(10)).join(' ').split(String.fromCharCode(13)).join(' ') : '', SID].join('|');
     fetch(LOG, {method:'POST', mode:'no-cors', body:new URLSearchParams({'entry.1433921101': row})}).catch(() => {});
   } catch(e){}
 }
@@ -1072,7 +1074,7 @@ function fillKw(t, w){
     return word + JOSA[j][jong ? 0 : 1];
   });
 }
-function tlog(kind, q){ if (!/github\.io$/.test(location.hostname)) return; try { fetch(LOG, {method:'POST', mode:'no-cors', body:new URLSearchParams({'entry.1433921101':[kind,'','','','',SRC,q||''].join('|')})}).catch(() => {}); } catch(e){} }
+function tlog(kind, q){ if (!/github\.io$/.test(location.hostname)) return; try { fetch(LOG, {method:'POST', mode:'no-cors', body:new URLSearchParams({'entry.1433921101':[kind,'','','','',SRC,q||'',SID].join('|')})}).catch(() => {}); } catch(e){} }
 let tdoor = null, torder = [], tpicked = [];
 const tshow = v => { ['t-door','t-pick','t-read'].forEach(x => $(x).hidden = x !== v); $('v-tarot').scrollIntoView({block:'start'}); };
 function tshuffle(){ const a = DECK.map((_, i) => i), r = new Uint32Array(a.length); crypto.getRandomValues(r);
