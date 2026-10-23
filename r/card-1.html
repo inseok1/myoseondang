@@ -23,6 +23,11 @@ main{max-width:520px;margin:0 auto;padding:0 18px 48px}.hero{width:100%;display:
 · 관계: 먼저 손을 내밀어도 되는 주입니다. 짧은 안부 한 줄이 문을 엽니다.
 · 돈·일: 포기했던 제안이나 지원을 다시 꺼내 보세요. 이번엔 받아들여질 자리가 생깁니다.
 · 오늘 할 일: 기다리던 사람에게 먼저 한 줄 보내기.</div>
+<div class="box"><h2>이 풀이를 그대 사주로 받아 보세요</h2>
+<p>지금 궁금한 질문 하나를 적으면, 사주 풀이와 그 질문의 답을 따로 담아 <b>24시간 안에 PDF</b>로 보내 드려요.</p>
+<a class="btn gold" data-o="basic" href="https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54lF28EiYkRnlnv-LRqXe2D09g/viewform?usp=pp_url&entry.1425718858=BASIC%209%2C900%EC%9B%90%20%E2%80%94%20%EA%B0%84%EB%8B%A8%ED%95%9C%20%EC%82%AC%EC%A3%BC%ED%92%80%EC%9D%B4%20%2B%20%EC%A7%88%EB%AC%B8%201%EA%B0%9C">내 질문으로 BASIC 주문하기 · 9,900원</a>
+<a class="btn line" data-o="premium" href="https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54lF28EiYkRnlnv-LRqXe2D09g/viewform?usp=pp_url&entry.1425718858=PREMIUM%2029%2C900%EC%9B%90%20%E2%80%94%20%EC%A0%84%EC%B2%B4%20%ED%9D%90%EB%A6%84%20%2B%2012%EA%B0%9C%EC%9B%94%20%EB%8B%AC%EB%B3%84%20%ED%9D%90%EB%A6%84%20%2B%20%EC%A7%88%EB%AC%B8%20%EC%B5%9C%EB%8C%80%203%EA%B0%9C">질문 3개 PREMIUM · 29,900원</a>
+<a class="small" style="display:block;margin-top:10px" href="https://inseok1.github.io/myoseondang/?s=r_card#sales-title">리포트 샘플 먼저 보기 →</a></div>
 <div class="box"><h2>내 사주로 보면 더 또렷해요</h2>
 <p>생년월일과 지금 궁금한 것 하나만 보내 주시면, 당주가 직접 사주를 펼쳐 <b>무료 미니 풀이</b>를 DM으로 보내 드려요.</p>
 <a class="btn gold" href="https://ig.me/m/myoseondang">무료 미니 풀이 받기 (DM에 '미니')</a>
@@ -32,4 +37,10 @@ main{max-width:520px;margin:0 auto;padding:0 18px 48px}.hero{width:100%;display:
 <div class="price"><a class="btn line" href="https://inseok1.github.io/myoseondang/?s=r_card#sales-title">BASIC 9,900원<br><small>질문 1개</small></a>
 <a class="btn gold" href="https://inseok1.github.io/myoseondang/?s=r_card#sales-title">PREMIUM 29,900원<br><small>질문 3개</small></a></div></div>
 <p class="small">사주와 풍수는 참고용 해석입니다.<br>@myoseondang</p>
-</main></body></html>
+</main>
+<script>
+// 풀이 페이지 방문·주문 버튼 클릭을 방문 기록 표에 남긴다 (어느 게시물에서 주문까지 갔는지)
+(function(){var SRC=(new URLSearchParams(location.search).get('s')||'inpock')+'_r_card-1',SID=Math.random().toString(36).slice(2,8);
+function log(k,q){try{fetch('https://docs.google.com/forms/d/e/1FAIpQLSfqbnJPIycDBdZuXx8ierUjKeJ041Qg_RR660HnrEHckc0psg/formResponse',{method:'POST',mode:'no-cors',body:new URLSearchParams({'entry.1433921101':[k,'','','','',SRC,q||'',SID].join('|')})})}catch(e){}}
+log('rview');document.querySelectorAll('[data-o]').forEach(function(a){a.addEventListener('click',function(){log('rorder',a.dataset.o)})});})();
+</script></body></html>
