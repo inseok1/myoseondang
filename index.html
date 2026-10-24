@@ -543,7 +543,7 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
       <li>입금 확인 후 24시간 안에 PDF를 이메일로 보내 드려요.</li>
     </ol>
     <p class="sales-reassure" style="margin-top:10px">질문과 출생정보는 주문서에서만 받아요. 공개 댓글에는 적지 말아 주세요.</p>
-    <a class="btn gold" id="sales-order" href="#">주문서 열기</a>
+    <a class="btn gold" id="sales-order" href="#">내 질문부터 적기</a>
   </section>
 <!-- CODEX_SALES_HTML_END -->
 
@@ -1188,10 +1188,12 @@ const CARD = {"type": [{"name": "곧은 나무", "line": "스스로 길을 여�
 const SHARE_URL = 'https://inseok1.github.io/myoseondang/?s=share';
 const PRODUCT = {basic:'BASIC 9,900원 — 간단한 사주풀이 + 질문 1개', premium:'PREMIUM 29,900원 — 전체 흐름 + 12개월 달별 흐름 + 질문 최대 3개'};
 /* CODEX_SALES_JS_START */
-const SALES_FORM_URL = tier => FORM + '?usp=pp_url&entry.1425718858=' + encodeURIComponent(PRODUCT[tier]);
-document.getElementById('sales-basic').href = SALES_FORM_URL('basic');
-document.getElementById('sales-premium').href = SALES_FORM_URL('premium');
-document.getElementById('sales-order').href = FORM;
+// 구글 주문서로 바로 보내지 않는다: 사이트에서 질문·생년월일을 먼저 받고, 풀이 화면의 주문 버튼이 그 내용을 채워 주문서를 연다
+['sales-basic','sales-premium','sales-order'].forEach(id => document.getElementById(id).addEventListener('click', e => {
+  e.preventDefault(); log('sales_' + id.slice(6));
+  if (!$('v-story').hidden) { $('goB').scrollIntoView({behavior:'smooth', block:'center'}); return; }
+  $('v-in').hidden = false; openForm();
+}));
 /* CODEX_SALES_JS_END */
 const CALNAME = {S:'양력', L:'음력 (평달)', LL:'음력 (윤달)'};
 /* 당주 대사 문구: ChatGPT(Thinking) 상의본 gpt_dangju_answer.txt. 반복되는 패턴만 말하고 사건 예언·겁주기는 하지 않는다 */
