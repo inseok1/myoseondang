@@ -413,9 +413,12 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
     <section id="v-tarot">
       <div class="view" id="t-door">
         <h2>그대가 붙잡고 있는 고민부터 골라 보세요</h2>
-        <p class="sub">문을 하나 고르면 카드 석 장을 뽑습니다. 여기까지는 무료예요.</p>
+        <p class="sub">아래 그림 중 내 고민에 가까운 걸 누르면 <b style="color:var(--gold2)">타로 카드 석 장</b>을 직접 뽑아요.<br>카드가 말한 방향을 보고, 이어서 생년월일을 넣으면 <b style="color:var(--gold2)">내 사주로 그 고민을 풀어</b> 드려요. 전부 무료예요.</p>
+        <p class="note" style="font-size:13.5px">① 고민 고르기 → ② 카드 석 장 → ③ 내 사주 풀이</p>
+        <p class="note" style="color:var(--gold2);font-size:13.5px">← 옆으로 넘기면 고민 5가지 →</p>
         <div class="doors" id="doors" aria-label="고민 고르기"></div>
-        <button class="btn line" type="button" id="t-skip">카드 없이 질문부터 적기</button>
+        <p class="note" style="margin-top:6px">타로는 건너뛰고 싶다면, 궁금한 걸 직접 적고 바로 사주 풀이로 갈 수 있어요.</p>
+        <button class="btn line" type="button" id="t-skip">타로 없이 내 질문 바로 적기 →</button>
       </div>
       <div class="view" id="t-pick" hidden>
         <p class="asked" id="t-asked"></p>
