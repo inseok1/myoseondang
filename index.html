@@ -523,6 +523,7 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
     <div class="gapL"></div>
     <div class="pay reveal" id="pay">
       <div id="tPay" hidden style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="typex" style="border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--panel);display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.65"></div>
       <div id="crit" style="border:1px solid var(--gold);border-radius:14px;padding:16px 16px 12px;background:var(--panel)"></div>
       <h2 id="payTitle">방금까지는, 먼저 드러난 부분만 짚었습니다.</h2>
       <div class="seat">
@@ -1243,6 +1244,8 @@ const PRODUCT = {basic:'BASIC 9,900원 — 간단한 사주풀이 + 질문 1개'
 /* CODEX_SALES_JS_END */
 // 무료 결과의 실속: 질문 자리별로 오늘 바로 쓸 판단 기준 3가지 (회의 3차: 무료도 쓸모 있게)
 const CRIT = {"재회": ["헤어진 이유를 그 사람이 말로 설명할 수 있는지 보십시오.", "그때 부딪힌 문제를 막을 행동이 달라졌는지, 말이 아니라 행동으로 확인하십시오.", "다시 만나도 양보하지 않을 선 하나를 먼저 정해 두십시오."], "결혼": ["돈 쓰는 방식과 양가와의 거리를 같은 그림으로 그리는지 보십시오.", "다툰 뒤 먼저 푸는 쪽이 늘 한 사람인지 살피십시오.", "5년 뒤 사는 곳과 일하는 모습을 서로 말로 맞춰 보십시오."], "연애": ["그 사람이 바쁠 때도 연락의 온도가 일정한지 보십시오.", "서운한 걸 말했을 때 변명보다 행동이 먼저 오는지 확인하십시오.", "이 관계에서 그대가 참고 있는 것 하나를 적고, 그게 계속돼도 괜찮은지 물으십시오."], "직업": ["지금 자리에서 1년 뒤 늘어날 것이 돈인지, 실력인지, 아무것도 아닌지 적어 보십시오.", "옮기고 싶은 이유가 사람인지 일인지 가르십시오. 사람 때문이라면 옮겨도 되풀이됩니다.", "떠나기 전에 석 달 버틸 돈과 갈 곳 하나를 먼저 확보하십시오."], "사업": ["매달 고정으로 나가는 돈을 몇 달 감당할 수 있는지 숫자로 적으십시오.", "손님이 왜 나를 고르는지 한 문장으로 말할 수 있는지 보십시오.", "혼자 정하던 결정 하나를 믿는 사람에게 먼저 물어보십시오."], "돈": ["지난달 나간 돈 중 기억나지 않는 지출을 세어 보십시오. 그곳이 새는 자리입니다.", "남 때문에 쓰는 돈과 나를 위해 쓰는 돈을 나눠 적으십시오.", "돈이 들어오는 날 바로 떼어 둘 금액을 정하십시오. 작아도 됩니다."], "가족": ["내 몫과 남이 맡을 몫을 말로 나눠 본 적이 있는지 보십시오.", "쌓인 서운함 중 하나만 골라 담담히 말하십시오.", "내가 빠져도 굴러가는 일은 이번 달 안에 내려놓으십시오."], "건강": ["몸이 보내는 신호를 날짜와 함께 적어 두십시오.", "미뤄 둔 검진이나 진료가 있다면 이번 달 안에 날짜부터 잡으십시오.", "잠·식사·움직임 중 무너진 것 하나만 먼저 되돌리십시오."], "방향": ["같은 고민이 되풀이되는 장면 하나를 구체적으로 적어 보십시오.", "남의 기대와 내 바람을 나눠 적고, 내 바람 쪽에 동그라미를 치십시오.", "이번 주 안에 할 수 있는 가장 작은 한 걸음을 정하십시오."]};
+// 일간별 찰떡·상극(천간합·충, 오행 상극 근거)·주변에 꼭 있는 사람·돈·연애 — 회의 4차, 사이다 단정형
+const TYPEX = {"갑": {"best": "기토", "bestWhy": "갑기합토로 큰 방향을 세우는 갑목과 현실을 다지는 기토가 한 팀을 만듭니다.", "worst": "경금", "worstWhy": "경금은 갑목을 극하고 갑경충까지 겹쳐, 밀어붙이는 방식이 정면으로 부딪힙니다.", "friend": "자기 일은 혼자 다 하면서 남이 끼어들면 '내가 할게'부터 나오는 사람.", "money": "돈은 큰 방향을 정하고 장기 프로젝트를 끝까지 키우는 방식으로 법니다.", "love": "상대의 속도보다 자기 기준을 앞세우고, 맞춰 주다 결국 답답해하는 사람."}, "을": {"best": "경금", "bestWhy": "을경합금으로 유연한 을목과 결단력 있는 경금이 서로의 빈틈을 메웁니다.", "worst": "신금", "worstWhy": "신금은 을목을 극하고 을신충으로 맞서, 세밀한 지적이 숨통을 조입니다.", "friend": "다 맞춰 준다고 해 놓고 마지막 선택권만큼은 절대 안 놓는 사람.", "money": "돈은 사람 사이 흐름을 읽고 협상과 기획으로 기회를 연결하며 법니다.", "love": "상대에게 맞춰 주다 서운함을 쌓고, 어느 날 조용히 마음을 거두는 사람."}, "병": {"best": "신금", "bestWhy": "병신합수로 표현력 있는 병화와 섬세한 신금이 서로 다른 강점을 묶습니다.", "worst": "임수", "worstWhy": "임수는 병화를 극하고 병임충까지 겹쳐, 자유를 밀어붙이는 방식이 정면 충돌합니다.", "friend": "조용히 있겠다더니 어느새 분위기와 사진까지 다 책임지는 사람.", "money": "돈은 앞에 나서 성과를 드러내는 영업·콘텐츠·기획에서 법니다.", "love": "마음을 숨기지 않지만 반응이 시원찮으면 애정도 자존심 싸움으로 바꾸는 사람."}, "정": {"best": "임수", "bestWhy": "정임합목으로 섬세한 정화와 큰 흐름을 읽는 임수가 방향과 온도를 맞춥니다.", "worst": "계수", "worstWhy": "계수는 정화를 극하고 정계충까지 겹쳐, 말하지 않은 감정이 냉전으로 번집니다.", "friend": "괜찮다고 해 놓고 집에 가는 길에 대화 전체를 복기하는 사람.", "money": "돈은 완성도와 디테일을 쌓는 디자인·편집·기획으로 법니다.", "love": "작은 신호를 오래 기억하고, 확신이 없으면 혼자 결론을 내려 버리는 사람."}, "무": {"best": "계수", "bestWhy": "무계합화로 버티는 무토와 감각적인 계수가 굳은 판에 새로운 온기를 더합니다.", "worst": "갑목", "worstWhy": "갑목은 무토를 극하는 목극토 관계라, 방향을 밀어붙이는 쪽과 버티는 쪽이 맞섭니다.", "friend": "모두의 버팀목인데 정작 '나도 힘들어'는 가장 늦게 말하는 사람.", "money": "돈은 자산·운영·관리처럼 기반을 만들고 오래 유지하는 방식으로 법니다.", "love": "책임지는 게 사랑이라 믿고 버티다가, 상대가 알아서 알아주길 기다리는 사람."}, "기": {"best": "갑목", "bestWhy": "갑기합토로 큰 방향을 세우는 갑목과 세부를 가꾸는 기토가 서로를 완성합니다.", "worst": "을목", "worstWhy": "을목은 기토를 극하는 목극토 관계라, 배려를 반복할수록 자기 몫이 줄어듭니다.", "friend": "남의 표정 변화는 즉시 알아채면서 자기 피곤함은 끝까지 숨기는 사람.", "money": "돈은 비용을 관리하고 반복 고객을 쌓는 실속형 운영으로 법니다.", "love": "상대가 편하도록 더 챙기다가, 당연해지는 순간 혼자 지쳐 버리는 사람."}, "경": {"best": "을목", "bestWhy": "을경합금으로 유연한 을목과 결단력 있는 경금이 실행 가능한 모양을 만듭니다.", "worst": "병화", "worstWhy": "병화는 경금을 극하는 화극금 관계라, 속도와 감정으로 압박할수록 힘겨루기가 됩니다.", "friend": "회의가 40분째 제자리면 '그래서 결론이 뭔데?'부터 꺼내는 사람.", "money": "돈은 협상·관리·문제 해결처럼 기준과 결과가 분명한 일에서 법니다.", "love": "말보다 행동으로 증명하지만 상대가 감정부터 알아주길 바라면 대화를 닫는 사람."}, "신": {"best": "병화", "bestWhy": "병신합수로 추진력 있는 병화와 정교한 신금이 서로의 강점을 잇습니다.", "worst": "정화", "worstWhy": "정화는 신금을 극하는 화극금 관계라, 잦은 간섭과 기준 강요가 신경을 긁습니다.", "friend": "칭찬은 한마디인데 디테일 하나 틀린 건 끝까지 기억하는 사람.", "money": "돈은 전문성과 품질을 정교하게 다듬어 차별화하는 일에서 법니다.", "love": "아무나 쉽게 들이지 않지만, 한번 기대를 걸면 작은 실망도 오래 기록하는 사람."}, "임": {"best": "정화", "bestWhy": "정임합목으로 넓게 흐르는 임수와 섬세한 정화가 방향과 온도를 맞춥니다.", "worst": "무토", "worstWhy": "무토는 임수를 제어하는 토극수 관계라, 통제와 규칙이 강해질수록 부딪힙니다.", "friend": "새로운 계획 열 개를 말하면서 돌아갈 길까지 미리 알아둔 사람.", "money": "돈은 정보·네트워크·유통의 흐름을 읽고 연결하는 방식으로 법니다.", "love": "자유를 달라면서 마음은 알아서 읽어 주길 바라, 가까워지면 거리를 재는 사람."}, "계": {"best": "무토", "bestWhy": "무계합화로 계수의 섬세함과 무토의 안정감이 만나 생각을 현실에 붙입니다.", "worst": "기토", "worstWhy": "기토는 계수를 제어하는 토극수 관계라, 지나친 관리가 흐름을 가두며 답답함을 만듭니다.", "friend": "상대 표정 하나 바뀐 걸 알아채고도 모른 척하며 혼자 결론 내리는 사람.", "money": "돈은 자료를 모으고 분석해 작은 판단을 누적하는 방식으로 법니다.", "love": "서운하다고 말하기보다 상대 반응을 시험하고, 기대가 어긋나면 조용히 멀어지는 사람."}};
 const CALNAME = {S:'양력', L:'음력 (평달)', LL:'음력 (윤달)'};
 /* 당주 대사 문구: ChatGPT(Thinking) 상의본 gpt_dangju_answer.txt. 반복되는 패턴만 말하고 사건 예언·겁주기는 하지 않는다 */
 const DMP = ['앞으로 가야 한다는 마음은 큰데, 한번 정한 방향을 너무 오래 붙잡고 있는군요.',
@@ -1468,6 +1471,8 @@ function render(){
   $('goB').href = orderUrl('basic'); $('goP').href = orderUrl('premium');
   $('seatLine').innerHTML = (TAROT ? `뽑은 석 장(${TAROT.c.map(n => esc(TNAME[n])).join(' · ')})은 방향을 말했습니다. 이제 사주가 자리와 때를 말합니다.<br>` : '') + `그대의 질문은 <b>${esc(r.seat.name)}</b>에 걸려 있습니다.<br>${esc(r.seat.line)}`;
   // 목차 아래 흐린 줄: 무엇이 잠겨 있는지 제목은 보이고 내용만 리포트에 (회의: 블러 잠금은 제목을 보여 줄 것)
+  const X = TYPEX[GAN[r.dg]], row = (k, v) => `<div><b style="color:var(--gold2)">${k}</b><br>${esc(v)}</div>`;
+  $('typex').innerHTML = `<b style="font-size:16px">‘${esc(r.type.name)}’ 한눈에</b>` + row('찰떡 · ' + X.best, X.bestWhy) + row('상극 · ' + X.worst, X.worstWhy) + row('이런 사람 주변에 꼭 있다', X.friend) + row('돈 버는 방식', X.money) + row('연애에서 반복하는 것', X.love) + '<small style="color:var(--muted)">사주 풀이는 전통 명리 해석을 바탕으로 한 참고이며, 실제 궁합과 흐름은 전체 사주와 선택에 따라 달라질 수 있습니다.</small>';
   $('crit').innerHTML = `<b style="color:var(--gold2);font-size:15px">당주가 짚어 드리는 판단 기준 3가지</b><ol style="margin:10px 0 0;padding-left:20px;display:grid;gap:8px;font-size:14.5px;line-height:1.65">${(CRIT[r.keys['주제']] || CRIT['방향']).map(x => `<li>${esc(x)}</li>`).join('')}</ol>`;
   $('toc').innerHTML = r.seat.toc.map(x => `<li><span>${esc(x)}<small aria-hidden="true" style="display:block;filter:blur(3.5px);user-select:none;color:var(--muted);font-size:12.5px;margin-top:4px">그대 사주의 해와 달 흐름에 맞춰 이 부분을 따로 적어 둡니다</small></span></li>`).join('');
   $('shMsg').textContent = '카드에는 이름과 생년월일이 들어가지 않아요.';
@@ -1553,6 +1558,7 @@ async function drawCard(){
   const ls = r.type.line.split(', ').map((seg, i, a) => i < a.length - 1 ? seg + ',' : seg).flatMap(seg => wrapText(c, seg, 840));
   let y = 660 - (ls.length - 1) * 48;
   ls.forEach(l => { c.fillText(l, W / 2, y); y += 96; });
+  const X = TYPEX[GAN[r.dg]]; c.fillStyle = '#c8a86b'; c.font = `600 38px ${SANS}`; c.fillText(`찰떡 ${X.best}  ·  상극 ${X.worst}`, W / 2, 880);
   c.fillStyle = '#a59db0'; c.font = `500 32px ${SANS}`; c.fillText('그대의 질문이 걸린 자리', W / 2, 1010);
   c.fillStyle = '#e2c891'; c.font = `700 62px ${SERIF}`; c.fillText(r.seat.name, W / 2, 1098);
   c.fillStyle = '#a59db0'; c.font = `500 30px ${SANS}`; c.fillText('나도 보기 · inseok1.github.io/myoseondang', W / 2, 1238);
@@ -1568,7 +1574,7 @@ $('save').addEventListener('click', () => {
 });
 $('share').addEventListener('click', async () => {
   log('공유 누름', CUR);
-  const r0 = CUR.r, mine = `나 ‘${r0.type.name}’ 나왔어. “${r0.type.line}” 이거 완전 나야. 너는 뭐 나와?`;
+  const r0 = CUR.r, mine = `나 ‘${r0.type.name}’ 나왔어. “${TYPEX[GAN[r0.dg]].friend}” 이거 완전 나야ㅋㅋ 찰떡은 ${TYPEX[GAN[r0.dg]].best}래. 너는 뭐 나와?`;
   const data = {title:'묘선당', text:mine, url:SHARE_URL};
   try {
     if (navigator.share){ await navigator.share(data); return; }
