@@ -24,12 +24,12 @@ input[type=date]{width:100%;padding:13px;border-radius:12px;border:1px solid #d9
 <input id="bd" type="date" value="1990-01-01" min="1930-01-01" max="2015-12-31">
 <button class="btn gold" id="go" type="button">내 일간 바로 보기</button>
 <div id="res" class="card" style="display:none;margin-top:14px"></div></div>
-<div class="box" id="buy"><h2>내 사정과 질문 하나를 따로 풀이합니다</h2>
-<p>생년월일만 넣는 운세가 아니라, 주문서에 적은 <b>직업·연애·최근 변화 같은 지금 사정</b>까지 반영해 당주가 풀어요.<br><b>BASIC 9,900원 · 약 50쪽 PDF · 24시간 안에 이메일</b></p>
-<a class="btn gold" data-o="basic" href="https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54lF28EiYkRnlnv-LRqXe2D09g/viewform?usp=pp_url&entry.1425718858=BASIC%209%2C900%EC%9B%90%20%E2%80%94%20%EA%B0%84%EB%8B%A8%ED%95%9C%20%EC%82%AC%EC%A3%BC%ED%92%80%EC%9D%B4%20%2B%20%EC%A7%88%EB%AC%B8%201%EA%B0%9C">내 질문 1개 BASIC 주문하기 · 9,900원</a>
-<a class="btn line" data-o="premium" href="https://docs.google.com/forms/d/e/1FAIpQLSdUNfwsXTpUJvNtkuiV-Rft54lF28EiYkRnlnv-LRqXe2D09g/viewform?usp=pp_url&entry.1425718858=PREMIUM%2029%2C900%EC%9B%90%20%E2%80%94%20%EC%A0%84%EC%B2%B4%20%ED%9D%90%EB%A6%84%20%2B%2012%EA%B0%9C%EC%9B%94%20%EB%8B%AC%EB%B3%84%20%ED%9D%90%EB%A6%84%20%2B%20%EC%A7%88%EB%AC%B8%20%EC%B5%9C%EB%8C%80%203%EA%B0%9C">질문 3개 + 12개월 흐름 PREMIUM · 29,900원</a>
-<a class="small" style="display:block;margin-top:12px" data-o="sample" href="https://inseok1.github.io/myoseondang/?s=r_genkwan#sales-title">리포트 샘플 먼저 보기 →</a>
-<a class="small" style="display:block;margin-top:4px" data-o="free" href="https://inseok1.github.io/myoseondang/?s=r_genkwan#hook">질문을 넣고 웹툰으로 더 자세히 보기 (무료) →</a></div>
+<div class="box" id="free" style="display:none"><h2>그 다음은, 그대 고민으로</h2>
+<p>고민의 문을 하나 고르면 카드 석 장으로 먼저 짚어 드려요. 여기까지 무료예요.</p>
+<a class="btn gold" data-o="free" href="https://inseok1.github.io/myoseondang/?s=r_genkwan#hook">내 고민 무료로 이어 보기</a></div>
+<div class="box" id="buy" style="background:none;border-color:#3a3358"><h2 style="font-size:16px;color:#d8d0c2">더 깊이 알고 싶을 때만</h2>
+<p style="font-size:14px">태어난 시간과 지금 사정(직업·연애·최근 변화)까지 넣어 당주가 그대 질문 하나를 따로 풀어 드려요. 약 50쪽 PDF, 24시간 안에 이메일.</p>
+<a class="small" style="display:block;margin-top:4px" data-o="sample" href="https://inseok1.github.io/myoseondang/?s=r_genkwan#sales-title">리포트 샘플·가격 보기 →</a></div>
 <p class="small">사주와 풍수는 참고용 해석입니다.<br>@myoseondang</p>
 </main>
 <script>
@@ -42,7 +42,7 @@ var OH=['목','목','화','화','토','토','금','금','수','수'];
 function jdn(y,m,d){var a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;return d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045}
 document.getElementById('go').onclick=function(){var v=document.getElementById('bd').value.split('-').map(Number);if(v.length<3||!v[0])return;
 var g=((jdn(v[0],v[1],v[2])+49)%60+60)%60%10,r=document.getElementById('res');
-r.innerHTML='<b style="color:#f0d491;font-size:19px">그대는 '+G[g]+OH[g]+' 일간, ‘'+T[g][0]+'’</b><br><br>'+T[g][1]+'<br><br>방금 본 「현관에 이것 있으면 운이 돌아 나간다」 이야기가 그대 사주에서 언제, 어디로 이어지는지는 태어난 시간과 지금 사정까지 넣어야 정확히 나옵니다. 그 답을 리포트에 적어 드려요.';
-r.style.display='block';log('rgan',G[g]);document.getElementById('buy').scrollIntoView({behavior:'smooth',block:'start'});};
+r.innerHTML='<b style="color:#f0d491;font-size:19px">그대는 '+G[g]+OH[g]+' 일간, ‘'+T[g][0]+'’</b><br><br>'+T[g][1]+'<br><br>방금 본 「현관에 이것 있으면 운이 돌아 나간다」 이야기가 그대 사주에서 언제, 어디로 이어지는지는 태어난 시간과 지금 사정까지 넣어야 정확히 나옵니다. 아래에서 그대 고민으로 이어 보세요.';
+r.style.display='block';var f=document.getElementById('free');f.style.display='block';log('rgan',G[g]);f.scrollIntoView({behavior:'smooth',block:'center'});};
 log('rview');document.querySelectorAll('[data-o]').forEach(function(a){a.addEventListener('click',function(){log('rorder',a.dataset.o)})});})();
 </script></body></html>

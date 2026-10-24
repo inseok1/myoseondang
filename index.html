@@ -402,36 +402,9 @@ footer button{font:inherit;color:var(--muted);background:none;border:0;padding:0
 function jdn(y,m,d){var a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;return d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045}
 document.getElementById('gq-go').onclick=function(){var v=document.getElementById('gq-bd').value.split('-').map(Number);if(v.length<3||!v[0])return;
 var g=((jdn(v[0],v[1],v[2])+49)%60+60)%60%10,r=document.getElementById('gq-res');
-r.innerHTML='<b style="color:#f0d491;font-size:19px">그대는 '+G[g]+OH[g]+' 일간, ‘'+T[g][0]+'’</b><br><br>'+T[g][1]+'<br><br>지금 붙잡고 있는 고민이 그대 사주에서 언제, 어디로 풀리는지는 태어난 시간과 지금 사정까지 넣어야 나옵니다. 그 답을 아래 리포트에 적어 드려요.';
-r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('sales-title').scrollIntoView({behavior:'smooth',block:'start'})}})();
+r.innerHTML='<b style="color:#f0d491;font-size:19px">그대는 '+G[g]+OH[g]+' 일간, ‘'+T[g][0]+'’</b><br><br>'+T[g][1]+'<br><br>지금 붙잡고 있는 고민이 그대 사주에서 언제, 어디로 풀리는지는 태어난 시간과 지금 사정까지 넣어야 나옵니다. 아래에서 고민의 문을 하나 고르고 카드 석 장으로 먼저 무료로 보세요.';
+r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').scrollIntoView({behavior:'smooth',block:'start'})}})();
 </script>
-<!-- CODEX_SALES_HTML_START -->
-<section class="sales-landing" aria-labelledby="sales-title">
-    <p class="sales-kicker">묘선당 사주 리포트</p>
-    <h1 id="sales-title">내 질문 하나를 따로 푸는<br>약 50쪽 사주 리포트</h1>
-    <p class="sales-lead">생년월일뿐 아니라 직업·연애·최근 변화 같은 <b>지금 사정</b>까지 반영해 당주가 풀어요. BASIC 9,900원, 결제 후 24시간 안에 이메일 PDF.</p>
-    <div class="sample-strip" aria-label="가상 고객 PREMIUM 리포트 미리보기">
-      <figure class="sample-card"><img src="sample-pages/premium-cover.png" alt="가상 고객 프리미엄 리포트 표지"><figcaption>리포트 표지</figcaption></figure>
-      <figure class="sample-card"><img src="sample-pages/premium-chart.png" alt="가상 고객 사주 원국 페이지"><figcaption>사주 원국</figcaption></figure>
-      <figure class="sample-card"><img src="sample-pages/premium-question.png" alt="가상 고객 질문 분석 답변 페이지"><figcaption>질문 분석 답변</figcaption></figure>
-    </div>
-    <p class="sales-difference">기본 사주풀이 + 내 질문을 따로 분석</p>
-    <div class="sales-products">
-      <article class="sales-product"><h2>BASIC</h2><strong class="sales-price">9,900원</strong><p class="sales-detail">질문 1개 심층 답변<br>약 50쪽 PDF</p><a class="btn line" id="sales-basic" href="#order-steps">BASIC 주문하기</a></article>
-      <article class="sales-product premium"><h2>PREMIUM</h2><strong class="sales-price">29,900원</strong><p class="sales-detail">질문 3개 + 12개월 흐름<br>약 120쪽 PDF</p><a class="btn gold" id="sales-premium" href="#order-steps">PREMIUM 주문하기</a></article>
-    </div>
-    <p class="sales-reassure">출생시간을 모르면 ‘모름’으로 주문할 수 있어요.</p>
-  </section>
-  <section class="order-steps" id="order-steps" aria-labelledby="order-title">
-    <h2 id="order-title">주문은 이렇게 진행돼요</h2>
-    <ol>
-      <li>주문서에 상품과 정보를 적고 결제해요.<small>카카오페이 또는 계좌이체 · 생년월일, 출생시간(모르면 ‘모름’), 성별, 지역, 질문</small></li>
-      <li>입금 확인 후 24시간 안에 PDF를 이메일로 보내 드려요.</li>
-    </ol>
-    <p class="sales-reassure" style="margin-top:10px">질문과 출생정보는 주문서에서만 받아요. 공개 댓글에는 적지 말아 주세요.</p>
-    <a class="btn gold" id="sales-order" href="#">주문서 열기</a>
-  </section>
-<!-- CODEX_SALES_HTML_END -->
 
   <!-- 1. 입력 -->
   <section id="v-in" style="display:flex;flex-direction:column;gap:24px">
@@ -544,6 +517,35 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('sales-titl
       <button class="btn line" type="button" id="again">다른 사주로 다시 보기</button>
     </div>
   </section>
+
+<!-- 주문 안내는 무료 흐름(일간→타로→풀이) 뒤로: 첫 화면부터 주문서를 들이밀지 않는다 -->
+<!-- CODEX_SALES_HTML_START -->
+<section class="sales-landing" aria-labelledby="sales-title">
+    <p class="sales-kicker">묘선당 사주 리포트</p>
+    <h1 id="sales-title">내 질문 하나를 따로 푸는<br>약 50쪽 사주 리포트</h1>
+    <p class="sales-lead">생년월일뿐 아니라 직업·연애·최근 변화 같은 <b>지금 사정</b>까지 반영해 당주가 풀어요. BASIC 9,900원, 결제 후 24시간 안에 이메일 PDF.</p>
+    <div class="sample-strip" aria-label="가상 고객 PREMIUM 리포트 미리보기">
+      <figure class="sample-card"><img src="sample-pages/premium-cover.png" alt="가상 고객 프리미엄 리포트 표지"><figcaption>리포트 표지</figcaption></figure>
+      <figure class="sample-card"><img src="sample-pages/premium-chart.png" alt="가상 고객 사주 원국 페이지"><figcaption>사주 원국</figcaption></figure>
+      <figure class="sample-card"><img src="sample-pages/premium-question.png" alt="가상 고객 질문 분석 답변 페이지"><figcaption>질문 분석 답변</figcaption></figure>
+    </div>
+    <p class="sales-difference">기본 사주풀이 + 내 질문을 따로 분석</p>
+    <div class="sales-products">
+      <article class="sales-product"><h2>BASIC</h2><strong class="sales-price">9,900원</strong><p class="sales-detail">질문 1개 심층 답변<br>약 50쪽 PDF</p><a class="btn line" id="sales-basic" href="#order-steps">BASIC 주문하기</a></article>
+      <article class="sales-product premium"><h2>PREMIUM</h2><strong class="sales-price">29,900원</strong><p class="sales-detail">질문 3개 + 12개월 흐름<br>약 120쪽 PDF</p><a class="btn gold" id="sales-premium" href="#order-steps">PREMIUM 주문하기</a></article>
+    </div>
+    <p class="sales-reassure">출생시간을 모르면 ‘모름’으로 주문할 수 있어요.</p>
+  </section>
+  <section class="order-steps" id="order-steps" aria-labelledby="order-title">
+    <h2 id="order-title">주문은 이렇게 진행돼요</h2>
+    <ol>
+      <li>주문서에 상품과 정보를 적고 결제해요.<small>카카오페이 또는 계좌이체 · 생년월일, 출생시간(모르면 ‘모름’), 성별, 지역, 질문</small></li>
+      <li>입금 확인 후 24시간 안에 PDF를 이메일로 보내 드려요.</li>
+    </ol>
+    <p class="sales-reassure" style="margin-top:10px">질문과 출생정보는 주문서에서만 받아요. 공개 댓글에는 적지 말아 주세요.</p>
+    <a class="btn gold" id="sales-order" href="#">주문서 열기</a>
+  </section>
+<!-- CODEX_SALES_HTML_END -->
 
   <footer>
     <nav><button type="button" data-doc="terms">이용약관</button><button type="button" data-doc="privacy">개인정보처리방침</button><button type="button" data-doc="refund">환불정책</button></nav>
