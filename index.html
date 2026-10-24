@@ -115,6 +115,9 @@ textarea{min-height:84px;resize:vertical}
 .plan li:before{content:"— ";color:var(--gold)}
 /* 질문 먼저 받는 입력 두 단계 */
 .step{display:flex;flex-direction:column;gap:16px}
+#lamps{display:flex;justify-content:center;gap:10px;margin:2px 0 14px}#lamps i{width:12px;height:16px;border-radius:50% 50% 45% 45%;background:#3a3358;transition:background .4s,box-shadow .4s}#lamps i.on{background:#f0c56a;box-shadow:0 0 10px #f0c56acc}#lampT{text-align:center;font-size:12.5px;color:var(--gold2);margin:-8px 0 12px}
+.grp{display:flex;flex-direction:column;gap:16px}.grp[hidden],.react[hidden]{display:none}
+.react{display:flex;gap:12px;align-items:flex-start;animation:rIn .5s ease both}.react img{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--gold);flex:none}.react p{margin:0;padding:12px 14px;border-radius:4px 14px 14px 14px;background:var(--panel);border:1px solid var(--line);font-size:15px;line-height:1.7}.react b{color:var(--gold2)}@keyframes rIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips button{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
 .chips button.on{color:var(--bg);background:var(--gold2);border-color:var(--gold2);font-weight:700}
@@ -439,6 +442,7 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
       </div>
     </section>
     <form id="fm" novalidate hidden>
+      <div id="lamps" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div><p id="lampT">1/6 · 고민의 문을 열었어요</p>
       <!-- 1단계: 질문부터 받는다 -->
       <div class="step" id="st1">
         <div id="tarot" hidden style="flex-direction:column;gap:10px;border:1px solid var(--gold);border-radius:14px;padding:14px;background:var(--panel)"></div>
@@ -458,6 +462,7 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
       </div>
       <!-- 1.5단계: 사전 질문(전부 선택). 2026-10-07 지시서: 손님의 현실을 먼저 듣고 그 문맥으로 사주를 푼다 -->
       <div class="step" id="st1b" hidden>
+        <div class="react" id="rQ"></div>
         <h1 class="serif" style="margin:0;font-size:21px;text-align:center;text-wrap:balance">그대 사정, 두 가지만 알려 주세요</h1>
         <p class="note">일과 연애 상태만 골라도 풀이가 그대 사정에 맞춰져요. 건너뛰어도 돼요.<br>이 내용은 주문서로만 넘어가고, 주문하지 않으면 어디에도 저장되지 않아요.</p>
         <label class="f"><span>지금 하는 일</span><select id="pJob"><option>선택 안 함</option><option>직장인</option><option>공무원</option><option>전문직</option><option>자영업</option><option>사업자</option><option>프리랜서</option><option>계약직</option><option>구직 중</option><option>은퇴</option><option>주부</option><option>학생</option><option>기타</option></select></label>
@@ -481,14 +486,24 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
       <!-- 2단계: 태어난 때 -->
       <div class="step" id="st2" hidden>
       <p class="asked" id="asked"></p>
-      <div class="f"><span>성별</span><div class="seg" id="sex"><button type="button" data-v="여">여</button><button type="button" data-v="남">남</button></div></div>
+      <button type="button" class="note" id="allIn" style="background:none;border:0;color:var(--gold2);text-decoration:underline;cursor:pointer;font:inherit;font-size:13px">하나씩 말고 한 번에 다 적을래요</button>
       <div class="f"><span>달력</span><div class="seg" id="cal"><button type="button" data-v="S" class="on">양력</button><button type="button" data-v="L">음력</button><button type="button" data-v="LL">음력 윤달</button></div></div>
       <div class="f"><span>생년월일</span><div class="row"><input id="y" inputmode="numeric" maxlength="4" placeholder="1990"><input id="mo" inputmode="numeric" maxlength="2" placeholder="월"><input id="d" inputmode="numeric" maxlength="2" placeholder="일"></div></div>
+      <p class="err" id="e2" role="alert"></p>
+      <button class="btn gold stepBtn" type="button" id="gAok">내 타고난 결 보기</button>
+      <div class="react" id="rA" hidden></div>
+      <div id="gB" class="grp" hidden>
       <div class="f"><span>태어난 시간</span><div class="time"><input id="t" type="time" value="12:00"><label class="chk"><input type="checkbox" id="unk">모름</label></div></div>
+      <button class="btn gold stepBtn" type="button" id="gBok">내 오행 보기</button>
+      </div>
+      <div class="react" id="rB" hidden></div>
+      <div id="gC" class="grp" hidden>
+      <div class="f"><span>성별</span><div class="seg" id="sex"><button type="button" data-v="여">여</button><button type="button" data-v="남">남</button></div></div>
       <label class="f"><span>태어난 지역</span><select id="city"></select></label>
       <label class="f"><span>당주가 부를 이름 (안 적어도 돼요)</span><input id="nm" maxlength="12" autocomplete="nickname" placeholder="예) 지민"></label>
       <p class="err" id="e1" role="alert"></p>
       <button class="btn gold" type="submit">문 두드리기</button>
+      </div>
       <p class="note">이름과 태어난 달·날·시간·지역은 이 화면 안에서만 쓰이고 어디로도 보내지 않아요. 태어난 해·성별·질문만 이름 없이 기록해 더 나은 풀이를 만드는 데 써요.</p>
       </div>
     </form>
@@ -1416,7 +1431,7 @@ function tsum(){
   $('t-next').onclick = () => { tlog('타로에서 사주로', tdoor.chip); TAROT = {door:TDOOR[tdoor.id], c, id:tdoor.id}; applyTarot(); };
 }
 $('t-skip').onclick = () => { tlog('타로 건너뜀'); openForm(); };
-function openForm(){ $('v-tarot').hidden = true; $('fm').hidden = false; $('fm').scrollIntoView({block:'start'}); }
+function openForm(){ lamp(2); $('v-tarot').hidden = true; $('fm').hidden = false; $('fm').scrollIntoView({block:'start'}); }
 /* 타로를 마친 손님(이 화면에서 뽑았거나, 예전 tarot.html 주소로 ?d=문&tc=번호 를 들고 온 손님): 뽑은 석 장과 고른 고민을 질문 칸 위에 둔다 */
 function applyTarot(){
   $('q').value = TAROT.door[1];
@@ -1570,7 +1585,10 @@ $('next').addEventListener('click', () => {
   if (q.length < 4){ $('e0').textContent = '당주에게 묻고 싶은 것을 한 문장으로 적어 주세요.'; return; }
   $('e0').textContent = ''; log('질문 완료');
   $('asked').innerHTML = `“${esc(q)}”<small>질문은 받았어요. 이제 태어난 때를 알려 주세요.</small>`;
-  $('st1').hidden = true; $('st1b').hidden = false; $('st1b').scrollIntoView({block:'start'});
+  // 질문에 당주가 한마디: 질문이 걸린 자리(주제를 못 읽으면 '방향')
+  const t = TOPICS.find(([, re]) => re.test(q)), seat = CARD.seat[t ? t[0] : '방향'];
+  $('rQ').innerHTML = DJ('n5') + `<p>“${esc(q)}”<br>이 질문은 <b>${esc(seat.name)}</b>에 걸려 있다고 봅니다. ${esc(seat.line)}</p>`;
+  lamp(3); $('st1').hidden = true; $('st1b').hidden = false; $('st1b').scrollIntoView({block:'start'});
 });
 /* 사전 질문: 고른 것에 따라 덧붙여 묻는 칸을 연다. 주문서의 '지금 상황' 칸으로만 넘긴다(익명 기록에는 넣지 않는다) */
 const NONE = ['선택 안 함', '없음', '전혀 없음', '특별한 문제 없음', '답변하고 싶지 않음'];
@@ -1591,11 +1609,40 @@ function profileText(){
   if (TAROT) add('먼저 뽑은 타로', TAROT.c.map((n, i) => TPOS[i] + ': ' + TNAME[n]).join(' / '), '고른 고민: ' + TAROT.door[0]);
   return out.join(String.fromCharCode(10));
 }
-const toBirth = kind => { log(kind); $('st1b').hidden = true; $('st2').hidden = false; $('asked').scrollIntoView({block:'start'}); };
+const toBirth = kind => { log(kind); lamp(4); $('st1b').hidden = true; $('st2').hidden = false; $('asked').scrollIntoView({block:'start'}); };
 $('next2').addEventListener('click', () => toBirth('사전 질문 완료'));
 $('skip2').addEventListener('click', () => toBirth('사전 질문 건너뜀'));
 /* 태어난 시간 칸은 누르면 바로 시계가 뜨게 한다(지원하지 않는 브라우저에서는 그냥 입력) */
 $('t').addEventListener('click', () => { try { $('t').showPicker(); } catch(e){} });
+
+/* 단계형 입력(2026-10-24 회의 2차): 하나 적으면 당주가 그 값으로 한마디 → 다음 칸. 등불 6개로 진행 표시. "한 번에 다 적기"도 둔다 */
+const LAMPT = ['고민의 문을 열었어요', '질문을 받는 중', '그대 사정을 듣는 중', '타고난 결을 살피는 중', '오행을 살피는 중', '마지막 계산 기준'];
+function lamp(n){ [...$('lamps').children].forEach((x, i) => x.classList.toggle('on', i < n)); $('lampT').textContent = n + '/6 · ' + LAMPT[n - 1]; }
+const DJ = img => `<img src="dangju/v5/${img}.jpg" alt="">`;
+function say(el, img, html){ el.innerHTML = DJ(img) + `<p>${html}</p>`; el.hidden = false; el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; el.scrollIntoView({behavior:'smooth', block:'center'}); }
+// 성별·지역은 아직 안 골랐어도 일간·오행은 그대로라 기본값으로 미리 본다
+function peek(){
+  const y = +$('y').value, mo = +$('mo').value, d = +$('d').value;
+  if (!(y >= 1900 && y <= 2050 && mo >= 1 && mo <= 12 && d >= 1 && d <= 31)) throw new Error('생년월일을 숫자로 적어 주세요. 예) 1990 · 5 · 14');
+  let s = {y, m:mo, d};
+  if (CAL !== 'S') s = lunarToSolar(y, mo, d, CAL === 'LL');
+  const unk = $('unk').checked, [hh, mi] = ($('t').value || '12:00').split(':').map(Number);
+  return reading({y, solar:s, unk, hh:unk ? 12 : hh, mi:unk ? 0 : mi, lon:parseFloat($('city').value) || 127, sex:SEX || '여', q:$('q').value});
+}
+$('gAok').addEventListener('click', () => {
+  let r; try { r = peek(); $('e2').textContent = ''; } catch(err){ $('e2').textContent = err.message; $('e2').scrollIntoView({block:'center'}); return; }
+  log('단계 일간', r.gan);
+  say($('rA'), 's3', `그대는 <b>${esc(r.gan)}</b>, ‘${esc(r.nick)}’의 결을 타고났다고 봅니다.<br>${esc(r.dm)}<br><small style="color:var(--muted)">태어난 시간까지 알면 오행이 어디로 기울었는지도 짚어 드려요.</small>`);
+  $('gAok').hidden = true; $('gB').hidden = false; lamp(5);
+});
+$('gBok').addEventListener('click', () => {
+  let r; try { r = peek(); } catch(err){ $('e2').textContent = err.message; return; }
+  log('단계 오행', r.keys['오행'] || '');
+  const head = $('unk').checked ? '시간을 모르시니 정오를 기준으로 봤어요. ' : '';
+  say($('rB'), 'h2', head + (r.oh ? esc(r.oh) + '<br>' : '') + esc(r.st) + `<br><small style="color:var(--muted)">이제 계산 기준만 맞추면, 그대 질문과 사주를 한자리에 놓고 풀어 드려요.</small>`);
+  $('gBok').hidden = true; $('gC').hidden = false; lamp(6);
+});
+$('allIn').addEventListener('click', () => { log('한 번에 적기'); ['gB','gC'].forEach(x => $(x).hidden = false); ['gAok','gBok','allIn'].forEach(x => $(x).hidden = true); lamp(6); });
 
 /* 스크롤하면 컷이 하나씩 드러난다. 관찰 기능이 없으면 바로 다 보여 준다 */
 function watch(){
@@ -1613,7 +1660,7 @@ $('fm').addEventListener('submit', e => {
 });
 $('goB').addEventListener('click', () => log('BASIC 누름', CUR)); $('goP').addEventListener('click', () => log('PREMIUM 누름', CUR));
 log('방문');
-$('again').addEventListener('click', () => { $('v-story').hidden = true; $('v-in').hidden = false; $('st2').hidden = true; $('st1b').hidden = true; $('st1').hidden = false; window.scrollTo({top:0}); });
+$('again').addEventListener('click', () => { $('v-story').hidden = true; $('v-in').hidden = false; $('st2').hidden = true; $('st1b').hidden = true; $('st1').hidden = false; ['gB','gC','rA','rB'].forEach(x => $(x).hidden = true); ['gAok','gBok','allIn'].forEach(x => $(x).hidden = false); lamp(2); window.scrollTo({top:0}); });
 
 document.addEventListener('click', e => { const d = e.target.closest('[data-doc]'); if (!d) return; const [t, h] = DOCS[d.dataset.doc]; $('shT').textContent = t; $('shB').innerHTML = h; $('sheet').hidden = false; $('shX').focus(); });
 $('shX').addEventListener('click', () => $('sheet').hidden = true);
