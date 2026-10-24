@@ -513,7 +513,30 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
         <div class="plan best"><h3>질문 하나의 답 <b>9,900원</b></h3><ul><li>BASIC · 핵심 사주 풀이</li><li>이 질문 1개 심층 답변</li><li>약 50쪽 PDF, 24시간 안에 이메일로</li></ul><a class="btn gold" id="goB" target="_blank" rel="noopener">이 질문의 답 받기</a></div>
         <div class="plan"><h3>질문 3개 + 1년 흐름 <b>29,900원</b></h3><ul><li>PREMIUM · 전체 흐름 + 12개월 달별 흐름</li><li>질문 최대 3개 심층 답변</li><li>약 120쪽 PDF</li></ul><a class="btn line" id="goP" target="_blank" rel="noopener">질문 셋까지 깊이 보기</a></div>
       </div>
-      <p class="note">질문이 여러 개라면 PREMIUM에서 최대 3개까지 함께 볼 수 있어요.<br>주문서에 방금 적은 내용이 미리 채워져요. 이메일과 입금자명만 더 적으면 돼요.<br>입금 확인 후 24시간 안에 이메일로 보내 드려요.</p>
+      <p class="note">질문이 여러 개라면 PREMIUM에서 최대 3개까지 함께 볼 수 있어요.<br>방금 적은 질문과 생년월일은 그대로 들어가요. 이메일과 입금자명만 더 적으면 돼요.<br>입금 확인 후 24시간 안에 이메일로 보내 드려요.</p>
+      <!-- 사이트 안 주문서: 여기 적은 것 + 앞에서 받은 질문·출생정보를 구글 주문서로 대신 제출한다 (손님은 구글 화면을 안 봄) -->
+      <form id="ord" class="plan best" novalidate hidden style="gap:14px">
+        <h3 id="oT"></h3>
+        <p class="note" id="oQ1" style="text-align:left;font-size:13.5px"></p>
+        <label class="f"><span>리포트 표지에 넣을 이름 (닉네임도 돼요)</span><input id="oName" maxlength="30"></label>
+        <div id="oQs" hidden style="display:flex;flex-direction:column;gap:14px">
+          <label class="f"><span>질문 2 (선택)</span><textarea id="oQ2" maxlength="200" style="min-height:64px"></textarea></label>
+          <label class="f"><span>질문 3 (선택)</span><textarea id="oQ3" maxlength="200" style="min-height:64px"></textarea></label>
+        </div>
+        <label class="f"><span>PDF를 받을 이메일</span><input id="oMail" type="email" autocomplete="email" inputmode="email" placeholder="example@gmail.com"></label>
+        <label class="f"><span>입금자 이름 (결제할 때 보이는 이름)</span><input id="oPayer" maxlength="20" autocomplete="name"></label>
+        <label class="chk" style="white-space:normal;align-items:flex-start"><input type="checkbox" id="oA1" style="flex:none;width:18px;height:18px;margin-top:3px"><span>받은 뒤에는 단순 변심 환불이 어렵다는 점에 동의해요. <button type="button" data-doc="refund" style="background:none;border:0;color:var(--gold2);padding:0;text-decoration:underline;font:inherit">환불정책</button></span></label>
+        <label class="chk" style="white-space:normal;align-items:flex-start"><input type="checkbox" id="oA2" style="flex:none;width:18px;height:18px;margin-top:3px"><span>리포트 작성을 위해 사주 여덟 글자·질문·상황을 Google 서비스에 전달하는 데 동의해요. (이름·생년월일 원문은 전달하지 않아요)</span></label>
+        <p class="note" id="oErr" role="alert" style="color:#f08a8a"></p>
+        <button class="btn gold" type="submit" id="oGo">주문 넣기</button>
+      </form>
+      <div id="oDone" class="plan best" hidden>
+        <h3>주문을 받았어요</h3>
+        <p style="margin:0">아래 중 편한 방법으로 <b id="oAmt"></b>을 보내 주세요. 입금을 확인하면 24시간 안에 <b id="oMailShow"></b>로 PDF를 보내 드려요.</p>
+        <a class="btn gold" href="https://qr.kakaopay.com/FT5zidMv9" target="_blank" rel="noopener" id="oKpay">카카오페이로 보내기</a>
+        <button class="btn line" type="button" id="oAcct">계좌 복사 · 카카오뱅크 3333-38-0767462 (최인석)</button>
+        <p class="note">메일이 안 보이면 스팸함도 확인해 주세요. 입금자 이름이 다르면 카카오톡 채널 "묘선당"으로 알려 주세요.</p>
+      </div>
       <button class="btn line" type="button" id="again">다른 사주로 다시 보기</button>
     </div>
   </section>
@@ -539,10 +562,10 @@ r.hidden=false;try{log('gan',G[g])}catch(e){}document.getElementById('hook').hid
   <section class="order-steps" id="order-steps" aria-labelledby="order-title">
     <h2 id="order-title">주문은 이렇게 진행돼요</h2>
     <ol>
-      <li>주문서에 상품과 정보를 적고 결제해요.<small>카카오페이 또는 계좌이체 · 생년월일, 출생시간(모르면 ‘모름’), 성별, 지역, 질문</small></li>
+      <li>사이트에서 질문과 생년월일을 적고, 이메일·입금자명만 더 적어 주문해요.<small>결제는 카카오페이 또는 계좌이체 · 출생시간은 모르면 ‘모름’</small></li>
       <li>입금 확인 후 24시간 안에 PDF를 이메일로 보내 드려요.</li>
     </ol>
-    <p class="sales-reassure" style="margin-top:10px">질문과 출생정보는 주문서에서만 받아요. 공개 댓글에는 적지 말아 주세요.</p>
+    <p class="sales-reassure" style="margin-top:10px">질문과 출생정보는 이 사이트에서만 받아요. 공개 댓글에는 적지 말아 주세요.</p>
     <a class="btn gold" id="sales-order" href="#">내 질문부터 적기</a>
   </section>
 <!-- CODEX_SALES_HTML_END -->
@@ -1191,7 +1214,7 @@ const PRODUCT = {basic:'BASIC 9,900원 — 간단한 사주풀이 + 질문 1개'
 // 구글 주문서로 바로 보내지 않는다: 사이트에서 질문·생년월일을 먼저 받고, 풀이 화면의 주문 버튼이 그 내용을 채워 주문서를 연다
 ['sales-basic','sales-premium','sales-order'].forEach(id => document.getElementById(id).addEventListener('click', e => {
   e.preventDefault(); log('sales_' + id.slice(6));
-  if (!$('v-story').hidden) { $('goB').scrollIntoView({behavior:'smooth', block:'center'}); return; }
+  if (!$('v-story').hidden) { openOrder(id === 'sales-premium' ? 'premium' : 'basic'); return; }
   $('v-in').hidden = false; openForm();
 }));
 /* CODEX_SALES_JS_END */
@@ -1427,6 +1450,48 @@ function orderUrl(tier){
   const pf = profileText(); if (pf) p.set('entry.2123051714', pf);
   return FORM + '?' + p.toString();
 }
+
+/* 사이트 안 주문: 구글 주문서 칸 이름(entry.*) 그대로 formResponse에 대신 제출. 날짜 칸은 _year/_month/_day 로 나눠 보낸다 */
+let OTIER = 'basic';
+function orderBody(tier, o){
+  const b = CUR, two = n => String(n).padStart(2, '0'), p = new URLSearchParams();
+  p.set('entry.1425718858', PRODUCT[tier]); p.set('entry.143991645', o.name); p.set('entry.358440189', b.sex);
+  p.set('entry.1564947932', CALNAME[b.cal]);
+  p.set('entry.1305139645_year', b.y); p.set('entry.1305139645_month', two(b.mo)); p.set('entry.1305139645_day', two(b.d));
+  p.set('entry.445168086', b.unk ? '모름' : `${two(b.hh)}:${two(b.mi)}`);
+  p.set('entry.1378085171', b.cityName);
+  p.set('entry.1643090871', b.q);
+  if (tier === 'premium'){ if (o.q2) p.set('entry.981271087', o.q2); if (o.q3) p.set('entry.22944938', o.q3); }
+  p.set('entry.1210751656', o.mail); p.set('entry.265078131', o.payer);
+  const pf = profileText(); if (pf) p.set('entry.2123051714', pf);
+  p.set('entry.79720773', '안내 내용을 확인했고, 받은 뒤에는 단순 변심 환불이 어렵다는 점에 동의합니다.');
+  p.set('entry.1691911700', '리포트 작성을 위해 Google에 위 정보를 전달하는 데 동의합니다.');
+  return p;
+}
+function openOrder(tier){
+  OTIER = tier; $('oT').innerHTML = tier === 'premium' ? 'PREMIUM <b>29,900원</b>' : 'BASIC <b>9,900원</b>';
+  $('oQs').hidden = tier !== 'premium'; $('oQs').style.display = tier === 'premium' ? 'flex' : 'none';
+  if (!$('oName').value && CUR.name !== '그대') $('oName').value = CUR.name;
+  $('oQ1').textContent = '질문 1 · ' + CUR.q + ' (방금 적은 질문과 생년월일은 그대로 들어가요)';
+  $('oDone').hidden = true; $('ord').hidden = false; $('ord').style.display = 'flex'; $('ord').scrollIntoView({behavior:'smooth', block:'start'});
+}
+['goB','goP'].forEach(id => $(id).addEventListener('click', e => { e.preventDefault(); openOrder(id === 'goP' ? 'premium' : 'basic'); }));
+$('ord').addEventListener('submit', async e => {
+  e.preventDefault();
+  const o = {name:$('oName').value.trim(), mail:$('oMail').value.trim(), payer:$('oPayer').value.trim(), q2:$('oQ2').value.trim(), q3:$('oQ3').value.trim()};
+  const err = !o.name ? '표지에 넣을 이름을 적어 주세요.' : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(o.mail) ? '이메일을 다시 확인해 주세요.' : !o.payer ? '입금자 이름을 적어 주세요.' : !($('oA1').checked && $('oA2').checked) ? '두 가지 동의에 체크해 주세요.' : '';
+  $('oErr').textContent = err; if (err) return;
+  $('oGo').disabled = true; $('oGo').textContent = '주문 넣는 중…';
+  try {
+    await fetch(FORM.replace('/viewform', '/formResponse'), {method:'POST', mode:'no-cors', body:orderBody(OTIER, o)});
+  } catch (x) {
+    $('oGo').disabled = false; $('oGo').textContent = '주문 넣기'; $('oErr').textContent = '연결이 끊겼어요. 잠시 뒤 다시 눌러 주세요.'; return;
+  }
+  log('주문 넣음', OTIER);
+  $('oAmt').textContent = OTIER === 'premium' ? '29,900원' : '9,900원'; $('oMailShow').textContent = o.mail;
+  $('ord').hidden = true; $('ord').style.display = 'none'; $('oDone').hidden = false; $('oDone').style.display = 'flex'; $('oDone').scrollIntoView({behavior:'smooth', block:'start'});
+});
+$('oAcct').addEventListener('click', async () => { try { await navigator.clipboard.writeText('카카오뱅크 3333-38-0767462'); $('oAcct').textContent = '복사했어요 · 카카오뱅크 3333-38-0767462 (최인석)'; } catch (x) {} });
 
 /* 한 장 결과 카드(1080×1350): 유형 이름, 카드 한 줄, 질문 자리, 주소만 그린다 */
 function wrapText(c, text, maxW){
