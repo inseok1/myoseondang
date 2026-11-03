@@ -1,0 +1,14 @@
+{
+  "screenSections": [
+    {"id":"part1","titleRole":"원국과 전체 흐름의 출발점","paragraphs":[{"covers":"질문에 대한 첫 방향과 해석 범위","chars":540,"values":["일간","월지 계절","십성 분포","신강약","질문"]},{"covers":"원국·대운·가까운 세운의 계산 근거 요약","chars":430,"values":["일간","합충","격","대운","세운"]}]},
+    {"id":"part2","titleRole":"질문에 직접 답하기","paragraphs":[{"covers":"질문과 상황에 맞춘 결론·방향·현실적인 대응","chars":850,"values":["일간","십성 분포","신강약","대운","세운","질문"]}]},
+    {"id":"part3","titleRole":"타고난 기질과 관계 방식","paragraphs":[{"covers":"일간과 월지 계절이 만드는 기본 결","chars":550,"values":["일간","월지 계절","신강약"]},{"covers":"십성의 분포를 생활 장면으로 설명","chars":620,"values":["십성 분포","합충"]},{"covers":"격과 과거·현재 대운 흐름의 연결","chars":570,"values":["격","대운","질문"]}]},
+    {"id":"part4","titleRole":"오행의 균형과 관계","paragraphs":[{"covers":"오행 분포에서 두드러지거나 비는 기운","chars":700,"values":["오행 넘침/빔","월지 계절","신강약"]},{"covers":"원국의 합·충이 드러나는 관계 장면","chars":600,"values":["합충","일간"]}]},
+    {"id":"part5","titleRole":"균형을 돕는 핵심 기운","paragraphs":[{"covers":"용신의 쉬운 뜻과 원국에서 맡는 역할","chars":680,"values":["용신","일간","오행 넘침/빔"]},{"covers":"일상에서 적용할 수 있는 일반적 방법","chars":500,"values":["용신","질문"]}],"locked":"방법"},
+    {"id":"part6","titleRole":"현재 대운의 큰 흐름","paragraphs":[{"covers":"현재 대운의 십성과 시기별 주제","chars":700,"values":["대운","십성 분포","신강약"]},{"covers":"질문 분야에 나타나는 유리한 방향","chars":600,"values":["대운","격","질문"]}],"locked":"때"},
+    {"id":"part7","titleRole":"앞으로 열두 달의 미리보기","paragraphs":[{"covers":"세운과 월운이 보여주는 큰 흐름과 달력 키워드","chars":700,"values":["세운","월운","대운"]},{"covers":"월운의 반복 주제와 한 해 전체에서 살필 점. 달을 지정한 행동 지시는 하지 않음","chars":700,"values":["월운","세운","질문"]}],"locked":"근거·때·방법"},
+    {"id":"part8","titleRole":"마무리와 다음 풀이 안내","paragraphs":[{"covers":"앞선 풀이를 질문에 연결하는 정리","chars":500,"values":["일간","용신","대운","질문"]}]}
+  ],
+  "lockedLocations":["근거","때","방법"],
+  "rule":"기존 화면의 8단계 목차와 순서를 유지한다. 계산값은 엔진 결과만 쓴다."
+}

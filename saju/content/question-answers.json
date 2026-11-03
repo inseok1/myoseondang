@@ -1,0 +1,288 @@
+{
+  "business": [
+    {
+      "text": "사업은 고객이 다시 찾을 이유를 만들 때 오래가며, 그대는 한 번 맺은 인연을 이어 가고 손에 잡히는 결과로 신뢰를 쌓는 데 강점이 있습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국에는 재성 {wealthCount}개와 식상 {outputCount}개가 있어 돈을 다루는 감각과 상품·서비스를 내놓는 재주가 함께 드러나며, 재주가 손님과 이어질 때 사업의 결실도 생깁니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해는 새로운 제안에 마음이 끌려도 지금 쌓은 관계와 감당할 몫을 함께 살피고, 내년에는 확인한 손님과 일하는 방식을 바탕으로 다음 길을 넓힐 수 있습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "그대에게 맞는 성장은 큰 모험보다 믿을 만한 인연과 꾸준히 이어지는 거래에서 나오므로, 지킬 수 있는 약속을 골라 오래 남는 관계를 차근히 키워 가세요.",
+      "status": "draft"
+    }
+  ],
+  "jobchange": [
+    {
+      "text": "이직을 고민하는 마음에는 지금보다 제 능력을 잘 쓸 수 있는 자리를 찾고 싶은 뜻이 담겨 있으니, 지금까지 해 온 일에서 다음 자리로 가져갈 강점을 먼저 발견하세요.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 관성 {authorityCount}개와 인성 {resourceCount}개는 조직 안의 역할과 자격·경험을 쌓는 방식을 함께 보여 줍니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해는 원하는 역할을 살피고 준비를 다지는 시기이며, 내년에는 그 준비를 알아봐 주는 자리와 인연이 닿을 수 있으니 조급함보다 기준을 가지고 기회를 고르세요.",
+      "status": "draft"
+    },
+    {
+      "text": "그대는 준비가 쌓일수록 가진 힘을 안정적으로 발휘하므로, 어떤 일을 맡아 성장하고 싶은지 떠올리고 그 바람을 알아주는 자리를 선택하세요.",
+      "status": "draft"
+    }
+  ],
+  "employment": [
+    {
+      "text": "취업은 준비한 역량을 보여 줄 자리를 고르고, 지원 조건에 맞춰 경험을 정리합니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 관성 {authorityCount}개와 인성 {resourceCount}개는 조직 안의 역할과 자격·경험을 쌓는 방식을 함께 보여 줍니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간에는 자격과 경력 자료를 정돈하고, 내년에는 준비한 조건에 맞춰 지원을 이어 갑니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 지원서에 맡은 일과 결과를 수치로 적고 공고의 자격·일정·근무 조건을 대조합니다.",
+      "status": "draft"
+    }
+  ],
+  "dating": [
+    {
+      "text": "연애에서는 바라는 관계와 연락 방식을 말로 나누고, 서로 지킬 약속을 정합니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 배우자 별인 관성 {authorityCount}개와 재성 {wealthCount}개를 바탕으로, 인연을 맺고 유지하는 방식을 함께 읽습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간에는 기대와 생활 리듬을 확인하고, 내년에는 합의한 약속을 꾸준히 이어 갑니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 연락 방식과 약속의 빈도를 정하고 만난 뒤 서로 지킨 점을 나눕니다.",
+      "status": "draft"
+    }
+  ],
+  "reunion": [
+    {
+      "text": "재회는 지난 관계에서 달라진 점과 바라는 점을 확인하고, 지킬 경계를 먼저 정합니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 배우자 별인 관성 {authorityCount}개와 재성 {wealthCount}개를 바탕으로 관계를 시작하고 이어 가는 결을 함께 읽습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간에는 연락의 목적과 상대의 의사를 확인하고, 내년에는 실제로 이어 갈 수 있는 약속을 세웁니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 연락 전에 바라는 점과 경계를 적고 대화에서는 상대의 답을 충분히 듣습니다.",
+      "status": "draft"
+    }
+  ],
+  "marriage": [
+    {
+      "text": "결혼은 마음과 생활을 함께 꾸려 가는 일이며, 그대는 사랑하는 사람과 안정된 바탕을 만들고 싶어 하므로 작은 생활 기준을 맞출수록 마음이 편안해집니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국에는 관계의 약속을 살피는 관성 {authorityCount}개와 서로 주고받는 현실을 보는 재성 {wealthCount}개가 있어, 기대를 미리 말하고 함께 조정할수록 신뢰가 쌓입니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해는 둘이 함께할 생활의 모양을 그려 보고, 내년에는 나눈 이야기를 실제 일상에 맞추며 서로 편안한 방식을 찾아갈 수 있습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "그대에게 맞는 결혼은 한 사람이 참고 맞추기보다 작은 차이를 함께 이야기하며 생활을 만들어 가는 관계이니, 중요한 문제를 다정하게 꺼내 보세요.",
+      "status": "draft"
+    }
+  ],
+  "money": [
+    {
+      "text": "돈의 흐름은 들어온 금액과 남는 금액을 나누어 기록하며 다룹니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 재성 {wealthCount}개와 식상 {outputCount}개는 돈의 유입과 수입을 만들어 내는 힘을 함께 보여 줍니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간에는 수입과 고정 지출을 정리하고, 내년에는 확인된 예산 안에서 지출 순서를 세웁니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 수입·고정 지출·상환 일정을 장부에 적고 남는 금액 안에서 계획을 세웁니다.",
+      "status": "draft"
+    }
+  ],
+  "move": [
+    {
+      "text": "이사는 예산·통근 시간·생활 편의를 표로 비교하고, 확인한 조건에 맞춰 옮길 곳을 정합니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 관성 {authorityCount}개와 인성 {resourceCount}개는 정착할 환경과 조건을 살피는 힘을 함께 보여 줍니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간에는 계약 조건과 생활 동선을 확인하고, 내년에는 예산 안에서 필요한 준비를 마칩니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 관리비와 계약 조건을 확인하고 통근·생활 편의를 비교합니다.",
+      "status": "draft"
+    }
+  ],
+  "exam": [
+    {
+      "text": "시험은 준비 범위와 평가 기준을 확인하고, 공부 시간을 계획에 맞춰 쌓습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 인성 {resourceCount}개와 관성 {authorityCount}개는 배움의 축적과 평가에 대응하는 힘을 함께 보여 줍니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간에는 과목별 학습량과 오답을 정리하고, 내년에는 기록에 맞춰 공부 시간을 배분합니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 학습 범위와 오답을 매주 기록하고 과목별 시간을 다시 배분합니다.",
+      "status": "draft"
+    }
+  ],
+  "health": [
+    {
+      "text": "건강에 관한 질문은 생활 리듬을 살피고 식사·휴식·활동 시간을 고르게 챙깁니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 오행 분포는 전통 해석의 상징이며 의학적 검사나 전문 진료를 대신하지 않습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간과 내년의 흐름도 생활 습관을 점검하는 계기로 삼고, 불편은 의료 전문가와 상의합니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 식사·휴식·활동 시간을 기록하고 일정한 수면과 휴식 시간을 둡니다.",
+      "status": "draft"
+    }
+  ],
+  "general": [
+    {
+      "text": "그대가 바라는 일은 준비한 힘을 현실의 선택으로 이어 갑니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 세운 {yearStar}은 {yearGroup}의 흐름이며, {yearMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "현재 대운의 {daeunStar}은 {daeunGroup}의 10년 주제이며, {daeunMeaning}.",
+      "status": "draft"
+    },
+    {
+      "text": "원국의 {yearGroup} {yearGroupCount}개와 {daeunGroup} {daeunGroupCount}개를 함께 보면 타고난 관심과 지속할 힘을 읽습니다.",
+      "status": "draft"
+    },
+    {
+      "text": "올해 남은 기간에는 해 오던 일의 결과를 기록하고, 내년에는 확인된 선택지를 우선순위에 맞춰 실행합니다.",
+      "status": "draft"
+    },
+    {
+      "text": "자세한 때와 방법은 리포트에 담았으며, 선택의 기대 결과와 비용을 적고 실행 뒤 달라진 점을 기록합니다.",
+      "status": "draft"
+    }
+  ]
+}
