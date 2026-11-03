@@ -35,6 +35,10 @@ export const MODULES=[
  {id:'yearTopic',part:'part7',slot:1,chars:700,keys:()=>cross(GROUPS,Object.keys(TOPICS)),describe:([y,t])=>`올해 세운의 십성 갈래: ${y}(${GROUP_MEANING[y]}) / 질문 분야: ${TOPICS[t]}. 한 해 내내 반복되는 주제와 대응. 달·계절·기간을 지정하지 않는다. 개별 십성 이름은 쓰지 않는다.`,slots:['{세운연도}']},
  {id:'closing',part:'part8',slot:0,chars:500,keys:()=>cross(ELEMENTS,Object.keys(TOPICS)),describe:([y,t])=>`용신: ${ELEMENT_MEANING[y]} / 질문 분야: ${TOPICS[t]}. 앞선 풀이를 질문에 연결해 정리하고, 그대가 택할 방향과 방법으로 끝낸다.`,slots:['{용신}']},
 ];
+// 990원 「다음 12개월」 전용. 공개 사이트로 나가지 않고(bank-packed에 넣지 않음) 결제 확인 서버만 내려준다.
+export const PAID_MODULES=[
+ {id:'month',chars:280,keys:()=>cross(STARS,Object.keys(STRENGTHS),Object.keys(TOPICS)),describe:([s,k,t])=>`이 달 월운의 십성: ${s} / ${STRENGTHS[k]} / 질문 분야: ${TOPICS[t]}. 한 달 동안 드러나기 쉬운 주제, 사주상 이유(이 십성이 일간에게 하는 일), 질문 분야에서 눈여겨볼 장면, 이 기운을 살리는 방향을 차례로. 달 이름·날짜·기간을 쓰지 않는다(앞에 따로 붙는다). 언제 무엇을 하라고 날을 정해 지시하지 않는다. 이 십성 말고 다른 개별 십성 이름은 쓰지 않는다.`,slots:[]},
+];
 export function cross(...lists){return lists.reduce((acc,list)=>acc.flatMap(a=>list.map(b=>[...a,b])),[[]]);}
 export const keyOf=parts=>parts.join('|');
 

@@ -3,6 +3,7 @@ import {currentDaeun as selectCurrentDaeun} from '../fortune.js';
 import {fillText,dedupeScreenSentences,sipsinCounts,josa} from './text.js';
 import {buildQuestionAnswer,questionTopic,starGroup} from './question.js';
 import {composeReading} from './bank-reading.js';
+import {setupPaidMonths} from './months-paid.js';
 import {storyLines,temperamentLines,elementLines,relationLines,yongLines,weatherLines,nextYearLines} from './longform.js';
 const root=document.querySelector('#result-content'), dataUrl=new URL('../../content/readings.json',import.meta.url), narrativeUrl=new URL('../../content/narratives.json',import.meta.url), questionCopyUrl=new URL('../../content/question-answers.json',import.meta.url);
 const GAN=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'],JI=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
@@ -171,7 +172,9 @@ async function requestPersonalizedReading(engine,p,r,topic){
  try{
   const calculation=engine.toData(r,p);delete calculation['이름'];delete calculation['생년월일시'];
   // 무료 풀이는 문장 창고 조립(0원). 유료 /api/reading은 결제 손님용으로만 남겨 둔다.
-  const result={sections:await composeReading(calculation,topic,JSON.stringify([calculation['원국'],calculation['성별'],topic,p.question||''])),mode:'bank'};
+  const seed=JSON.stringify([calculation['원국'],calculation['성별'],topic,p.question||'']);
+  const result={sections:await composeReading(calculation,topic,seed),mode:'bank'};
+  setupPaidMonths(calculation,topic,seed);
   for(const [id,paragraphs] of Object.entries(result.sections)){const target=document.querySelector(`#${CSS.escape(id)}`);if(!target||!Array.isArray(paragraphs))continue;const box=document.createElement('div');box.className='personal-reading';box.dataset.mode=result.mode||'cached';const label=document.createElement('h3');label.textContent='묘선당 풀이';box.append(label);for(const paragraph of paragraphs){const pEl=document.createElement('p');pEl.textContent=paragraph;box.append(pEl);}const heading=target.querySelector('.section-title');if(heading?.nextSibling)target.insertBefore(box,heading.nextSibling);else target.prepend(box);}
  }catch(error){console.warn('개별 풀이를 불러오지 못해 기본 풀이를 표시합니다.',error);}
  finally{waiting.forEach(box=>box.remove());}
