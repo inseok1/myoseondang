@@ -2,7 +2,7 @@
 // 탭에는 주문 토큰과 사주 표식(원국+주제)만 남긴다. 이름·생년월일은 서버로 보내지 않는다.
 import {features} from '../bank-features.js';
 
-export const PAY_SERVER='';  // 배포 후 Cloud Run 주소(https://myoseondang-pay-….run.app)를 넣는다
+export const PAY_SERVER='https://myoseondang-pay-uasuwwm3hq-du.a.run.app';  // server/deploy.mjs가 알려 준 Cloud Run 주소
 const SLOT='myoseondang-pay990';
 const hash=s=>{let h=2166136261;for(const c of s){h^=c.codePointAt(0);h=Math.imul(h,16777619);}return h>>>0;};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
