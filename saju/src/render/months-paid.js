@@ -40,7 +40,7 @@ export async function setupPaidMonths(calc,topic,seed){
  const spots=parts.map(({m,name})=>{
   const section=document.querySelector(`#${m.part}`);if(!section)return null;
   const spot=document.createElement('a');spot.className='paid-spot';spot.href='#paid-offer';
-  spot.innerHTML=`<b>🔒 ${esc(name)}</b><small>「${esc(title)}」 1,000원에 들어 있어요</small>`;const lock=section.querySelector('.locked-card');lock?lock.before(spot):section.append(spot);return spot;
+  spot.innerHTML=`<b>🔒 ${esc(name)}</b><small>「${esc(title)}」 1,000원 · 누르면 바로 결제로 열려요</small>`;const lock=section.querySelector('.locked-card');lock?lock.before(spot):section.append(spot);return spot;
  });
  // 결제 칸 하나: result.js가 #part7에 만든 잠긴 칸을 봉인 편지 칸으로 바꾼다
  const card=document.querySelector('#part7 .locked-card');if(!card)return;
@@ -48,6 +48,8 @@ export async function setupPaidMonths(calc,topic,seed){
  card.innerHTML=`<img class="lock-art" src="assets/v3-lock.jpg" alt="봉인된 라벤더 편지"><div class="offer-body"><h3>${esc(title)} · 1,000원</h3><ul>${parts.map(p=>`<li>${esc(p.name)}</li>`).join('')}<li>다음 12개월, 달마다 이유와 방향</li></ul><button class="button primary wide">🔓 1,000원으로 ${esc(title)} 열기</button><small>결제하면 바로 이 화면에서 다섯 칸이 함께 열려요</small></div>`;
  const button=card.querySelector('button');
  button.onclick=()=>{button.disabled=true;pay(topic,sig,`${title} · 묘선당`).catch(err=>{button.disabled=false;alert(err.message);});};
+ // 칸마다 붙은 잠긴 자리도 누르면 바로 결제창을 연다(아래로 내려가기만 하면 손님이 결제 버튼을 못 찾는다)
+ spots.forEach(s=>s?.addEventListener('click',e=>{e.preventDefault();if(!button.disabled)button.click();}));
 
  // 결제하고 돌아왔으면(탭의 주문 또는 주소의 ?o=) 연다
  const q=new URLSearchParams(location.search),slot=readSlot();
