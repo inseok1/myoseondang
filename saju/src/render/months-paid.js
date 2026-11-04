@@ -1,4 +1,4 @@
-// 990원 「다음 12개월」: 페이앱 결제 → 결제 확인 서버(server/pay.mjs)가 열어 준 달별 문장을 12달 칸 아래에 붙인다.
+// 1,000원(페이앱 최소 금액) 「다음 12개월」: 페이앱 결제 → 결제 확인 서버(server/pay.mjs)가 열어 준 달별 문장을 12달 칸 아래에 붙인다.
 // 탭에는 주문 토큰과 사주 표식(원국+주제)만 남긴다. 이름·생년월일은 서버로 보내지 않는다.
 import {features} from '../bank-features.js';
 
@@ -23,7 +23,7 @@ async function pay(sig){
  sessionStorage.setItem(SLOT,JSON.stringify({t,sig}));
  const PayApp=await loadPayApp();
  PayApp.setTarget('_self');
- PayApp.call({userid:'myoseondang',shopname:'묘선당',goodname:'내 사주의 다음 12개월',price:'990',var1:t,smsuse:'n',checkretry:'y',
+ PayApp.call({userid:'myoseondang',shopname:'묘선당',goodname:'내 사주의 다음 12개월',price:'1000',var1:t,smsuse:'n',checkretry:'y',
   feedbackurl:`${PAY_SERVER}/feedback`,returnurl:location.href.split('#')[0]+'#part7'});
 }
 
@@ -36,7 +36,7 @@ export async function setupPaidMonths(calc,topic,seed){
  if(!card||!PAY_SERVER)return;
  const list=months(calc,topic),sig=String(hash(JSON.stringify([calc['원국'],topic])));
  const button=card.querySelector('.lock-overlay');
- button.innerHTML='🔓 990원으로 12달 이유와 방향 열기<small>결제하면 바로 이 자리에서 열려요</small>';
+ button.innerHTML='🔓 1,000원으로 12달 이유와 방향 열기<small>결제하면 바로 이 자리에서 열려요</small>';
  button.onclick=e=>{e.stopPropagation();button.disabled=true;pay(sig).catch(err=>{button.disabled=false;alert(err.message);});};
  const slot=readSlot();
  if(!slot||slot.sig!==sig)return;
