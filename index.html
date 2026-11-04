@@ -2,8 +2,8 @@
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>묘선당</title>
 <script>
-// 첫 주소는 새 사주 사이트로 보낸다. ?s=ig 같은 유입 표시는 그대로 넘기고, 타로 DM 링크(#v-tarot)는 타로 페이지로.
-location.replace(location.hash==='#v-tarot'?'tarot.html'+location.search:'saju/'+location.search);
+// 첫 주소는 새 사주 사이트로 보낸다. ?s=ig 같은 유입 표시는 그대로 넘기고, 타로 DM·tarot.html(?s=tarot)은 타로가 있는 예전 화면으로.
+location.replace(location.hash==='#v-tarot'||/[?&]s=tarot/.test(location.search)?'classic.html'+location.search+'#v-tarot':'saju/'+location.search);
 </script>
 <meta http-equiv="refresh" content="0;url=saju/">
 </head><body style="background:#fbf7f2;font-family:sans-serif;text-align:center;padding:40px 16px"><a href="saju/">묘선당으로 이동</a></body></html>
