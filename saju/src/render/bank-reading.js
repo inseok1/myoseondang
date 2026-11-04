@@ -35,6 +35,9 @@ function months(calc){
  return ` 열두 달의 월운을 차례로 적으면 ${items.join(', ')}입니다. 같은 키워드가 이어지는 구간은 한 주제가 길게 흐르는 때이고, 키워드가 바뀌는 자리는 관심이 옮겨 가는 자리입니다.`;
 }
 
+// 결제로 받은 칸(answer 등)의 문장 후보 중 하나를 무료 칸과 같은 규칙으로 골라 채운다
+export const fillPaid=(calc,topic,seed,id,variants)=>fill(variants[hash(`${seed}|${id}`)%variants.length],features(calc,topic).values);
+
 export async function composeReading(calc,topic,seed,load=defaultLoad){
  const f=features(calc,topic);const sections={part1:[],part2:[],part3:[],part4:[],part5:[],part6:[],part7:[],part8:[]};
  const texts=await Promise.all(MODULES.map(async m=>{

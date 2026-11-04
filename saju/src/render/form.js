@@ -77,6 +77,20 @@ document.querySelector('[name="unknownTime"]').addEventListener('change',e=>{
   document.querySelectorAll('[data-hour]').forEach(b=>b.disabled=e.target.checked);
 });
 
+// 첫 화면 카테고리를 누르면 그 주제로 입력칸 제목을 바꾸고 입력칸으로 내려간다
+document.querySelectorAll('.cat-grid input').forEach(r=>r.addEventListener('change',()=>{
+  const name=r.nextElementSibling.querySelector('b').textContent;
+  document.querySelector('#form-title').textContent=r.value==='general'?'생년월일만 넣으면 바로 나와요':`${name} 풀이, 생년월일만 넣으면 바로 나와요`;
+  document.querySelector('#form').scrollIntoView({behavior:'smooth'});
+}));
+
+// 결제한 풀이를 다시 열러 온 손님(?o=주문&c=주제): 카테고리를 맞춰 두고, 결과로 갈 때 주문 주소를 넘긴다
+const order=new URLSearchParams(location.search);
+if(order.get('o')){
+  document.querySelector(`.cat-grid input[value="${CSS.escape(order.get('c')||'')}"]`)?.click();
+  document.querySelector('#form-title').insertAdjacentHTML('afterend','<p class="notice">결제한 풀이를 다시 여는 중이에요. 결제할 때 넣은 생년월일을 그대로 넣어 주세요.</p>');
+}
+
 function chosenDate(data){
   const manual=!document.querySelector('.manual-date').hidden;
   return manual?[Number(data.get('yearManual')),Number(data.get('monthManual')),Number(data.get('dayManual'))]:[Number(data.get('year')),Number(data.get('month')),Number(data.get('day'))];
@@ -89,11 +103,12 @@ form.addEventListener('submit',async e=>{
   if(data.get('calendar')==='lunar'){showError(lunarStatus().message);return;}
   const birthday=new Date(y,mo-1,d);
   if(!y||y<1900||y>2100||mo<1||mo>12||d<1||d>31||birthday.getFullYear()!==y||birthday.getMonth()!==mo-1||birthday.getDate()!==d){showError('생년월일을 다시 확인해 주세요.');return;}
-  let city=cities.find(([name])=>name===String(data.get('city')||'').trim());
-  if(!city&&String(data.get('city')||'').trim()!=='모름'){
-    const matches=cityMatches(String(data.get('city')||''));
+  const cityText=String(data.get('city')||'').trim();  // 비워 두면 출생지 모름으로 계산
+  let city=cities.find(([name])=>name===cityText);
+  if(!city&&cityText&&cityText!=='모름'){
+    const matches=cityMatches(cityText);
     if(matches.length===1){city=matches[0];setCity(city[0]);}
-    else{showError(matches.length?'출생 도시 후보를 아래 목록에서 골라 주세요.':'출생 도시를 선택해 주세요.');cityInput.focus();return;}
+    else{document.querySelector('.more-fields').open=true;showError(matches.length?'출생 도시 후보를 아래 목록에서 골라 주세요.':'출생 도시를 목록에서 골라 주세요. 모르면 비워 두세요.');cityInput.focus();return;}
   }
   const time=unknown?null:parseTimeText(String(data.get('timeText')||''));
   if(!unknown&&!time){showError('태어난 시각을 다시 확인해 주세요. 예: 오후 7시, 새벽 1시 반, 19:00.');return;}
@@ -104,6 +119,6 @@ form.addEventListener('submit',async e=>{
     question:String(data.get('question')||'').trim(),topic:data.get('topic')||'default',
     work:data.get('work')||'',relationship:data.get('relationship')||'',calendar:'solar'
   };
-  try{const engine=await loadEngine();payload.calculation=engine.compute(payload);sessionStorage.setItem('myoseondang-current',JSON.stringify(payload));location.href='result.html';}
+  try{const engine=await loadEngine();payload.calculation=engine.compute(payload);sessionStorage.setItem('myoseondang-current',JSON.stringify(payload));location.href='result.html'+(order.get('o')?location.search:'');}
   catch(err){showError(err.message||'입력 내용을 확인해 주세요.');}
 });

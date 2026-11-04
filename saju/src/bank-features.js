@@ -21,22 +21,22 @@ export function relationKey(list){const kinds=list.map(v=>String(v).split('·')[
 // 각 모듈: 화면 칸(part, 문단 순서), 글자 수, 열쇠 목록, 열쇠 설명(창고 작성용), 쓸 수 있는 자리표시
 export const MODULES=[
  {id:'opening',part:'part1',slot:0,chars:540,keys:()=>cross(Object.keys(TOPICS),Object.keys(STRENGTHS)),describe:([t,s])=>`질문 분야: ${TOPICS[t]} / ${STRENGTHS[s]}. 풀이 첫머리에서 질문에 대한 첫 방향과 이 풀이가 무엇을 근거로 읽는지 말한다.`,slots:['{일간}','{세운연도}']},
- {id:'answer',part:'part2',slot:0,chars:850,keys:()=>cross(GROUPS,GROUPS,Object.keys(TOPICS)),describe:([y,d,t])=>`올해 세운의 십성 갈래: ${y}(${GROUP_MEANING[y]}) / 지금 대운의 십성 갈래: ${d}(${GROUP_MEANING[d]}) / 질문 분야: ${TOPICS[t]}. 질문에 직접 답한다 — 결론, 근거(두 기운이 만나는 방식), 생활 속 대응 방법.`,slots:['{세운연도}','{세운십성}','{대운십성}']},
  {id:'temper',part:'part3',slot:0,chars:550,keys:()=>cross(Object.keys(STEMS),SEASONS,Object.keys(STRENGTHS)),describe:([g,s,k])=>`일간: ${STEMS[g]} / 태어난 계절: ${s} / ${STRENGTHS[k]}. 이 사람의 기본 결과 성격을 생활 장면으로. 계절 낱말이 든 문장에는 권유·평가(좋습니다, 유리합니다 등)를 넣지 않는다.`,slots:['{일간}']},
  {id:'stars',part:'part3',slot:1,chars:620,keys:()=>cross(GROUPS,GROUPS).filter(([a,b])=>a!==b),describe:([a,b])=>`원국에서 가장 두드러진 십성 갈래: ${a}(${GROUP_MEANING[a]}) / 가장 적거나 빈 갈래: ${b}(${GROUP_MEANING[b]}). 십성 분포가 생활에서 드러나는 장면과 빈 쪽을 채우는 방법. 갈래 이름(비겁·식상·재성·관성·인성)으로만 말하고 개별 십성 이름은 쓰지 않는다.`,slots:[]},
  {id:'gyeok',part:'part3',slot:2,chars:570,keys:()=>cross(GYEOKS,GROUPS),describe:([g,d])=>`격: ${g} / 지금 대운의 십성 갈래: ${d}(${GROUP_MEANING[d]}). 타고난 쓰임(격)이 지금 대운과 어떻게 이어지는지. 대운의 개별 십성 이름은 {대운십성} 자리표시로만 쓴다.`,slots:['{격}','{대운나이}','{대운십성}']},
  {id:'elements',part:'part4',slot:0,chars:700,keys:()=>cross(ELEMENTS,ELEMENTS).filter(([a,b])=>a!==b),describe:([a,b])=>`오행 중 가장 많은 기운: ${ELEMENT_MEANING[a]} / 가장 적은 기운: ${ELEMENT_MEANING[b]}. 넘치는 쪽이 생활에서 드러나는 모습과 모자란 쪽을 채우는 생활 방법.`,slots:['{최다오행}','{최소오행}']},
  {id:'relations',part:'part4',slot:1,chars:600,keys:()=>cross(RELATION_KINDS,ELEMENTS),describe:([r,e])=>`원국 글자 사이의 관계 종류: ${r==='없음'?'두드러진 합·충·형·파·해가 없음':r.replace('형파해','형·파·해')} / 일간 오행: ${ELEMENT_MEANING[e]}. 관계(합=묶임·협력, 충=부딪힘·변화, 형·파·해=마찰·조정)가 사람 사이·일에서 드러나는 장면. 어느 글자끼리인지는 쓰지 않는다(앞에 따로 붙는다).`,slots:[]},
  {id:'yongsin',part:'part5',slot:0,chars:680,keys:()=>cross(ELEMENTS,ELEMENTS),describe:([y,e])=>`용신(균형을 돕는 기운): ${ELEMENT_MEANING[y]} / 일간 오행: ${ELEMENT_MEANING[e]}. 용신의 쉬운 뜻과 이 원국에서 맡는 역할.`,slots:['{용신}']},
- {id:'yongsinTopic',part:'part5',slot:1,chars:500,keys:()=>cross(ELEMENTS,Object.keys(TOPICS)),describe:([y,t])=>`용신: ${ELEMENT_MEANING[y]} / 질문 분야: ${TOPICS[t]}. 일상에서 이 기운을 쓰는 일반적 방법(공간·사람·습관·일하는 방식).`,slots:['{용신}']},
  {id:'daeun',part:'part6',slot:0,chars:700,keys:()=>cross(STARS,Object.keys(STRENGTHS)),describe:([s,k])=>`지금 대운의 십성: ${s} / ${STRENGTHS[k]}. 이 대운 십 년의 큰 주제와 쓰는 법. 이 십성 말고 다른 개별 십성 이름은 쓰지 않는다.`,slots:['{대운}','{대운나이}','{대운연도}']},
- {id:'daeunTopic',part:'part6',slot:1,chars:600,keys:()=>cross(GROUPS,Object.keys(TOPICS)),describe:([d,t])=>`지금 대운의 십성 갈래: ${d}(${GROUP_MEANING[d]}) / 질문 분야: ${TOPICS[t]}. 이 대운에서 질문 분야에 유리한 방향. 개별 십성 이름은 {대운십성} 자리표시로만 쓴다.`,slots:['{대운십성}']},
  {id:'yearIntro',part:'part7',slot:0,chars:300,keys:()=>cross(STARS,GROUPS),describe:([y,d])=>`올해 세운의 십성: ${y} / 지금 대운의 십성 갈래: ${d}(${GROUP_MEANING[d]}). 한 해 흐름의 큰 그림을 짧게. 달 이름은 쓰지 않는다(뒤에 달별 키워드가 따로 붙는다). 이 세운 십성 말고 다른 개별 십성 이름은 쓰지 않는다.`,slots:['{세운연도}','{세운}']},
- {id:'yearTopic',part:'part7',slot:1,chars:700,keys:()=>cross(GROUPS,Object.keys(TOPICS)),describe:([y,t])=>`올해 세운의 십성 갈래: ${y}(${GROUP_MEANING[y]}) / 질문 분야: ${TOPICS[t]}. 한 해 내내 반복되는 주제와 대응. 달·계절·기간을 지정하지 않는다. 개별 십성 이름은 쓰지 않는다.`,slots:['{세운연도}']},
  {id:'closing',part:'part8',slot:0,chars:500,keys:()=>cross(ELEMENTS,Object.keys(TOPICS)),describe:([y,t])=>`용신: ${ELEMENT_MEANING[y]} / 질문 분야: ${TOPICS[t]}. 앞선 풀이를 질문에 연결해 정리하고, 그대가 택할 방향과 방법으로 끝낸다.`,slots:['{용신}']},
 ];
-// 990원 「다음 12개월」 전용. 공개 사이트로 나가지 않고(bank-packed에 넣지 않음) 결제 확인 서버만 내려준다.
+// 1,000원 칸들. 공개 사이트로 나가지 않고(bank-packed에 넣지 않음) 결제 확인 서버가 산 칸만 내려준다.
 export const PAID_MODULES=[
+ {id:'answer',title:'이 주제의 핵심 해석과 할 일',part:'part2',slot:0,chars:850,keys:()=>cross(GROUPS,GROUPS,Object.keys(TOPICS)),describe:([y,d,t])=>`올해 세운의 십성 갈래: ${y}(${GROUP_MEANING[y]}) / 지금 대운의 십성 갈래: ${d}(${GROUP_MEANING[d]}) / 질문 분야: ${TOPICS[t]}. 질문에 직접 답한다 — 결론, 근거(두 기운이 만나는 방식), 생활 속 대응 방법.`,slots:['{세운연도}','{세운십성}','{대운십성}']},
+ {id:'yongsinTopic',title:'필요한 기운을 이 주제에 쓰는 법',part:'part5',slot:1,chars:500,keys:()=>cross(ELEMENTS,Object.keys(TOPICS)),describe:([y,t])=>`용신: ${ELEMENT_MEANING[y]} / 질문 분야: ${TOPICS[t]}. 일상에서 이 기운을 쓰는 일반적 방법(공간·사람·습관·일하는 방식).`,slots:['{용신}']},
+ {id:'daeunTopic',title:'지금 대운에서 이 주제의 흐름',part:'part6',slot:1,chars:600,keys:()=>cross(GROUPS,Object.keys(TOPICS)),describe:([d,t])=>`지금 대운의 십성 갈래: ${d}(${GROUP_MEANING[d]}) / 질문 분야: ${TOPICS[t]}. 이 대운에서 질문 분야에 유리한 방향. 개별 십성 이름은 {대운십성} 자리표시로만 쓴다.`,slots:['{대운십성}']},
+ {id:'yearTopic',title:'올해 이 주제에서 할 일',part:'part7',slot:1,chars:700,keys:()=>cross(GROUPS,Object.keys(TOPICS)),describe:([y,t])=>`올해 세운의 십성 갈래: ${y}(${GROUP_MEANING[y]}) / 질문 분야: ${TOPICS[t]}. 한 해 내내 반복되는 주제와 대응. 달·계절·기간을 지정하지 않는다. 개별 십성 이름은 쓰지 않는다.`,slots:['{세운연도}']},
  {id:'month',chars:280,keys:()=>cross(STARS,Object.keys(STRENGTHS),Object.keys(TOPICS)),describe:([s,k,t])=>`이 달 월운의 십성: ${s} / ${STRENGTHS[k]} / 질문 분야: ${TOPICS[t]}. 한 달 동안 드러나기 쉬운 주제, 사주상 이유(이 십성이 일간에게 하는 일), 질문 분야에서 눈여겨볼 장면, 이 기운을 살리는 방향을 차례로. 달 이름·날짜·기간을 쓰지 않는다(앞에 따로 붙는다). 언제 무엇을 하라고 날을 정해 지시하지 않는다. 이 십성 말고 다른 개별 십성 이름은 쓰지 않는다.`,slots:[]},
 ];
 export function cross(...lists){return lists.reduce((acc,list)=>acc.flatMap(a=>list.map(b=>[...a,b])),[[]]);}

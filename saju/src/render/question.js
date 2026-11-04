@@ -1,9 +1,11 @@
 import {sipsinCounts,josa} from './text.js';
+import {TOPICS} from '../bank-features.js';
 export function questionTopic(question,selected=''){
   const q=String(question||'');
   const topics=[['business',/사업|창업|가게|장사|매장|고객|거래처|매출|동업/],['reunion',/재회|재결합|다시 만날|다시 만남|헤어진 사람/],['marriage',/결혼|혼인|배우자|부부/],['dating',/연애|애인|남자친구|여자친구|짝사랑|소개팅/],['jobchange',/이직|퇴사|직장 옮|옮길|새 직장/],['employment',/취업|합격|구직|취직|직장 구/],['money',/돈|재물|금전|수입|투자|빚|저축|재정/],['move',/이사|이동|이주|집을 옮/],['exam',/시험|고시|자격증|입시|공부|합격/],['health',/건강|몸 상태|회복|컨디션/]];
   for(const [topic,pattern] of topics)if(pattern.test(q))return topic;
-  return ({work:'business',relationship:'dating',change:'jobchange',self:'general'})[selected]||'general';
+  // 첫 화면 카테고리는 엔진 주제 이름(money·dating 등)을 그대로 보낸다. work 등은 예전 입력값
+  return ({work:'business',relationship:'dating',change:'jobchange',self:'general'})[selected]||(TOPICS[selected]?selected:'general');
 }
 export const starGroup=star=>/식신|상관/.test(star)?'식상':/정재|편재/.test(star)?'재성':/정관|편관|칠살/.test(star)?'관성':/정인|편인/.test(star)?'인성':'비겁';
 export function starMeaning(star,topic='general'){
