@@ -1,3 +1,4 @@
+import {josa} from './text.js';
 const OH=['목','화','토','금','수'];
 const SIPSIN=['비견','겁재','식신','상관','편재','정재','편관','정관','편인','정인'];
 const DAY_SCENE=[
@@ -75,7 +76,7 @@ export function storyLines({day,season,archetype,element,topic}){
 export function temperamentLines({day,star,strength,hasRelation,cell,topic='general'}){
  const person=['새로운 길을 먼저 내고 싶어 합니다.','주변의 마음을 살피며 제 길을 찾습니다.','생각을 나누며 사람들의 기운을 북돋웁니다.','작은 차이를 알아보고 필요한 일에 집중합니다.','사람과 일을 받아들여 든든한 바탕을 만듭니다.','꾸준히 돌보고 실속을 쌓아 갑니다.','기준을 세우고 결정을 이끕니다.','세부를 다듬어 단정하게 마무리합니다.','변화를 읽어 여러 가능성을 이어 봅니다.','깊이 살핀 뒤 움직일 때를 기다립니다.'][day]||'자신의 속도를 살피며 한 걸음씩 나아갑니다.';
  const meaning=STAR_MEANING[star]||STAR_MEANING['비견'];
- const base=[`그대는 ${person}`,`${star}은 ${meaning}을 뜻합니다. 이 기운이 두드러져 ${STAR_LINE[star]?.[0]||STAR_LINE['비견'][0]}`];
+ const base=[`그대는 ${person}`,`${star}${josa(star,'eunneun')} ${meaning}${josa(meaning,'eulreul')} 뜻합니다. 이 기운이 두드러져 ${STAR_LINE[star]?.[0]||STAR_LINE['비견'][0]}`];
  const strengthLine={극신강:'움직일 힘이 넉넉해 시작은 빠르지만, 함께하는 이의 속도도 살필 때 오래 갑니다.',신강:'스스로 밀고 나갈 힘이 있습니다. 주변의 목소리를 들으면 그 힘이 더 큰 결과로 이어집니다.',중화:'상황에 맞춰 속도를 조절하는 편입니다. 계획과 현실을 함께 볼 때 판단이 안정됩니다.',신약:'믿을 만한 도움과 준비가 있을 때 재주를 잘 펼칩니다. 혼자 감당할 몫을 줄여도 좋습니다.',극신약:'작은 일을 하나씩 마칠 때 힘이 차오릅니다. 믿을 만한 사람 곁에서 속도를 나누어 보세요.'}[strength]||'자신에게 맞는 속도를 찾을 때 가진 힘이 오래 갑니다.';
  const scene=cell===0?`${season}에 태어난 ${['갑','을','병','정','무','기','경','신','임','계'][day]} 일간의 모습은 ${DAY_SCENE[day]?.[0]||DAY_SCENE[0][0].toLowerCase()}`:cell===1?(topic==='marriage'||topic==='dating'||topic==='reunion'?'상대의 말과 행동을 함께 보며, 서로 바라는 관계를 확인해 보세요.':topic==='business'?'기회가 와도 실제로 감당할 시간과 몫을 먼저 살펴보세요.':'새로운 자리에서는 원하는 역할과 생활 조건을 함께 살펴보세요.'):cell===2?'가까운 사이일수록 기대를 마음속에만 두지 말고 작은 말로 건네 보세요.':cell===3?'기운을 한곳에 오래 쓰면 지치기 쉬우니 중요한 일과 미룰 일을 가려 보세요.':'사람의 마음과 일의 흐름을 함께 읽는 감각이 그대의 힘이 됩니다.';
  const relation=hasRelation?'원국의 합과 충은 사람이나 일의 흐름이 서로 만나는 자리를 보여 줍니다.':null;
@@ -83,7 +84,7 @@ export function temperamentLines({day,star,strength,hasRelation,cell,topic='gene
 }
 export function elementLines({element,over,rawCount,star}){
  const relation=star||'비견';
- return [`${element} 기운이 ${over?'도드라져':'드문 편이라'} 이 성향이 삶에서 눈에 띕니다. 이는 글자의 많고 적음만이 아니라, 그대가 힘을 쓰고 쉬는 방식에도 닿아 있습니다.`,`${element}은 ${relation}의 기운으로, ${STAR_MEANING[relation]||'일간과 다른 글자의 관계'}을 뜻합니다. ${over?'잘하는 일에 깊이 빠지면 주변이 기다리는 속도를 놓치기도 합니다.':'혼자 해결하기보다 필요한 배움과 조언을 받아들일 때 빈자리가 채워집니다.'}`,`${over?'잘하는 일을 골라 힘을 모으고, 다른 이의 방식도 들을 여유를 남겨 두세요.':'배움과 조언을 생활 속에서 조금씩 받아들이고, 익힌 것을 작은 선택에 써 보세요.'}`];
+ return [`${element} 기운이 ${over?'도드라져':'드문 편이라'} 이 성향이 삶에서 눈에 띕니다. 이는 글자의 많고 적음만이 아니라, 그대가 힘을 쓰고 쉬는 방식에도 닿아 있습니다.`,`${element}${josa(element,'eunneun')} ${relation}의 기운으로, ${(m=>m+josa(m,'eulreul'))(STAR_MEANING[relation]||'일간과 다른 글자의 관계')} 뜻합니다. ${over?'잘하는 일에 깊이 빠지면 주변이 기다리는 속도를 놓치기도 합니다.':'혼자 해결하기보다 필요한 배움과 조언을 받아들일 때 빈자리가 채워집니다.'}`,`${over?'잘하는 일을 골라 힘을 모으고, 다른 이의 방식도 들을 여유를 남겨 두세요.':'배움과 조언을 생활 속에서 조금씩 받아들이고, 익힌 것을 작은 선택에 써 보세요.'}`];
 }
 export function relationLines(kind){return REL[kind]||REL['합'];}
 export function yongLines({element,dayElement,topic}){

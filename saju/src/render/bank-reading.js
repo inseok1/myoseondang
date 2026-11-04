@@ -11,7 +11,9 @@ const spoken=v=>/%$/.test(v)?'퍼센트':(s=>BRANCH_SOUND[s.at(-1)]||s)(v.replac
 const fill=(text,values)=>text
  .replace(/(\{[^}]+\})(으로|로|은|는|이|가|을|를|과|와)(?=[\s,.])/g,(m,key,p)=>key in values?values[key]+josa(spoken(values[key]),KIND[p]):m)
  .replace(/\{[^}]+\}/g,m=>values[m]??m)
- .replace(/대운 대운/g,'대운');
+ .replace(/대운 대운/g,'대운')
+ // "쇠(금) 35.9%인 쇠 기운"·"흙(토) 25%의 기운인 흙이"처럼 값 뒤에 같은 기운 이름을 또 쓴 문장을 한 번만 쓰게 줄인다
+ .replace(/(나무|불|흙|쇠|물)\(([목화토금수])\) ([\d.]+%)(?:인|의 기운인|의) \1(?:(이|가|은|는|을|를)(?=[\s,.]))?/g,(m,w,e,n,p)=>`${w}(${e}) ${n}${p?josa('퍼센트',KIND[p]):''}`);
 
 function summary(calc,f,pick){
  const w=calc['원국']||{},v=f.values;
