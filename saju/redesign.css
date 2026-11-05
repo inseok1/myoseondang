@@ -97,4 +97,3 @@ body{background:#fff9f1;color:var(--ink)}
 .locked-card.paid{padding:0}.offer-body{padding:16px 18px 20px}.offer-body h3{margin:0 0 8px;color:#3f3446;font:700 20px 'Gowun Batang',serif}.offer-body ul{margin:0 0 14px;padding-left:18px;color:#5c5263;font-size:14px;line-height:1.9}.offer-body small{display:block;margin-top:8px;text-align:center;color:#857a86;font-size:12px}
 .after-pay{margin-top:18px;padding:16px;border:1px solid #e3d6c3;border-radius:16px;background:#fffaf2}.after-pay b{color:#4f3f5c}.after-pay p{margin:6px 0;font-size:14px;color:#5c5263}.after-pay small{display:block;margin-top:8px;text-align:center;color:#857a86;font-size:12px}
 
-.cat-grid .cat-free{grid-column:1/-1}
