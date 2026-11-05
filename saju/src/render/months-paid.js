@@ -53,6 +53,8 @@ export async function setupPaidMonths(calc,topic,seed){
 
  // 결제하고 돌아왔으면(탭의 주문 또는 주소의 ?o=) 연다
  const q=new URLSearchParams(location.search),slot=readSlot();
+ // 첫 화면에서 1,000원 카테고리를 고르고 왔으면 바로 결제창으로 간다(주소에서 pay를 지워 뒤로 가기로는 무료 화면이 보이게)
+ if(q.get('pay')==='1'){history.replaceState(null,'',location.pathname);button.click();return;}
  const t=slot?.sig===sig?slot.t:(q.get('c')===topic&&TOKEN.test(q.get('o')||'')?q.get('o'):'');
  if(!t)return;
  const keys=[...parts.map(p=>`${p.m.id}:${p.key}`),...new Set(list.map(m=>`month:${m.key}`))];
