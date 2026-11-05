@@ -80,7 +80,7 @@ document.querySelector('[name="unknownTime"]').addEventListener('change',e=>{
 // 첫 화면 카테고리를 누르면 그 주제로 입력칸 제목을 바꾸고 입력칸으로 내려간다
 document.querySelectorAll('.cat-grid input').forEach(r=>r.addEventListener('change',()=>{
   const name=r.nextElementSibling.querySelector('b').textContent;
-  const free=r.value==='general';
+  const free=r.value==='free';
   document.querySelector('#form-title').textContent=free?'생년월일만 넣으면 바로 나와요':`${name} 전체 풀이, 생년월일 넣고 1,000원으로 열어요`;
   document.querySelector('#form-sub').textContent=free?'무료 · 가입 없음 · 입력한 정보는 서버로 보내지 않아요':'1,000원 · 가입 없음 · 결제하면 바로 이 주제 전체가 열려요';
   document.querySelector('#birth-form [type=submit]').firstChild.textContent=free?'내 사주 결과 보기 ':'1,000원 결제하고 풀이 보기 ';
@@ -122,6 +122,6 @@ form.addEventListener('submit',async e=>{
     question:String(data.get('question')||'').trim(),topic:data.get('topic')||'default',
     work:data.get('work')||'',relationship:data.get('relationship')||'',calendar:'solar'
   };
-  try{const engine=await loadEngine();payload.calculation=engine.compute(payload);sessionStorage.setItem('myoseondang-current',JSON.stringify(payload));location.href='result.html'+(order.get('o')?location.search:!['general','default'].includes(payload.topic)?'?pay=1':'');}  // 1,000원 카테고리는 결과 화면에서 바로 결제창을 연다
+  try{const engine=await loadEngine();payload.calculation=engine.compute(payload);sessionStorage.setItem('myoseondang-current',JSON.stringify(payload));location.href='result.html'+(order.get('o')?location.search:!['free','default'].includes(payload.topic)?'?pay=1':'');}  // 1,000원 카테고리는 결과 화면에서 바로 결제창을 연다
   catch(err){showError(err.message||'입력 내용을 확인해 주세요.');}
 });
