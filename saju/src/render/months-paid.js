@@ -26,7 +26,7 @@ async function pay(topic,sig,goodname){
  const PayApp=await loadPayApp();
  PayApp.setTarget('_self');
  const back=new URL(location.href);back.search=`?o=${t}&c=${topic}`;back.hash='paid-offer';
- PayApp.call({userid:'myoseondang',shopname:'묘선당',goodname,price:'1000',var1:t,var2:`set:${topic}`,smsuse:'n',checkretry:'y',
+ PayApp.call({userid:'myoseondang',shopname:'묘선당',goodname,price:'1000',var1:t,var2:`set:${topic}`,smsuse:'n',redirectpay:'1',checkretry:'y',
   feedbackurl:`${PAY_SERVER}/feedback`,returnurl:back.href});
 }
 
