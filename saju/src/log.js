@@ -2,7 +2,9 @@
 // 이름·태어난 달과 날·시각·지역은 보내지 않는다. 경로와 손님 번호는 첫 화면에서 정해 같은 탭의 결과 화면까지 이어 쓴다.
 const LOG='https://docs.google.com/forms/d/e/1FAIpQLSfqbnJPIycDBdZuXx8ierUjKeJ041Qg_RR660HnrEHckc0psg/formResponse';
 const keep=(k,make)=>{try{let v=sessionStorage.getItem(k);if(!v){v=make();sessionStorage.setItem(k,v);}return v;}catch{return make();}};
-const SRC=keep('msd_src',()=>{try{return (new URLSearchParams(location.search).get('s')||(document.referrer?new URL(document.referrer).hostname:'직접')).slice(0,30);}catch{return '직접';}});
+const S=new URLSearchParams(location.search).get('s');  // 주소에 경로 표시가 있으면 그것이 우선(같은 탭에서 다른 링크로 다시 들어온 경우)
+try{if(S)sessionStorage.setItem('msd_src',S.slice(0,30));}catch{}
+const SRC=keep('msd_src',()=>{try{return document.referrer?new URL(document.referrer).hostname.slice(0,30):'직접';}catch{return '직접';}});
 const SID=keep('msd_sid',()=>Math.random().toString(36).slice(2,8));
 export function log(kind,p={}){
  try{
