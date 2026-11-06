@@ -3,9 +3,11 @@
 // 주문 토큰은 탭(sessionStorage)과 돌아오는 주소(?o=)에 남겨, 창을 닫아도 그 주소로 같은 생년월일·주제를 넣으면 다시 열린다. 이름·생년월일은 서버로 보내지 않는다.
 import {features,TOPICS,PAID_MODULES} from '../bank-features.js';
 import {fillPaid} from './bank-reading.js';
-import {buildPaidReport,rankMonths} from './paid-report.js';
+import {buildPaidReport,teaserInfo,TOPIC_NAME} from './paid-report.js';
 
 export const PAY_SERVER='https://myoseondang-pay-uasuwwm3hq-du.a.run.app';  // server/deploy.mjs가 알려 준 Cloud Run 주소
+// 디지털 콘텐츠 청약철회 안내(결제 칸마다 같은 문구)
+export const REFUND='결제하면 바로 열리는 디지털 콘텐츠예요. 열린 뒤에는 청약철회가 제한돼요(전자상거래법 제17조 제2항 제5호). 결제 전에 보이는 미리보기가 맛보기예요. 결제했는데 열리지 않거나 계산 오류가 있으면 인스타 DM으로 알려 주세요. 다시 열어 드리거나 환불해 드려요.';
 const SLOT='myoseondang-pay990',TOKEN=/^[A-Za-z0-9_-]{20,64}$/;
 const hash=s=>{let h=2166136261;for(const c of s){h^=c.codePointAt(0);h=Math.imul(h,16777619);}return h>>>0;};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
@@ -47,7 +49,7 @@ export async function setupPaidMonths(calc,topic,seed,ctx){
  // 결제 칸 하나: result.js가 #part7에 만든 잠긴 칸을 봉인 편지 칸으로 바꾼다
  const card=document.querySelector('#part7 .locked-card');if(!card)return;
  card.id='paid-offer';card.classList.add('paid');
- card.innerHTML=`<img class="lock-art" src="assets/v3-lock.jpg" alt="봉인된 라벤더 편지"><div class="offer-body"><h3>${esc(title)} · 1,000원</h3><ul>${parts.map(p=>`<li>${esc(p.name)}</li>`).join('')}<li>다음 12개월, 달마다 이유와 방향</li></ul><button class="button primary wide">🔓 1,000원으로 ${esc(title)} 열기</button><small>결제하면 바로 이 화면에서 다섯 칸이 함께 열려요</small></div>`;
+ card.innerHTML=`<img class="lock-art" src="assets/v3-lock.jpg" alt="봉인된 라벤더 편지"><div class="offer-body"><h3>${esc(title)} · 1,000원</h3><ul><li>다음 열두 달 중 열리는 달·조심할 달과 그 이유(그대 원국의 실제 글자로)</li><li>달마다 이렇게 쓰세요 · 이렇게 넘기세요</li><li>앞으로 6년의 가장 열리는 해와 고비의 해</li><li>지금 대운과 다음 대운의 흐름</li><li>당주의 풀이: ${parts.map(p=>esc(p.name)).join(' · ')}</li></ul><button class="button primary wide">🔓 1,000원으로 ${esc(title)} 열기</button><small>결제하면 바로 이 화면 맨 위에 열려요</small><small class="refund-note">${REFUND}</small></div>`;
  const button=card.querySelector('button');
  button.onclick=()=>{button.disabled=true;pay(topic,sig,`${title} · 묘선당`).catch(err=>{button.disabled=false;alert(err.message);});};
  // 칸마다 붙은 잠긴 자리도 누르면 바로 결제창을 연다(아래로 내려가기만 하면 손님이 결제 버튼을 못 찾는다)
@@ -56,7 +58,8 @@ export async function setupPaidMonths(calc,topic,seed,ctx){
  // 결제하고 돌아왔으면(탭의 주문 또는 주소의 ?o=) 연다
  const q=new URLSearchParams(location.search),slot=readSlot();
  // 첫 화면에서 1,000원 카테고리를 고르고 왔으면 바로 결제창으로 간다(주소에서 pay를 지워 뒤로 가기로는 무료 화면이 보이게)
- if(q.get('pay')==='1'){history.replaceState(null,'',location.pathname);button.click();return;}
+ if(ctx&&topic!=='general')teaser(calc,topic,ctx,title,button,q.get('pay')==='1');
+ if(q.get('pay')==='1'){history.replaceState(null,'',location.pathname);return;}
  const t=slot?.sig===sig?slot.t:(q.get('c')===topic&&TOKEN.test(q.get('o')||'')?q.get('o'):'');
  if(!t)return;
  const keys=[...parts.map(p=>`${p.m.id}:${p.key}`),...new Set(list.map(m=>`month:${m.key}`))];
@@ -83,12 +86,19 @@ function openPaid({calc,topic,seed,ctx,title,parts,list,texts,spots,card}){
  [...root.children].filter(el=>el!==hero).forEach(el=>fold.append(el));
  hero.insertAdjacentHTML('afterend',buildPaidReport(ctx.engine,ctx.r,{sex:ctx.sex,name:ctx.name,topic}));
  const report=root.querySelector('#paid-report');report.after(fold);
- const kinds=Object.fromEntries(rankMonths(ctx.engine,ctx.r,ctx.sex,topic).list.map(m=>[m.name,m.kind]));
- const tag={good:'열리는 달',bad:'조심할 달'};
- root.querySelector('#paid-more').outerHTML=`<h3>당주의 풀이</h3>${parts.map(p=>{const v=texts[`${p.m.id}:${p.key}`];return v?`<div class="personal-reading paid-open"><h3>${esc(p.name)}</h3><p>${esc(fillPaid(calc,topic,seed,p.m.id,v))}</p></div>`:'';}).join('')}
-<h3>다음 12개월 · 달마다</h3><div class="personal-reading paid-months">${list.map(m=>{const v=texts[`month:${m.key}`];if(!v)return '';const k=kinds[m.label];return `<article class="month-reading ${k||''}"><b>${esc(m.label)} · ${esc(m.star)}의 달${tag[k]?` · <em>${tag[k]}</em>`:''}</b><p>${esc(v[hash(`${seed}|${m.label}`)%v.length])}</p></article>`;}).join('')}</div>
-<p class="muted">사주가 말하는 흐름입니다. 실제 선택은 그대의 상황에 맞춰 정하세요.</p>
-<div class="after-pay"><b>✅ ${esc(title)}가 열렸어요</b><p>이 주소를 저장해 두면 같은 생년월일로 언제든 다시 열 수 있어요.</p><p>마음에 걸린 질문이 따로 있다면, 질문 하나를 직접 적어 PDF로 받아 보세요.</p><button class="button primary wide" data-buy="BASIC">BASIC 9,900원 · 내 질문 1개 PDF</button><small>다른 카테고리도 1,000원에 따로 열 수 있어요 · <a href="index.html">카테고리 고르기</a></small></div>`;
+ root.querySelector('#paid-more').outerHTML=`<h3>당주의 풀이</h3>${parts.map(p=>{const v=texts[`${p.m.id}:${p.key}`];return v?`<div class="personal-reading paid-open"><h3>${esc(p.name)}</h3><p>${esc(fillPaid(calc,topic,seed,p.m.id,v))}</p></div>`:'';}).join('')}`;
+ root.querySelector('#paid-teaser')?.remove();
  report.querySelector('[data-buy]')?.addEventListener('click',()=>document.querySelector('.mid-offer [data-buy="BASIC"],.end-offer [data-buy="BASIC"],#buy-basic')?.click());
  report.scrollIntoView();
+}
+
+// 결제 전 미리보기: 결론의 윤곽(열리는 달 수·첫 기회의 반기·조심할 달 수)까지 보여 주고, 정확한 달·이유·할 일은 결제 뒤에
+function teaser(calc,topic,ctx,title,button,scroll){
+ const root=document.querySelector('#result-content'),hero=root?.querySelector('.result-hero');if(!hero)return;
+ const t=teaserInfo(ctx.engine,ctx.r,ctx.sex,topic),who=ctx.name?`${esc(ctx.name)}님`:'그대';title=TOPIC_NAME[topic]||title;
+ const line=t.good?`앞으로 열두 달 가운데 ${who}의 ${esc(title)}이 힘을 얻는 달은 <b>${t.good}번</b> 있고, 첫 기회는 <b>${t.first}</b>에 옵니다.`:`앞으로 열두 달은 ${esc(title)}이 크게 오르내리지 않는 고른 흐름입니다. 그 안에서 조금 더 나은 때와 할 일을 짚어 드려요.`;
+ const tail=t.bad?` 한 박자 쉬어 가야 할 달도 <b>${t.bad}번</b> 보입니다.`:' 크게 막히는 달은 보이지 않습니다.';
+ hero.insertAdjacentHTML('afterend',`<section id="paid-teaser" class="section paid-report"><p class="eyebrow">${esc(title)} 미리보기 · 무료</p><div class="paid-verdict"><p>${line}${tail}</p></div><p class="muted">정확히 몇 월인지, 왜 그런지(그대 원국의 실제 글자), 그 달에 무엇을 하면 좋은지, 앞으로 6년의 좋은 해와 고비의 해는 1,000원 풀이에서 열려요.</p><button class="button primary wide" type="button">🔓 1,000원으로 정확한 달과 할 일 보기</button><small class="refund-note">${REFUND}</small></section>`);
+ const b=root.querySelector('#paid-teaser button');b.onclick=()=>{if(!button.disabled)button.click();};
+ if(scroll)root.querySelector('#paid-teaser').scrollIntoView();
 }

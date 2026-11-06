@@ -155,3 +155,9 @@ body{background:#fff9f1;color:var(--ink)}
 /* 타로 칸도 당주 그림체에 맞춰 밝은 라벤더 카드로 */
 .tarot-grid .shop-card>span{background:#f7f2fb;border-color:#ddd0ea}.tarot-grid .shop-card b{color:#3f3446}.tarot-grid .shop-card small{color:#857a86}
 .tarot-grid .shop-card i{background:#f3ecf8}.tarot-grid .shop-card i img{object-position:50% 40%}
+/* 결제 전·후 12달 한 줄 표, 청약철회 안내 */
+.paid-strip{list-style:none;margin:12px 0 4px;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.paid-strip li{padding:6px 2px;border-radius:9px;background:#f4eff8;text-align:center;font-size:11px;color:#857a86}
+.paid-strip li b{display:block;font-size:12px;color:#4f3f5c}
+.paid-strip li.good{background:#e6f1df;color:#4f7a3d}.paid-strip li.bad{background:#fbe6df;color:#a5543b}
+.refund-note{display:block;margin-top:10px;color:#9a8fa0;font-size:11px;line-height:1.55;text-align:left;word-break:keep-all}
