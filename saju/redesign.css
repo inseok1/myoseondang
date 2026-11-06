@@ -114,3 +114,44 @@ body{background:#fff9f1;color:var(--ink)}
 .paid-year-note p{font-size:14.5px;line-height:1.75;color:#4a4150;word-break:keep-all}
 .month-reading.good em{color:#4f7a3d;font-style:normal}.month-reading.bad em{color:#a5543b;font-style:normal}
 .free-fold{margin:18px 0}.free-fold>summary{cursor:pointer;padding:14px 16px;border:1px dashed #b9a6cc;border-radius:14px;background:#f7f2fa;color:#5b4a68;font-weight:600}
+/* 첫 화면 가게(.shop): 그림 큰 카드 2열, 묶음 제목, 카드마다 가격 */
+.shop{margin-top:18px;text-align:left}
+.shop .cat-title{font-size:20px;margin:0 0 10px}
+.shop-head{margin:22px 0 10px;color:#3f3446;font:700 17px 'Gowun Batang',serif}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shop .shop-card{position:relative;display:block;color:inherit;text-decoration:none}
+.shop .shop-card input{position:absolute;opacity:0}
+.shop .shop-card>span{display:flex;flex-direction:column;min-height:0;height:100%;padding:0 0 12px;border:1px solid #e6dacb;border-radius:16px;background:#fffdf8;overflow:hidden;cursor:pointer;box-shadow:0 2px 10px #876e4912}
+.shop .shop-card i{display:block;width:100%;height:auto;aspect-ratio:4/3;margin:0 0 9px;background:#f3ecf8}
+.shop .shop-card i img{width:100%;height:100%;border-radius:0;object-fit:cover;mix-blend-mode:normal}
+.shop .shop-card b{padding:0 12px;color:#3f3446;font-size:16px}
+.shop .shop-card small{padding:2px 12px 8px;color:#857a86;font-size:12px;line-height:1.45;word-break:keep-all}
+.shop .shop-card em.price{position:static;align-self:flex-end;margin:auto 10px 0 0;padding:3px 10px;border-radius:999px;background:#efe7f6;color:#6b5482;font:700 12px 'Noto Sans KR',sans-serif;font-style:normal}
+.shop .shop-card em.price.free{background:#e6f1df;color:#4f7a3d}
+.shop .shop-card input:checked+span{border-color:#8c76a4;box-shadow:0 0 0 3px #8c76a440}
+.shop .shop-card input:focus-visible+span,.shop a.shop-card:focus-visible>span{outline:2px solid #8c76a4}
+.shop-feature{display:block}
+.shop-feature .shop-card>span{display:grid;grid-template-columns:42% 1fr;grid-template-rows:auto 1fr auto;padding:0}
+.shop-feature .shop-card i{grid-row:1/4;aspect-ratio:auto;height:100%;min-height:128px;margin:0}
+.shop-feature .shop-card b{padding:14px 14px 0;font-size:18px}
+.shop-feature .shop-card small{padding:6px 14px 0}
+.shop-feature .shop-card em.price{margin:10px 12px 12px 0}
+.tarot-grid .shop-card>span{background:#211a2c;border-color:#3a2f4a}.tarot-grid .shop-card b{color:#f3e6c4}.tarot-grid .shop-card small{color:#c8bcd6}
+.tarot-grid .shop-card i{background:#171421}.tarot-grid .shop-card i img{object-position:50% 40%}
+.shop .shop-card i{aspect-ratio:16/10}.shop .shop-card>span{align-items:flex-start}
+.shop .shop-card b,.shop .shop-card small{text-align:left}
+.shop-feature .shop-card em.price{justify-self:end;align-self:end}
+.tarot-grid .shop-card i{aspect-ratio:4/3}.tarot-grid .shop-card i img{object-position:50% 22%}
+.shop .shop-grid .shop-card i{aspect-ratio:auto;height:auto}.shop .shop-grid .shop-card i img{display:block;height:auto;aspect-ratio:16/10}
+.tarot-grid .shop-card i img{aspect-ratio:4/3!important}
+.shop .cat-note{margin:10px 0 0}
+/* 줄에 혼자 남는 카드(홀수 개의 마지막)는 한 줄을 다 쓰는 가로 카드로 */
+.shop-grid>.shop-card:last-child:nth-child(odd){grid-column:1/-1}
+.shop-grid>.shop-card:last-child:nth-child(odd)>span{display:grid;grid-template-columns:46% 1fr;grid-template-rows:auto 1fr auto;padding:0}
+.shop .shop-grid>.shop-card:last-child:nth-child(odd) i{grid-row:1/4;margin:0;height:100%}
+.shop .shop-grid>.shop-card:last-child:nth-child(odd) i img{height:100%;min-height:118px;aspect-ratio:auto!important}
+.shop-grid>.shop-card:last-child:nth-child(odd) b{padding:14px 14px 0}.shop-grid>.shop-card:last-child:nth-child(odd) small{padding:6px 14px 0}
+.shop-grid>.shop-card:last-child:nth-child(odd) em.price{justify-self:end;align-self:end;margin:10px 12px 12px 0}
+/* 타로 칸도 당주 그림체에 맞춰 밝은 라벤더 카드로 */
+.tarot-grid .shop-card>span{background:#f7f2fb;border-color:#ddd0ea}.tarot-grid .shop-card b{color:#3f3446}.tarot-grid .shop-card small{color:#857a86}
+.tarot-grid .shop-card i{background:#f3ecf8}.tarot-grid .shop-card i img{object-position:50% 40%}
