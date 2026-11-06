@@ -55,6 +55,7 @@ const JI_HAE=[[0,7],[1,6],[2,5],[3,4],[8,11],[9,10]];
 const CHEONEUL={0:[1,7],4:[1,7],6:[1,7],1:[0,8],5:[0,8],2:[11,9],3:[11,9],7:[2,6],8:[3,5],9:[3,5]};
 const MUNCHANG=[5,6,8,9,8,9,11,0,2,3];
 const YANGIN={0:3,2:6,4:6,6:9,8:0};
+const LOK=[2,3,5,6,5,6,8,9,11,0];
 const HONGYEOM=[6,6,2,7,4,4,10,9,0,8];
 const BAEKHO=['갑진','을미','병술','정축','무진','임술','계축'];
 const GWAEGANG=['경진','경술','임진','임술','무술'];
@@ -213,7 +214,9 @@ function analyze(r){
   const other=power[(me+1)%5]+power[(me+2)%5]+power[(me+3)%5];
   r.myPct=+(mine/totalP*100).toFixed(1);
   const deukryeong = JI_OH[mJ]===me || JI_OH[mJ]===(me+4)%5;
-  const deukji = JIJANG[dJ].some(([k])=>{const o=GAN_OH[GAN.indexOf(k)];return o===me||o===(me+4)%5});
+  // 득지는 일지 본기(정기)가 비겁·인성일 때만(庚午처럼 지장간 중기 己土만 있는 경우는 득지가 아니다, 2026-11-06 검수)
+  const dJg=GAN_OH[GAN.indexOf(JIJANG[dJ][JIJANG[dJ].length-1][0])];
+  const deukji = dJg===me||dJg===(me+4)%5;
   r.deukryeong=deukryeong; r.deukji=deukji;
   let lvl;
   if(r.myPct>=62) lvl='극신강';
@@ -328,7 +331,8 @@ function analyze(r){
   let guk, gukWhy;
   const tuchulYn=gans.includes(jgIdx);
   if(jgSip==='비견'||jgSip==='겁재'){
-    guk = (YANGIN[dG]===mJ) ? '양인격' : '건록격';
+    // 건록격은 월지가 일간의 녹(甲寅 乙卯 丙戊巳 丁己午 庚申 辛酉 壬亥 癸子)일 때만. 己土 辰월처럼 녹이 아닌 비겁 월령은 월겁격
+    guk = (YANGIN[dG]===mJ) ? '양인격' : LOK[dG]===mJ ? '건록격' : '월겁격';
     gukWhy = `월지 ${JIH[mJ]}의 정기가 ${jgSip} — 자기 세력이 월령을 잡음`;
   }else{
     guk = jgSip+'격';
@@ -344,8 +348,19 @@ function analyze(r){
   scored.sort((a,b)=> r.isStrong ? b.p-a.p : a.p-b.p);
   r.yongsin = scored[0].o;
   r.huisin  = scored[1]?scored[1].o:scored[0].o;
-  r.gisin   = r.isStrong ? (me+4)%5 : (me+2)%5;
-  r.yongWhy = r.isStrong
+  // 신약한 사주의 기신은 일간을 가장 세게 빼거나 누르는 오행(식상·재성·관성 가운데 가장 센 것). 재성으로 못박으면 원국에 1%뿐인 오행이 기신이 된다(2026-11-06 검수)
+  r.gisin   = r.isStrong ? (me+4)%5 : [(me+1)%5,(me+2)%5,(me+3)%5].sort((a,b)=>power[b]-power[a])[0];
+  // 종격: 일간 편 세력이 20% 미만이고 지지 어디에도 비겁·인성 본기가 없으면 버티지 않고 센 기운을 따른다(2026-11-06 검수)
+  const rootless=!jis.some(j=>{const o=GAN_OH[GAN.indexOf(JIJANG[j][JIJANG[j].length-1][0])];return o===me||o===(me+4)%5});
+  // 천간(일간 말고)에 비겁·인성이 떠 있거나, 지장간 어디에든 비겁 뿌리가 있거나, 월지가 일간을 도우면 종하지 않는다(3차 검수)
+  const helpGan=gans.some((g,i)=>i!==2&&(GAN_OH[g]===me||GAN_OH[g]===(me+4)%5));
+  const anyRoot=jis.some(j=>JIJANG[j].some(([k])=>GAN_OH[GAN.indexOf(k)]===me));
+  r.jong = !r.isStrong && r.myPct<20 && rootless && !helpGan && !anyRoot && !deukryeong;
+  if(r.jong){
+    const follow=[(me+1)%5,(me+2)%5,(me+3)%5].sort((a,b)=>power[b]-power[a]);
+    r.yongsin=follow[0]; r.huisin=follow[0]===(me+1)%5?(me+2)%5:(follow[0]+4)%5; r.gisin=(me+4)%5;
+  }
+  r.yongWhy = r.jong ? `일간 세력 ${r.myPct}%에 뿌리가 없어 가장 센 기운을 따르는 종격 — 따르는 오행이 용신` : r.isStrong
     ? `일간 세력 ${r.myPct}% — 넘치므로 덜어내는 오행이 용신`
     : `일간 세력 ${r.myPct}% — 부족하므로 채워주는 오행이 용신`;
 

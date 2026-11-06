@@ -9,32 +9,39 @@ const GAN=['갑','을','병','정','무','기','경','신','임','계'],GANH=['�
 const JI=['자','축','인','묘','진','사','오','미','신','유','술','해'],JIH=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
 const GAN_OH=[0,0,1,1,2,2,3,3,4,4],JI_OH=[4,2,0,0,2,1,1,2,3,3,2,4],OH=['목','화','토','금','수'],OH_WORD=['나무','불','흙','쇠','물'];
 const JEONGGI=[9,5,0,1,4,2,3,5,6,7,4,8];  // 지지 정기(본기) 천간
+// 지장간 [천간, 사령 일수] — 여기·중기·본기 순. 본기만 문장 근거로 쓰고, 여기·중기는 점수에만 고정 비율(본기 .6·중기 .25·여기 .15, 두 글자면 .7·.3)로 더한다. 사령일수는 월령 개념이라 쓰지 않는다(2026-11-06 3차 검수)
+const JIJANG=[[[8,10],[9,20]],[[9,9],[7,3],[5,18]],[[4,7],[2,7],[0,16]],[[0,10],[1,20]],[[1,9],[9,3],[4,18]],[[4,7],[6,7],[2,16]],[[2,10],[5,9],[3,11]],[[3,9],[1,3],[5,18]],[[4,7],[8,7],[6,16]],[[6,10],[7,20]],[[7,9],[3,3],[4,18]],[[4,7],[0,7],[8,16]]];
+const HAPHWA=[2,3,4,0,1];  // 천간합이 되는 오행: 甲己土 乙庚金 丙辛水 丁壬木 戊癸火 (작은 쪽 천간 번호로)
 const YUKHAP=[[0,1],[2,11],[3,10],[4,9],[5,8],[6,7]],CHUNG=[[0,6],[1,7],[2,8],[3,9],[4,10],[5,11]];
-const HYUNG=[[2,5],[5,8],[1,10],[10,7],[0,3]],JAHYUNG=[4,6,9,11];  // 寅巳·巳申·丑戌·戌未·子卯 (寅申·丑未는 충으로 셈), 자형 辰午酉亥
+const SAMHYUNG=[[2,5,8],[1,10,7]],JAHYUNG=[4,6,9,11];  // 寅巳申·丑戌未 삼형은 세 번째 글자가 원국에 있을 때만 두 글자를 형으로 센다(未戌만 있으면 파, 2026-11-06 검수). 子卯 상형, 자형 辰午酉亥
+const isHyung=(a,b)=>(a===0&&b===3)||(a===3&&b===0);  // 子卯 상형만 두 글자로 센다. 寅巳申·丑戌未는 세 글자가 다 모일 때만(아래 삼형 완성)
+const CHEONHAP=[[0,5],[1,6],[2,7],[3,8],[4,9]];
+const SAMHAP=[[8,0,4,4],[11,3,7,0],[2,6,10,1],[5,9,1,3]],WANG=[0,3,6,9];  // 申子辰水 亥卯未木 寅午戌火 巳酉丑金 (마지막 수는 모이는 오행)
 const PA=[[0,9],[3,6],[4,1],[7,10],[2,11],[5,8]],HAE=[[0,7],[1,6],[2,5],[3,4],[8,11],[9,10]];
 const pair=(list,a,b)=>list.some(([x,y])=>(x===a&&y===b)||(x===b&&y===a));
 const GROUP={비견:'비겁',겁재:'비겁',식신:'식상',상관:'식상',편재:'재성',정재:'재성',편관:'관성',정관:'관성',편인:'인성',정인:'인성'};
 export const TOPIC_NAME={money:'재물운',business:'사업운',jobchange:'이직운',employment:'취업운',dating:'연애운',marriage:'결혼운',reunion:'재회운',general:'전체 운'};
 const LOVE=new Set(['dating','marriage','reunion']);
 const kindOf=topic=>LOVE.has(topic)?'love':topic==='jobchange'||topic==='employment'?'career':topic==='money'||topic==='business'?topic:'general';
-const strengthOf=r=>/극신약/.test(r.strength)?-2:/신약/.test(r.strength)?-1:/극신강/.test(r.strength)?2:/신강/.test(r.strength)?1:0;
+const strengthOf=r=>r.jong?1:/극신약/.test(r.strength)?-2:/신약/.test(r.strength)?-1:/극신강/.test(r.strength)?2:/신강/.test(r.strength)?1:0;
 
 // 주제별 십성 가중치. 신약하면 재성·관성·식상(나를 쓰게 하는 기운)은 버겁고 인성·비겁이 힘이 된다(재다신약), 신강하면 반대
 function weightOf(topic,sex,star,st){
  const grp=GROUP[star],love=LOVE.has(topic),mate=sex==='F'?'관성':'재성';
  if(love){
-  const base={dating:{mate:2,식상:1,인성:0,비겁:-1,other:0},marriage:{mate:2,식상:.5,인성:.5,비겁:-1,other:0},reunion:{mate:0,식상:.5,인성:1.5,비겁:-1,other:0}}[topic];
+  const base={dating:{mate:2,식상:1,인성:0,비겁:-1,other:0},marriage:{mate:1.25,식상:.5,인성:.5,비겁:-1,other:0},reunion:{mate:0,식상:.5,인성:1.5,비겁:-1,other:0}}[topic];
   let w=grp===mate?base.mate:base[grp]??base.other;
-  if(topic==='marriage'&&grp===mate&&/^정/.test(star))w+=.5;
+  if(topic==='marriage'&&grp===mate&&/^정/.test(star))w+=1.25;
+  if(topic==='reunion'&&grp===mate&&/^정/.test(star))w+=1;
   if(star==='상관'&&sex==='F')w-=1;
   return w;
  }
  const W={money:{재성:2,식상:1.5,관성:.5,인성:0,비겁:-1.5},business:{식상:2,재성:2,인성:.5,관성:0,비겁:-1.5},jobchange:{관성:2,인성:1.5,식상:1,재성:.5,비겁:-.5},employment:{관성:2,인성:2,재성:.5,식상:0,비겁:-1},general:{비겁:.3,식상:.5,재성:.5,관성:.5,인성:.5}}[TOPIC_NAME[topic]?topic:'general'];
  let w=W[grp];
  if(topic==='money'||topic==='business'){
-  if(st<0)w={재성:st<-1?-.5:1,식상:st<-1?0:1,관성:-.5,인성:1,비겁:st<-1?1:0}[grp];
+  if(st<0)w={재성:st<-1?-.5:1,식상:st<-1?0:1,관성:st<-1?-1:-.5,인성:st<-1?1.5:1,비겁:st<-1?.5:0}[grp];
   if(st>0)w={재성:2.5,식상:2,관성:.5,인성:-.5,비겁:-2}[grp];
-  if(star==='겁재'&&w<=0)w-=.5;
+  if(star==='겁재')w=w>0?w/2:w-.5;  // 겁재는 돈을 나눠 가져가는 기운이라 도움이 될 때도 반만
  }
  if((topic==='jobchange'||topic==='employment')&&st<0)w={관성:1,인성:2.5,식상:topic==='employment'?0:.5,재성:0,비겁:0}[grp];
  if(star==='상관'&&topic==='employment')w-=1;
@@ -49,15 +56,15 @@ const STAR={
  general:{비견:'내 힘으로 서려는 기운',겁재:'경쟁이 붙는 기운',식신:'재능이 편하게 드러나는 기운',상관:'새 시도를 하고 싶어지는 기운',정재:'실속을 챙기는 기운',편재:'기회를 넓히는 기운',정관:'책임과 자리가 생기는 기운',편관:'압박 속에서 버티는 힘이 생기는 기운',정인:'도움과 배움이 들어오는 기운',편인:'생각이 깊어지는 기운'}
 };
 // 점수가 그 갈래의 평소 뜻과 반대로 나온 경우(신약해 비겁이 힘이 될 때, 재성·관성이 버거울 때) 문장도 그 방향으로
-const POS_TEXT={비겁:'곁에서 힘을 보태 줄 사람이 생기는 기운'},NEG_TEXT={재성:'돈 일이 몰려 오히려 버거워지는 기운',관성:'책임이 무거워져 지치기 쉬운 기운',인성:'생각만 많아지고 움직임이 느려지는 기운',식상:'힘을 밖으로 쓰다 쉽게 지치는 기운'};
+const POS_TEXT={비겁:'혼자 버겁던 일을 나눠 질 힘이 붙는 기운'},NEG_TEXT={재성:'돈 일이 몰려 오히려 버거워지는 기운',관성:'책임이 무거워져 지치기 쉬운 기운',인성:'생각만 많아지고 움직임이 느려지는 기운',식상:'힘을 밖으로 쓰다 쉽게 지치는 기운'};
 function starText(topic,sex,star,w=0){
  const k=kindOf(topic),grp=GROUP[star];
  if(k!=='love'&&w>0&&POS_TEXT[grp])return POS_TEXT[grp];
  if(k!=='love'&&w<0&&NEG_TEXT[grp]&&!(k==='career'&&star==='상관'))return NEG_TEXT[grp];
  if(k!=='love')return STAR[k][star];
  const mate=sex==='F'?'관성':'재성';
- if(grp===mate)return topic==='reunion'?'새로운 사람이 눈에 들어와 마음이 나뉘기 쉬운 기운':/^정/.test(star)?'오래 갈 진지한 인연이 눈에 들어오는 기운':'설레는 새 인연이 다가오는 기운';
- return {식신:'편안한 말과 표현으로 마음이 잘 전해지는 기운',상관:'숨겨 둔 마음을 솔직하게 꺼내게 되는 기운',정인:'지난 인연과 대화를 돌아보게 되는 기운',편인:'혼자 지난 일을 곱씹으며 마음을 정리하는 기운',비견:'친구나 비슷한 사람이 둘 사이에 끼어드는 기운',겁재:'경쟁자가 나타나기 쉬운 기운'}[star]||(sex==='F'?'현실 조건을 따지게 되는 기운':'일과 체면이 연애보다 앞서는 기운');
+ if(grp===mate)return topic==='reunion'?(/^정/.test(star)?'예전 인연을 다시 진지하게 떠올리게 되는 기운':'새로운 사람이 눈에 들어와 마음이 나뉘기 쉬운 기운'):/^정/.test(star)?'오래 갈 진지한 인연이 눈에 들어오는 기운':'설레는 새 인연이 다가오는 기운';
+ return {식신:'편안한 말과 표현으로 마음이 잘 전해지는 기운',상관:'숨겨 둔 마음을 솔직하게 꺼내게 되는 기운',정인:'지난 인연과 대화를 돌아보게 되는 기운',편인:'지난 일을 차분히 돌아보며 마음을 정리하는 기운',비견:'내 고집과 자존심이 앞서기 쉬운 기운',겁재:'자존심 싸움으로 마음이 상하기 쉬운 기운'}[star]||(sex==='F'?'현실 조건을 따지게 되는 기운':'일과 체면이 연애보다 앞서는 기운');
 }
 // 용신·희신·기신이 그 주제에서 하는 일
 const YONG={money:'버는 힘이 붙습니다',business:'장사를 끌고 갈 힘이 붙습니다',career:'움직일 힘이 붙습니다',love:'마음에 여유가 생겨 사람을 편하게 대하게 됩니다',general:'일이 한결 수월하게 풀립니다'};
@@ -67,10 +74,12 @@ const elWord=e=>`${OH_WORD[e]}(${OH[e]})`,ganWord=g=>`${GAN[g]}${OH[GAN_OH[g]]}(
 const gj=(w,k)=>josa(w.replace(/\(.*\)$/,''),k);
 
 // 한 기둥(천간 g, 지지 j)이 이 사람·이 주제에 얼마나 좋은지: 점수, 근거(결론 쪽), 반대 근거 하나
-export function scorePillar(engine,r,sex,topic,g,j){
+export function scorePillar(engine,r,sex,topic,g,j,du=null){
  const k=kindOf(topic),love=LOVE.has(topic),st=strengthOf(r),reasons=[];
  const sg=engine.sipsin(r.dG,g),sj=engine.sipsin(r.dG,JEONGGI[j]);
- const wg=weightOf(topic,sex,sg,st),wj=weightOf(topic,sex,sj,st)*.8;
+ const jj=JIJANG[j],share=jj.length===2?[.3,.7]:[.15,.25,.6],main=share[share.length-1];
+ const wg=weightOf(topic,sex,sg,st),wj=weightOf(topic,sex,sj,st)*.8*main;
+ let hidden=jj.slice(0,-1).reduce((a,[h],i)=>a+weightOf(topic,sex,engine.sipsin(r.dG,h),st)*.8*share[i],0);
  if(GROUP[sg]===GROUP[sj]&&Math.sign(wg)===Math.sign(wj))
   reasons.push({w:wg+wj,kind:GROUP[sg],src:'gj',t:`위로 들어오는 ${ganWord(g)}${gj(ganWord(g),'gwawa')} 아래로 깔리는 ${jiWord(j)}${gj(jiWord(j),'iga')} 모두 그대에게 ${GROUP[sg]} 쪽, ${starText(topic,sex,sg,wg)}이 위아래로 겹칩니다`});
  else{
@@ -81,21 +90,21 @@ export function scorePillar(engine,r,sex,topic,g,j){
  const els=[GAN_OH[g],JI_OH[j]];
  for(const e of new Set(els)){
   const both=els[0]===e&&els[1]===e,x=both?1.5:1,where=both?'위아래로 겹쳐':els[0]===e?'위로':'아래로';
-  if(e===r.yongsin)reasons.push({w:1.5*x,kind:'yong',src:'e'+e,t:`그대 사주에 모자란 ${elWord(e)} 기운이 ${where} 들어와 ${YONG[k]}`});
+  if(e===r.yongsin)reasons.push({w:1.5*x,kind:'yong',src:'e'+e,t:`그대 사주의 균형을 잡아 주는 ${elWord(e)} 기운이 ${where} 들어와 ${YONG[k]}`});
   else if(e===r.huisin)reasons.push({w:.75*x,kind:'yong',src:'e'+e,t:`그대를 돕는 ${elWord(e)} 기운이 ${where} 들어와 한결 수월합니다`});
   else if(e===r.gisin)reasons.push({w:-1.5*x,kind:'gi',src:'e'+e,t:`그대 사주에 부담이 되는 ${elWord(e)} 기운이 ${where} 들어와 ${GI[k]}`});
  }
  // 일지(나와 가장 가까운 자리)와의 관계: 합·충·형·파·해를 한 문장으로 묶는다(巳申처럼 합이면서 형·파인 경우)
- const d=r.dJ,hap=pair(YUKHAP,j,d),chung=pair(CHUNG,j,d),hyung=pair(HYUNG,j,d)||(j===d&&JAHYUNG.includes(j)),pa=pair(PA,j,d),hae=pair(HAE,j,d);
+ const d=r.dJ,hap=pair(YUKHAP,j,d),chung=pair(CHUNG,j,d),hyung=isHyung(j,d)||(j===d&&JAHYUNG.includes(j)),pa=pair(PA,j,d),hae=pair(HAE,j,d);
  if(hap||chung||hyung||pa||hae){
   let w=0;const name=`${jiWord(j)}${gj(jiWord(j),'gwawa')} 그대 일지 ${jiWord(d)}`,ga=gj(jiWord(d),'iga');
   if(hap)w+=topic==='reunion'?2.5:love?2:.5;
-  if(chung)w+=topic==='jobchange'?1:topic==='marriage'||topic==='reunion'?-2:topic==='dating'?-1.5:-1;
+  if(chung)w+=topic==='jobchange'?(JI_OH[j]===r.gisin?-1:1):topic==='marriage'||topic==='reunion'?-2:topic==='dating'?-1.5:-1;
   if(hyung)w+=love?-1.5:-1;
   if(pa)w-=.5;
   if(hae)w-=love?1:.5;
   const marks=[hap&&'합',chung&&'충',hyung&&'형',pa&&'파',hae&&'해'].filter(Boolean).join('·');
-  const t=hap&&(hyung||pa||hae)?`${name}에는 ${marks}${josa(marks.slice(-1),'iga')} 함께 걸려, 묶이는 만큼 부딪힘도 생깁니다`
+  const t=hap&&(hyung||pa||hae)?(w>0?`${name}에는 ${marks}${josa(marks.slice(-1),'iga')} 함께 걸려, 묶이는 힘이 더 크되 작은 엇갈림은 따릅니다`:`${name}에는 ${marks}${josa(marks.slice(-1),'iga')} 함께 걸려, 묶이는 만큼 부딪힘도 생깁니다`)
    :hap?`${name}${ga} 합을 이룹니다. ${topic==='reunion'?'끊겼던 인연이 다시 닿을 틈이 생기는 자리입니다':love?'곁의 사람과 가까워지기 쉬운 자리입니다':'가까운 사람과 일이 한데 묶이는 자리입니다'}`
    :chung?`${name}${ga} 충으로 부딪힙니다. ${topic==='jobchange'?'생활의 바탕이 흔들려 자리를 옮기기 쉬운 때입니다':love?'가장 가까운 사이가 부딪히기 쉬운 자리입니다':'생활의 바탕이 흔들리기 쉬운 때입니다'}`
    :hyung?`${name}${ga} 형으로 걸려, 같은 문제로 신경이 곤두서기 쉽습니다`
@@ -103,8 +112,27 @@ export function scorePillar(engine,r,sex,topic,g,j){
    :`${name}${ga} 해로 걸려, ${love?'말 한마디에 서운함이 쌓이기 쉽습니다':'드러나지 않는 마찰이 생기기 쉽습니다'}`;
   if(w)reasons.push({w,kind:hap&&w>0?'hap':chung?'chung':'hyung',src:'rel',t});
  }
- if(j!==d&&pair(CHUNG,j,r.mJ)){const w=topic==='jobchange'?1:topic==='employment'||topic==='business'?-.5:0;if(w)reasons.push({w,kind:'chung',src:'m',t:`${jiWord(j)}${gj(jiWord(j),'iga')} 그대 월지 ${jiWord(r.mJ)}${gj(jiWord(r.mJ),'gwawa')} 충해 일터와 사회 자리에 변동이 생기는 기운입니다`});}
- const score=reasons.reduce((a,x)=>a+x.w,0);
+ if(j!==d&&pair(CHUNG,j,r.mJ)){const w=topic==='jobchange'?(JI_OH[j]===r.gisin?-.5:1):topic==='employment'||topic==='business'?-.5:0;if(w)reasons.push({w,kind:'chung',src:'m',t:`${jiWord(j)}${gj(jiWord(j),'iga')} 그대 월지 ${jiWord(r.mJ)}${gj(jiWord(r.mJ),'gwawa')} 충해 일터와 사회 자리에 변동이 생기는 기운입니다`});}
+ // 삼형 완성: 원국에 두 글자가 있고 이번에 세 번째 글자가 들어올 때. 자형은 일지 말고 다른 원국 지지와 겹칠 때도
+ const sam=SAMHYUNG.find(t=>t.includes(j)&&t.filter(x=>x!==j).every(x=>r.jis.includes(x)));
+ if(sam)reasons.push({w:love?-1.5:-1,kind:'hyung',src:'hy',t:`들어오는 ${jiWord(j)}${gj(jiWord(j),'iga')} 그대 원국의 ${sam.filter(x=>x!==j).map(jiWord).join('·')}${gj(jiWord(sam.filter(x=>x!==j)[1]),'gwawa')} 삼형을 이뤄, ${love?'가까운 사이에 날이 서기 쉽습니다':'일이 꼬이고 신경이 곤두서기 쉽습니다'}`});
+ else if(JAHYUNG.includes(j)&&j!==d&&r.jis.includes(j))reasons.push({w:-.5,kind:'hyung',src:'hy',t:`들어오는 ${jiWord(j)}${gj(jiWord(j),'iga')} 그대 원국의 같은 글자와 겹쳐 자형이 되니, 같은 걱정을 되풀이하기 쉽습니다`});
+ // 일간과의 천간합: 합 자체에는 점수를 주지 않고, 합해서 되는 오행이 그대에게 힘이 되는지(용신·희신) 부담인지(기신)로만 본다. 같은 천간의 십성 점수와 겹치지 않게 무게는 작게
+ if(pair(CHEONHAP,g,r.dG)&&(JI_OH[j]===HAPHWA[Math.min(g,r.dG)%5]||JI_OH[r.mJ]===HAPHWA[Math.min(g,r.dG)%5])){const el=HAPHWA[Math.min(g,r.dG)%5],w=el===r.yongsin?1:el===r.huisin?.5:el===r.gisin?-1:0;
+  if(w)reasons.push({w,kind:w>0?'hap':'gi',src:'ch',t:`위로 들어오는 ${ganWord(g)}${gj(ganWord(g),'iga')} 그대 일간 ${ganWord(r.dG)}${gj(ganWord(r.dG),'gwawa')} 합해 ${elWord(el)} 기운으로 묶이니, ${w>0?(love?'마음이 맞닿는 인연과 손이 닿기 쉬운 때입니다':k==='career'?'제안과 자리가 그대 쪽으로 묶이기 쉬운 때입니다':'거래와 약속이 그대에게 이롭게 묶이기 쉬운 때입니다'):'얽매이는 약속이 생기기 쉬우니 서두르지 않는 편이 낫습니다'}`});}
+ // 원국 지지와 반합·삼합(왕지 子午卯酉가 끼어야 반합): 모이는 오행이 용신·희신이면 힘, 기신이면 부담
+ for(const [a,b,c,el] of SAMHAP){if(![a,b,c].includes(j))continue;
+  const others=[a,b,c].filter(x=>x!==j&&r.jis.includes(x));if(!others.length)continue;
+  const full=others.length===2,half=!full&&(WANG.includes(j)||WANG.includes(others[0]));if(!full&&!half)continue;
+  const f=full?1.5:1,w=el===r.yongsin?1*f:el===r.huisin?.5*f:el===r.gisin?-1*f:0;if(!w)break;
+  reasons.push({w,kind:w>0?'yong':'gi',src:'sam',t:`들어오는 ${jiWord(j)}${gj(jiWord(j),'iga')} 그대 원국의 ${others.map(jiWord).join('·')}${gj(jiWord(others[others.length-1]),'gwawa')} ${full?'삼합':'반합'}을 이뤄 ${elWord(el)} 기운으로 모이니, ${w>0?'그대에게 힘이 되는 흐름이 커집니다':'그대에게 부담이 되는 쪽으로 기운이 쏠립니다'}`});break;}
+ // 지금 십 년 대운과의 충·합: 같은 달이라도 대운과 부딪히면 큰 흐름이 흔들린다
+ if(du){const el=e=>e===r.yongsin?.4:e===r.huisin?.2:e===r.gisin?-.4:0;hidden+=el(GAN_OH[du.g])+el(JI_OH[du.j])*.5;}
+ if(du&&j!==d){const duName=du.year>new Date().getFullYear()?`${du.year}년에 새로 들어오는 대운`:'지금 십 년 대운';
+  if(pair(CHUNG,j,du.j)){const w=topic==='jobchange'?.5:-.5;reasons.push({w,kind:'chung',src:'du',t:`${jiWord(j)}${gj(jiWord(j),'iga')} ${duName}의 ${jiWord(du.j)}${gj(jiWord(du.j),'gwawa')} 충해, ${topic==='jobchange'?'큰 흐름이 바뀌며 자리를 옮길 계기가 생기는 때입니다':'큰 흐름이 흔들려 계획이 틀어지기 쉬운 때입니다'}`});}
+  else if(pair(YUKHAP,j,du.j))reasons.push({w:.25,kind:'hap',src:'du',t:`${jiWord(j)}${gj(jiWord(j),'iga')} ${duName}의 ${jiWord(du.j)}${gj(jiWord(du.j),'gwawa')} 합해 큰 흐름이 받쳐 주는 때입니다`});
+ }
+ const score=reasons.reduce((a,x)=>a+x.w,0)+hidden;
  const side=reasons.filter(x=>score>=0?x.w>0:x.w<0).sort((a,b)=>Math.abs(b.w)-Math.abs(a.w));
  // 반대 근거는 결론 쪽 근거와 다른 글자에서 나왔고 무게가 1 이상일 때만 한 번 단다(같은 글자를 두고 좋다·나쁘다를 동시에 말하지 않게)
  const used=new Set(side.slice(0,3).map(x=>x.src));
@@ -143,19 +171,21 @@ const BASIC_Q={money:'올해 모은 돈을 어디에 써야 할까?',business:'�
 const KIND_WORD={재성:'이때는 특히 돈이 직접 오가는 일에서 힘이 납니다.',식상:'이때는 특히 솜씨와 표현이 힘을 냅니다.',관성:'이때는 특히 일과 책임을 통해 힘이 납니다.',인성:'이때는 특히 도와주는 사람과 문서가 힘이 됩니다.',비겁:'이때는 특히 곁의 사람과 힘을 합칠 때 잘 풀립니다.',yong:'이때는 그대에게 모자란 기운이 채워져, 무엇을 하든 힘이 붙습니다.',hap:'이때는 특히 가까운 사람과의 연결에서 기회가 옵니다.',chung:'이때는 자리가 바뀌는 흐름을 타기 좋습니다.'};
 
 const monthLabel=m=>{const [y,mo]=m.label.split('.');return `${y}년 ${Number(mo)}월`;};
-// 다음 12달: 점수 1.5 이상 중 높은 3달 = 열리는 달, −1 이하 중 낮은 2달 = 조심할 달, 나머지는 평탄
+// 그 해에 흐르는 대운
+const daeunAt=(r,year)=>[...r.daeun].reverse().find(u=>u.year<=year)||r.daeun[0];
+// 다음 12달: 1.5 이상은 모두 열림, −1.5 이하는 모두 조심(표). 풀이 카드는 그중 높은 3달·낮은 2달
 export function rankMonths(engine,r,sex,topic){
- const list=engine.wolwoonList(r,12).map(m=>({...m,name:monthLabel(m),...scorePillar(engine,r,sex,topic,m.g,m.j)}));
+ const list=engine.wolwoonList(r,12).map(m=>({...m,name:monthLabel(m),...scorePillar(engine,r,sex,topic,m.g,m.j,daeunAt(r,Number(m.label.slice(0,4))))}));
  const byScore=[...list].sort((a,b)=>b.score-a.score);
- const good=byScore.filter(m=>m.score>=1.5).slice(0,3),bad=[...byScore].reverse().filter(m=>m.score<=-1).slice(0,2);
- list.forEach(m=>m.kind=good.includes(m)?'good':bad.includes(m)?'bad':'usual');
+ const good=byScore.filter(m=>m.score>=1.5).slice(0,3),bad=[...byScore].reverse().filter(m=>m.score<=-1.5).slice(0,2);
+ list.forEach(m=>m.kind=m.score>=1.5?'good':m.score<=-1.5?'bad':'usual');
  const inOrder=a=>a.sort((x,y)=>list.indexOf(x)-list.indexOf(y));
  return {list,good:inOrder(good),bad:inOrder(bad)};
 }
 // 결제 전 맛보기: 몇 번 열리고, 첫 기회는 언제쯤(반기), 조심할 달은 몇 번
 export function teaserInfo(engine,r,sex,topic){
- const {good,bad}=rankMonths(engine,r,sex,topic),f=good[0];
- return {good:good.length,bad:bad.length,first:f?`${f.label.slice(0,4)}년 ${Number(f.label.slice(5))<=6?'상반기':'하반기'}`:''};
+ const {list}=rankMonths(engine,r,sex,topic),f=list.find(m=>m.kind==='good');
+ return {good:list.filter(m=>m.kind==='good').length,bad:list.filter(m=>m.kind==='bad').length,first:f?`${f.label.slice(0,4)}년 ${Number(f.label.slice(5))<=6?'상반기':'하반기'}`:''};
 }
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
@@ -170,15 +200,15 @@ export function buildPaidReport(engine,r,{sex,name,topic}){
  const title=TOPIC_NAME[topic],{list,good,bad}=rankMonths(engine,r,sex,topic);
  const nextGood=m=>list.slice(list.indexOf(m)+1).find(x=>x.kind==='good')?.name||'흐름이 나아지는 때';
  // 10월이 넘으면 올해는 거의 지나갔으니 내년부터 6년
- const years=engine.sewoonList(r,7).slice(new Date().getMonth()>=9?1:0).slice(0,6).map(y=>({...y,...scorePillar(engine,r,sex,topic,y.g,y.j)}));
+ const years=engine.sewoonList(r,7).slice(new Date().getMonth()>=9?1:0).slice(0,6).map(y=>({...y,...scorePillar(engine,r,sex,topic,y.g,y.j,daeunAt(r,y.year))}));
  const top=[...years].sort((a,b)=>b.score-a.score)[0],low=[...years].sort((a,b)=>a.score-b.score)[0];
  const best=top.score>=1.5?top:null,hard=low.score<=-1?low:null;
  const nowYear=new Date().getFullYear(),cur=[...r.daeun].reverse().find(u=>u.year<=nowYear)||r.daeun[0],next=r.daeun[r.daeun.indexOf(cur)+1];
  const dscore=u=>scorePillar(engine,r,sex,topic,u.g,u.j).score,tone=s=>s>=2?'힘이 붙는':s<=-1?'버거운':'고른';
  const who=name?`${esc(name)}님`:'그대';
  const kinds=good.map(m=>m.reasons[0]?.kind).filter(k=>KIND_WORD[k]),main=[...kinds].sort((a,b)=>kinds.filter(x=>x===b).length-kinds.filter(x=>x===a).length)[0];
- const head=good.length?`사주는 ${who}의 ${title}이 <b>${joinMonths(good)}</b>에 힘을 얻는다고 말합니다.${main?` ${KIND_WORD[main]}`:''}`:`사주는 앞으로 열두 달이 ${title}에 크게 오르내리지 않는 고른 흐름이라고 말합니다.`;
- const tail=bad.length?` ${joinMonths(bad)}은 한 박자 쉬어 가며 지키는 달입니다.`:' 열두 달 가운데 크게 막히는 달은 없습니다.';
+ const head=good.length?`사주는 ${who}의 ${title}이 <b>${joinMonths(good)}</b>에 가장 힘을 얻는다고 말합니다.${main?` ${KIND_WORD[main]}`:''}`:`사주는 앞으로 열두 달이 ${title}에 크게 오르내리지 않는 고른 흐름이라고 말합니다.`;
+ const tail=bad.length?` ${joinMonths(bad)}은 특히 한 박자 쉬어 가며 지키는 달입니다.`:' 열두 달 가운데 크게 막히는 달은 없습니다.';
  // 할 일은 그 달 첫 근거의 종류로 고르되, 앞 카드와 같은 문장이 되면 그 달의 다음 근거로
  const cards=(ms,kind)=>{const pool=kind==='good'?DO_GOOD[topic]:DO_BAD[topic],seen=new Set();
   return ms.map(m=>{const opts=[...m.reasons.map(x=>pool[x.kind]).filter(Boolean),pool.default,...(kind==='good'?MORE_GOOD:MORE_BAD)[topic]],raw=opts.find(a=>!seen.has(a))||opts[0],act=raw.replace('{next}',nextGood(m));seen.add(raw);
