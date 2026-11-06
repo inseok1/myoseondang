@@ -97,3 +97,20 @@ body{background:#fff9f1;color:var(--ink)}
 .locked-card.paid{padding:0}.offer-body{padding:16px 18px 20px}.offer-body h3{margin:0 0 8px;color:#3f3446;font:700 20px 'Gowun Batang',serif}.offer-body ul{margin:0 0 14px;padding-left:18px;color:#5c5263;font-size:14px;line-height:1.9}.offer-body small{display:block;margin-top:8px;text-align:center;color:#857a86;font-size:12px}
 .after-pay{margin-top:18px;padding:16px;border:1px solid #e3d6c3;border-radius:16px;background:#fffaf2}.after-pay b{color:#4f3f5c}.after-pay p{margin:6px 0;font-size:14px;color:#5c5263}.after-pay small{display:block;margin-top:8px;text-align:center;color:#857a86;font-size:12px}
 
+/* 1,000원 결제 뒤 전용 풀이(paid-report.js) */
+.paid-report{border:1px solid #c9b3dc;border-radius:20px;background:#fdfaff}
+.paid-report h2{margin:4px 0 12px;font:700 24px 'Gowun Batang',serif;color:#3f3446}
+.paid-report h3{margin:22px 0 10px;color:#4f3f5c;font:700 18px 'Gowun Batang',serif}
+.paid-verdict{padding:14px 16px;border-radius:14px;background:#4f3f5c;color:#fff;font-size:16px;line-height:1.7;word-break:keep-all}.paid-verdict b{color:#f3d99b}
+.paid-month{margin:0 0 12px;padding:14px 15px;border-radius:14px;border:1px solid #e3d6c3;background:#fff;word-break:keep-all}
+.paid-month.good{border-left:5px solid #7fa66b}.paid-month.bad{border-left:5px solid #c9826b}
+.paid-month p{margin:6px 0;font-size:14.5px;line-height:1.75;color:#4a4150}
+.pm-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.pm-head b{font-size:16px;color:#3f3446}.pm-head span{font-size:12px;color:#857a86}
+.pm-do{padding:8px 10px;border-radius:10px;background:#f7f2fa}.pm-do b{display:block;font-size:12px;color:#6b5877}
+.paid-years{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.paid-years li{display:grid;grid-template-columns:64px 1fr auto;gap:8px;align-items:center;padding:9px 12px;border-radius:10px;background:#fff;border:1px solid #eee3d3;font-size:14px}
+.paid-years li.good{background:#eef6e8;border-color:#a9c99a}.paid-years li.bad{background:#fbece6;border-color:#e0b4a4}
+.paid-years em{font-style:normal;font-size:12px;color:#6b5877}
+.paid-year-note p{font-size:14.5px;line-height:1.75;color:#4a4150;word-break:keep-all}
+.month-reading.good em{color:#4f7a3d;font-style:normal}.month-reading.bad em{color:#a5543b;font-style:normal}
+.free-fold{margin:18px 0}.free-fold>summary{cursor:pointer;padding:14px 16px;border:1px dashed #b9a6cc;border-radius:14px;background:#f7f2fa;color:#5b4a68;font-weight:600}

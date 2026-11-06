@@ -3,6 +3,7 @@
 // 주문 토큰은 탭(sessionStorage)과 돌아오는 주소(?o=)에 남겨, 창을 닫아도 그 주소로 같은 생년월일·주제를 넣으면 다시 열린다. 이름·생년월일은 서버로 보내지 않는다.
 import {features,TOPICS,PAID_MODULES} from '../bank-features.js';
 import {fillPaid} from './bank-reading.js';
+import {buildPaidReport,rankMonths} from './paid-report.js';
 
 export const PAY_SERVER='https://myoseondang-pay-uasuwwm3hq-du.a.run.app';  // server/deploy.mjs가 알려 준 Cloud Run 주소
 const SLOT='myoseondang-pay990',TOKEN=/^[A-Za-z0-9_-]{20,64}$/;
@@ -30,7 +31,8 @@ async function pay(topic,sig,goodname){
   feedbackurl:`${PAY_SERVER}/feedback`,returnurl:back.href});
 }
 
-export async function setupPaidMonths(calc,topic,seed){
+// ctx: {engine,r,sex,name} — 결제 뒤 원국으로 직접 계산한 결론(paid-report.js)을 만들 때 쓴다
+export async function setupPaidMonths(calc,topic,seed,ctx){
  if(!PAY_SERVER)return;
  topic=TOPICS[topic]?topic:'general';
  const sig=String(hash(JSON.stringify([calc['원국'],topic]))),subject=TOPICS[topic],f=features(calc,topic);
@@ -63,10 +65,7 @@ export async function setupPaidMonths(calc,topic,seed){
   const r=await fetch(`${PAY_SERVER}/unlock?t=${t}&k=${encodeURIComponent(keys.join(','))}`).catch(()=>null);
   if(r?.ok){
    const texts=(await r.json()).texts;
-   parts.forEach((p,i)=>{const v=texts[`${p.m.id}:${p.key}`];if(v&&spots[i])spots[i].outerHTML=`<div class="personal-reading paid-open"><h3>${esc(p.name)}</h3><p>${esc(fillPaid(calc,topic,seed,p.m.id,v))}</p></div>`;});
-   card.outerHTML=`<div id="paid-offer" class="personal-reading paid-months"><h3>다음 12개월 · 달마다 다른 이유와 방향</h3>${list.map(m=>{const v=texts[`month:${m.key}`];if(!v)return '';return `<article class="month-reading"><b>${esc(m.label)} · ${esc(m.star)}의 달</b><p>${esc(v[hash(`${seed}|${m.label}`)%v.length])}</p></article>`;}).join('')}<p class="muted">사주가 말하는 흐름입니다. 실제 선택은 그대의 상황에 맞춰 정하세요.</p>
-<div class="after-pay"><b>✅ ${esc(title)}가 열렸어요</b><p>이 주소를 저장해 두면 같은 생년월일로 언제든 다시 열 수 있어요.</p><p>마음에 걸린 질문이 따로 있다면, 질문 하나를 직접 적어 PDF로 받아 보세요.</p><button class="button primary wide" data-buy="BASIC">BASIC 9,900원 · 내 질문 1개 PDF</button><small>다른 카테고리도 1,000원에 따로 열 수 있어요 · <a href="index.html">카테고리 고르기</a></small></div></div>`;
-   document.querySelector('#paid-offer [data-buy]')?.addEventListener('click',()=>document.querySelector('.mid-offer [data-buy="BASIC"],.end-offer [data-buy="BASIC"]')?.click());
+   openPaid({calc,topic,seed,ctx,title,parts,list,texts,spots,card});
    return;
   }
   if(r&&r.status!==402)break;
@@ -74,4 +73,22 @@ export async function setupPaidMonths(calc,topic,seed){
  }
  sessionStorage.removeItem(SLOT);button.disabled=false;button.textContent=`🔓 1,000원으로 ${title} 열기`;
  alert('결제가 아직 확인되지 않았어요. 결제를 마쳤는데 열리지 않으면 인스타 DM으로 알려 주세요.');
+}
+
+// 결제 확인 뒤: 무료 풀이 사이에 끼워 넣지 않고, 이 주제만 담은 전용 풀이를 맨 위에 따로 펼치고 무료 풀이는 접어 둔다
+function openPaid({calc,topic,seed,ctx,title,parts,list,texts,spots,card}){
+ spots.forEach(s=>s?.remove());card.remove();
+ const root=document.querySelector('#result-content'),hero=root.querySelector('.result-hero');
+ const fold=document.createElement('details');fold.className='free-fold';fold.innerHTML='<summary>무료 기본 풀이 다시 보기 (원국표 · 기질 · 오행)</summary>';
+ [...root.children].filter(el=>el!==hero).forEach(el=>fold.append(el));
+ hero.insertAdjacentHTML('afterend',buildPaidReport(ctx.engine,ctx.r,{sex:ctx.sex,name:ctx.name,topic}));
+ const report=root.querySelector('#paid-report');report.after(fold);
+ const kinds=Object.fromEntries(rankMonths(ctx.engine,ctx.r,ctx.sex,topic).list.map(m=>[m.name,m.kind]));
+ const tag={good:'열리는 달',bad:'조심할 달'};
+ root.querySelector('#paid-more').outerHTML=`<h3>당주의 풀이</h3>${parts.map(p=>{const v=texts[`${p.m.id}:${p.key}`];return v?`<div class="personal-reading paid-open"><h3>${esc(p.name)}</h3><p>${esc(fillPaid(calc,topic,seed,p.m.id,v))}</p></div>`:'';}).join('')}
+<h3>다음 12개월 · 달마다</h3><div class="personal-reading paid-months">${list.map(m=>{const v=texts[`month:${m.key}`];if(!v)return '';const k=kinds[m.label];return `<article class="month-reading ${k||''}"><b>${esc(m.label)} · ${esc(m.star)}의 달${tag[k]?` · <em>${tag[k]}</em>`:''}</b><p>${esc(v[hash(`${seed}|${m.label}`)%v.length])}</p></article>`;}).join('')}</div>
+<p class="muted">사주가 말하는 흐름입니다. 실제 선택은 그대의 상황에 맞춰 정하세요.</p>
+<div class="after-pay"><b>✅ ${esc(title)}가 열렸어요</b><p>이 주소를 저장해 두면 같은 생년월일로 언제든 다시 열 수 있어요.</p><p>마음에 걸린 질문이 따로 있다면, 질문 하나를 직접 적어 PDF로 받아 보세요.</p><button class="button primary wide" data-buy="BASIC">BASIC 9,900원 · 내 질문 1개 PDF</button><small>다른 카테고리도 1,000원에 따로 열 수 있어요 · <a href="index.html">카테고리 고르기</a></small></div>`;
+ report.querySelector('[data-buy]')?.addEventListener('click',()=>document.querySelector('.mid-offer [data-buy="BASIC"],.end-offer [data-buy="BASIC"],#buy-basic')?.click());
+ report.scrollIntoView();
 }
