@@ -1,6 +1,8 @@
 import {loadEngine} from '../engine.js';
 import {lunarStatus} from '../lunar.js';
 import {parseTimeText,suggestCities} from '../input.js';
+import {log} from '../log.js';
+log('saju_visit');
 
 const form=document.querySelector('#birth-form');
 const error=document.querySelector('#form-error');
@@ -122,6 +124,6 @@ form.addEventListener('submit',async e=>{
     question:String(data.get('question')||'').trim(),topic:data.get('topic')||'default',
     work:data.get('work')||'',relationship:data.get('relationship')||'',calendar:'solar'
   };
-  try{const engine=await loadEngine();payload.calculation=engine.compute(payload);sessionStorage.setItem('myoseondang-current',JSON.stringify(payload));location.href='result.html'+(order.get('o')?location.search:!['free','default'].includes(payload.topic)?'?pay=1':'');}  // 1,000원 카테고리는 결과 화면에서 바로 결제창을 연다
+  try{const engine=await loadEngine();payload.calculation=engine.compute(payload);sessionStorage.setItem('myoseondang-current',JSON.stringify(payload));log('saju_submit',payload);location.href='result.html'+(order.get('o')?location.search:!['free','default'].includes(payload.topic)?'?pay=1':'');}  // 1,000원 카테고리는 결과 화면에서 바로 결제창을 연다
   catch(err){showError(err.message||'입력 내용을 확인해 주세요.');}
 });

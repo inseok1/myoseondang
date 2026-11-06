@@ -4,6 +4,7 @@
 import {features,TOPICS,PAID_MODULES} from '../bank-features.js';
 import {fillPaid} from './bank-reading.js';
 import {buildPaidReport,teaserInfo,TOPIC_NAME} from './paid-report.js';
+import {log} from '../log.js';
 
 export const PAY_SERVER='https://myoseondang-pay-uasuwwm3hq-du.a.run.app';  // server/deploy.mjs가 알려 준 Cloud Run 주소
 // 디지털 콘텐츠 청약철회 안내(결제 칸마다 같은 문구)
@@ -24,7 +25,7 @@ function loadPayApp(){
 }
 
 async function pay(topic,sig,goodname){
- const t=crypto.randomUUID().replaceAll('-','');
+ const t=crypto.randomUUID().replaceAll('-','');log('saju_pay',{topic});
  sessionStorage.setItem(SLOT,JSON.stringify({t,sig}));
  const PayApp=await loadPayApp();
  PayApp.setTarget('_self');
@@ -80,7 +81,7 @@ export async function setupPaidMonths(calc,topic,seed,ctx){
 
 // 결제 확인 뒤: 무료 풀이 사이에 끼워 넣지 않고, 이 주제만 담은 전용 풀이를 맨 위에 따로 펼치고 무료 풀이는 접어 둔다
 function openPaid({calc,topic,seed,ctx,title,parts,list,texts,spots,card}){
- spots.forEach(s=>s?.remove());card.remove();
+ spots.forEach(s=>s?.remove());card.remove();log('saju_paid',{topic});
  const root=document.querySelector('#result-content'),hero=root.querySelector('.result-hero');
  const fold=document.createElement('details');fold.className='free-fold';fold.innerHTML='<summary>무료 기본 풀이 다시 보기 (원국표 · 기질 · 오행)</summary>';
  [...root.children].filter(el=>el!==hero).forEach(el=>fold.append(el));
